@@ -12,6 +12,10 @@ class Web extends CI_Controller {
 		$this->db->order_by('id_data_notaris', 'DESC');
 		$data['query'] = $this->db->get("tbl_data_obh");
 
+		// Data for chart 
+		$this->db->order_by('id_anggaran', 'DESC');
+		$data['chart'] = $this->db->get("tbl_realisasi_anggaran")->row();
+
 		$this->load->view('web/header', $data);
 		$this->load->view('web/beranda', $data);
 		$this->load->view('web/footer', $data);

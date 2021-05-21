@@ -99,6 +99,25 @@ h3.title-peta-sebaran {
 .peta-sebaran {
    padding: 3%;
 }
+.realisasi-anggaran {
+   padding: 2%;
+}
+
+/* Realisasi Anggaran  */
+.current-anggaran {
+   margin-top: 30px;
+}
+.info-anggaran {
+   width: 100%;
+   box-shadow: 4px 4px 1px rgb(0 0 0 / 10%);
+   border-radius: 8px;
+   padding: 15px;
+   border: 1px solid;
+}
+.info-number {
+   font-size: 20px;
+   font-weight: 700;
+}
 
 @media (max-width: 540px) {
    /* Header */

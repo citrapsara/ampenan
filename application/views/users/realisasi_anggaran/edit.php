@@ -29,13 +29,19 @@ $link4 = strtolower($this->uri->segment(4));
                 ?>
                 <form class="form-horizontal" action="" data-parsley-validate="true" method="post" enctype="multipart/form-data">
                   <div class="form-group">
-                    <label class="control-label col-lg-3">Nama Kategori</label>
+                    <label class="control-label col-lg-3">Total Anggaran</label>
                     <div class="col-lg-9">
-                      <input type="text" name="nama_kategori" class="form-control" value="<?php echo $query->nama_kategori; ?>" placeholder="Nama Kategori" required autofocus onfocus="this.value = this.value;">
+                      <input type="text" name="total_anggaran" class="form-control" value="<?php echo $query->total_anggaran; ?>" placeholder="Total Anggaran" required autofocus onfocus="this.value = this.value;">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-lg-3">Penyerapan Anggaran</label>
+                    <div class="col-lg-9">
+                      <input type="text" name="penyerapan_anggaran" class="form-control" value="<?php echo $query->penyerapan_anggaran; ?>" placeholder="Penyerapan Anggaran" required autofocus onfocus="this.value = this.value;">
                     </div>
                   </div>
                   <hr>
-                  <a href="<?php echo $link1; ?>/<?php echo $link2; ?>.html" class="btn btn-default"><< Kembali</a>
+                  <!-- <a href="<?php //echo $link1; ?>/<?php //echo $link2; ?>.html" class="btn btn-default"><< Kembali</a> -->
                   <button type="submit" name="btnupdate" class="btn btn-primary" style="float:right;">Simpan</button>
                 </form>
             </div>
