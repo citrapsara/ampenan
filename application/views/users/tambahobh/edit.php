@@ -55,17 +55,15 @@ $link4 = strtolower($this->uri->segment(4));
                   <div class="form-group">
                     <label class="control-label col-lg-3">Kota / Kabupaten</label>
                     <div class="col-lg-9">
-                    <select class="form-control default-select2" name="kota" selected="<?php echo $query->kota; ?>" required>
+                      <select class="form-control default-select2" name="kota" selected="<?php echo $query->kota; ?>" required>
                         <option value="">- Pilih -</option>
-                        <option value="Mataram" <?php if($query->kota=="Mataram") echo 'selected="selected"'; ?> >Mataram</option>
-                        <option value="Lombok Barat" <?php if($query->kota=="Lombok Barat") echo 'selected="selected"'; ?> >Lombok Barat</option>
-                        <option value="Lombok Timur" <?php if($query->kota=="Lombok Timur") echo 'selected="selected"'; ?> >Lombok Timur</option>
-                        <option value="Lombok Tengah" <?php if($query->kota=="Lombok Tengah") echo 'selected="selected"'; ?> >Lombok Tengah</option>
-                        <option value="Lombok Utara" <?php if($query->kota=="Lombok Utara") echo 'selected="selected"'; ?> >Lombok Utara</option>
-                        <option value="Bima" <?php if($query->kota=="Bima") echo 'selected="selected"'; ?> >Bima</option>
-                        <option value="Dompu" <?php if($query->kota=="Dompu") echo 'selected="selected"'; ?> >Dompu</option>
-                        <option value="Sumbawa" <?php if($query->kota=="Sumbawa") echo 'selected="selected"'; ?> >Sumbawa</option>
-                        <option value="Sumbawa Barat" <?php if($query->kota=="Sumbawa Barat") echo 'selected="selected"'; ?> >Sumbawa Barat</option>
+                        <?php
+                          $this->db->order_by('nama_kota','ASC');
+                          $v_kota = $this->db->get('tbl_kota_ntb');
+                          foreach ($v_kota->result() as $key => $value): ?>
+                            <option value="<?php echo $value->nama_kota; ?>" <?php if($query->kota==$value->nama_kota) echo 'selected="selected"'; ?>><?php echo ucwords($value->nama_kota); ?></option>
+                        <?php
+                          endforeach; ?>
                       </select>
                     </div>
                   </div>

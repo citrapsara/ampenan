@@ -56,98 +56,98 @@ class Web extends CI_Controller {
 		$this->load->view('web/footer', $data);
 	}
 
-	public function user_register()
-	{
-		$data['judul_web'] = "Halaman Pendaftaran - ".$this->Mcrud->judul_web();
-		$this->load->view('web/log/header', $data);
-		$this->load->view('web/log/daftar', $data);
-		$this->load->view('web/log/footer', $data);
+	// public function user_register()
+	// {
+	// 	$data['judul_web'] = "Halaman Pendaftaran - ".$this->Mcrud->judul_web();
+	// 	$this->load->view('web/log/header', $data);
+	// 	$this->load->view('web/log/daftar', $data);
+	// 	$this->load->view('web/log/footer', $data);
 
-		date_default_timezone_set('Asia/Jakarta');
-		$tgl = date('Y-m-d H:i:s');
+	// 	date_default_timezone_set('Asia/Jakarta');
+	// 	$tgl = date('Y-m-d H:i:s');
 
-		if (isset($_POST['btndaftar']))
-		{
-				 $nama 		 = htmlentities(strip_tags($_POST['nama']));
-				 $no_ktp 	 = htmlentities(strip_tags($_POST['no_ktp']));
-				 $alamat 	 = htmlentities(strip_tags($_POST['alamat']));
-				 $kontak 	 = htmlentities(strip_tags($_POST['kontak']));
-				 $email 	 = htmlentities(strip_tags($_POST['email']));
-				 $username = htmlentities(strip_tags($_POST['username']));
-				 $pass	   = htmlentities(strip_tags($_POST['password']));
-				 $pass2	   = htmlentities(strip_tags($_POST['password2']));
+	// 	if (isset($_POST['btndaftar']))
+	// 	{
+	// 			 $nama 		 = htmlentities(strip_tags($_POST['nama']));
+	// 			 $no_ktp 	 = htmlentities(strip_tags($_POST['no_ktp']));
+	// 			 $alamat 	 = htmlentities(strip_tags($_POST['alamat']));
+	// 			 $kontak 	 = htmlentities(strip_tags($_POST['kontak']));
+	// 			 $email 	 = htmlentities(strip_tags($_POST['email']));
+	// 			 $username = htmlentities(strip_tags($_POST['username']));
+	// 			 $pass	   = htmlentities(strip_tags($_POST['password']));
+	// 			 $pass2	   = htmlentities(strip_tags($_POST['password2']));
 
-				 $cek_data  = $this->db->get_where('tbl_data_user', array('no_ktp'=>$no_ktp));
-				 $cek_data2 = $this->db->get_where('tbl_user', array('username'=>$username));
-				 $simpan = 'y';
-				 $pesan  = '';
-				 if ($cek_data->num_rows()!=0) {
-					 $simpan = 'n';
-					 $pesan  = "No. NIK '<b>$no_ktp</b>' Sudah Terdaftar!";
-				 }elseif ($cek_data2->num_rows()!=0) {
-					 $simpan = 'n';
-					 $pesan  = "Username '<b>$username</b>' Sudah Terdaftar!";
-				 }else{
-					 if ($pass!=$pass2) {
-						 $simpan = 'n';
-						 $pesan  = "Password tidak cocok!";
-					 }
-				 }
-				 $level = 'user';
-				 if ($simpan=='y'){
-								 $data = array(
-									 'nama_lengkap' => $nama,
-									 'username' 	 => $username,
-									 'password' 	 => $pass,
-									 'level' 		 => $level,
-									 'tgl_daftar'  => $tgl,
-									 'aktif'			 => '1',
-									 'dihapus' 		 => 'tidak'
-								 );
-								 $this->db->insert('tbl_user',$data);
+	// 			 $cek_data  = $this->db->get_where('tbl_data_user', array('no_ktp'=>$no_ktp));
+	// 			 $cek_data2 = $this->db->get_where('tbl_user', array('username'=>$username));
+	// 			 $simpan = 'y';
+	// 			 $pesan  = '';
+	// 			 if ($cek_data->num_rows()!=0) {
+	// 				 $simpan = 'n';
+	// 				 $pesan  = "No. NIK '<b>$no_ktp</b>' Sudah Terdaftar!";
+	// 			 }elseif ($cek_data2->num_rows()!=0) {
+	// 				 $simpan = 'n';
+	// 				 $pesan  = "Username '<b>$username</b>' Sudah Terdaftar!";
+	// 			 }else{
+	// 				 if ($pass!=$pass2) {
+	// 					 $simpan = 'n';
+	// 					 $pesan  = "Password tidak cocok!";
+	// 				 }
+	// 			 }
+	// 			 $level = 'user';
+	// 			 if ($simpan=='y'){
+	// 							 $data = array(
+	// 								 'nama_lengkap' => $nama,
+	// 								 'username' 	 => $username,
+	// 								 'password' 	 => $pass,
+	// 								 'level' 		 => $level,
+	// 								 'tgl_daftar'  => $tgl,
+	// 								 'aktif'			 => '1',
+	// 								 'dihapus' 		 => 'tidak'
+	// 							 );
+	// 							 $this->db->insert('tbl_user',$data);
 								
-								 $id_user = $this->db->insert_id();
-								 $data2 = array(
-									 'no_ktp'  => $no_ktp,
-									 'nama' 	 => $nama,
-									 'alamat'  => $alamat,
-									 'kontak'  => $kontak,
-									 'email'   => $email,
-									 'id_user' => $id_user
-								 );
-								 $this->db->insert('tbl_data_user',$data2);
+	// 							 $id_user = $this->db->insert_id();
+	// 							 $data2 = array(
+	// 								 'no_ktp'  => $no_ktp,
+	// 								 'nama' 	 => $nama,
+	// 								 'alamat'  => $alamat,
+	// 								 'kontak'  => $kontak,
+	// 								 'email'   => $email,
+	// 								 'id_user' => $id_user
+	// 							 );
+	// 							 $this->db->insert('tbl_data_user',$data2);
 
-								 // $this->session->set_userdata('username', "$username");
-								 // $this->session->set_userdata('id_user', "$id_user");
-								 // $this->session->set_userdata('level', "$level");
+	// 							 // $this->session->set_userdata('username', "$username");
+	// 							 // $this->session->set_userdata('id_user', "$id_user");
+	// 							 // $this->session->set_userdata('level', "$level");
 
-								 $this->session->set_flashdata('msg',
-									 '
-									 <div class="alert alert-success alert-dismissible" role="alert">
-											<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-												<span aria-hidden="true">&times;</span>
-											</button>
-											<strong>Registrasi Sukses!</strong> Silahkan login, dan lengkapi profil Anda.
-									 </div>
-									<br>'
-								 );
-					}else
-						{$this->session->set_flashdata('msg',
-									'
-									<div class="alert alert-danger alert-dismissible" role="alert">
-										 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-											 <span aria-hidden="true">&times;</span>
-										 </button>
-										 <strong>GAGAL!</strong> '.$pesan.'.
-								 	</div>
-								 <br>'
- 								);
-								redirect("web/user_register");
- 						}
-							redirect("web/login");
-		}
+	// 							 $this->session->set_flashdata('msg',
+	// 								 '
+	// 								 <div class="alert alert-success alert-dismissible" role="alert">
+	// 										<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	// 											<span aria-hidden="true">&times;</span>
+	// 										</button>
+	// 										<strong>Registrasi Sukses!</strong> Silahkan login, dan lengkapi profil Anda.
+	// 								 </div>
+	// 								<br>'
+	// 							 );
+	// 				}else
+	// 					{$this->session->set_flashdata('msg',
+	// 								'
+	// 								<div class="alert alert-danger alert-dismissible" role="alert">
+	// 									 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	// 										 <span aria-hidden="true">&times;</span>
+	// 									 </button>
+	// 									 <strong>GAGAL!</strong> '.$pesan.'.
+	// 							 	</div>
+	// 							 <br>'
+ 	// 							);
+	// 							redirect("web/user_register");
+ 	// 					}
+	// 						redirect("web/login");
+	// 	}
 		
-	}
+	// }
 
 
 	public function login()

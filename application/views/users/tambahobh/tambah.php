@@ -57,15 +57,12 @@ $link4 = strtolower($this->uri->segment(4));
                     <div class="col-lg-9">
                       <select class="form-control default-select2" name="kota" required>
                         <option value="">- Pilih -</option>
-                        <option value="Mataram">Mataram</option>
-                        <option value="Lombok Barat">Lombok Barat</option>
-                        <option value="Lombok Timur">Lombok Timur</option>
-                        <option value="Lombok Tengah">Lombok Tengah</option>
-                        <option value="Lombok Utara">Lombok Utara</option>
-                        <option value="Bima">Bima</option>
-                        <option value="Dompu">Dompu</option>
-                        <option value="Sumbawa">Sumbawa</option>
-                        <option value="Sumbawa Barat">Sumbawa Barat</option>
+                        <?php
+                          $this->db->order_by('nama_kota','ASC');
+                          $v_kota = $this->db->get('tbl_kota_ntb');
+                          foreach ($v_kota->result() as $key => $value): ?>
+                            <option value="<?php echo $value->nama_kota; ?>"><?php echo ucwords($value->nama_kota); ?></option>
+                        <?php endforeach; ?>
                       </select>
                     </div>
                   </div>

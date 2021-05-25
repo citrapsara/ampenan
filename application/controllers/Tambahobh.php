@@ -19,13 +19,14 @@ class TambahObh extends CI_Controller {
 		}else{
 			$data['user']  			  = $this->Mcrud->get_users_by_un($ceks);
 
-			if ($level != 'superadmin') {
+			if ($level == 'obh' OR $level == 'user') {
 					redirect('404_content');
 			}
 
 			$this->db->join('tbl_user','tbl_user.id_user=tbl_data_obh.id_user');
 			$this->db->order_by('id_data_notaris', 'DESC');
 			$data['query'] = $this->db->get("tbl_data_obh");
+			// $data['kota'] = $this->db->get("tbl_kota_ntb");
 
 				if ($aksi == 't') {
 					$p = "tambah";

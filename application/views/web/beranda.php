@@ -16,6 +16,7 @@
             </div>
           </div>
           <div class="col-md-4">
+            <img class="img-fluid img-pengayoman-banner" src="img/banner/pengayoman.png" alt="image logo pengayoman">
           </div>
         </div>
       </div>
@@ -47,24 +48,28 @@
           <div class="chart-anggaran">
             <canvas id="myChart" width="300" height="300"></canvas>
           </div>
-          <div class="row current-anggaran">
-            <div class="col-md-4">
-                <div class="info-anggaran total-anggaran text-center">
-                    <span class="info-title">Total Anggaran</span><br>
-                    <span class="info-number" id="total_anggaran"></span>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="info-anggaran penyerapan-anggaran text-center">
-                    <span class="info-title">Penyerapan Anggaran</span><br>
-                    <span class="info-number" id="penyerapan_anggaran"></span>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="info-anggaran sisa-anggaran text-center">
-                    <span class="info-title">Sisa Anggaran</span><br>
-                    <span class="info-number" id="sisa_anggaran"></span>
-                </div>
+          <div class="current-anggaran">
+            <h4 class="text-center">Realisasi Anggaran OBH Seluruh Indonesia</h4>
+            <div class="row">
+              <div class="col-md-4">
+                  <div class="info-anggaran total-anggaran text-center">
+                      <span class="info-title">Total Anggaran</span><br>
+                      <span class="info-number" id="total_anggaran"></span>
+                  </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="info-anggaran penyerapan-anggaran text-center">
+                      <span class="info-title">Penyerapan Anggaran</span><br>
+                      <span class="info-number" id="penyerapan_anggaran"></span>
+                  </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="info-anggaran sisa-anggaran text-center">
+                      <span class="info-title">Sisa Anggaran</span><br>
+                      <span class="info-number" id="sisa_anggaran"></span>
+                  </div>
+              </div>
+            
             </div>
           </div>
         </div>

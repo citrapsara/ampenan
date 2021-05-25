@@ -261,7 +261,7 @@ $sub_menu3 = strtolower($this->uri->segment(3));
 								</li>
 							</ul>
 						</li>
-						<li class="has-sub <?php if($menu=='obh' OR ($menu=='laporan' AND $sub_menu=='v')){echo " active";} ?>">
+						<li class="has-sub <?php if($menu=='obh' OR ($menu=='laporan' AND $sub_menu=='v') OR $menu=='tambahobh'){echo " active";} ?>">
 							<a href="javascript:;">
 								<b class="caret pull-right"></b>
 								<i class="fa fa-user bg-gray"></i>
@@ -271,6 +271,11 @@ $sub_menu3 = strtolower($this->uri->segment(3));
 								<li <?php if($menu=='obh'){echo " class='active'";} ?>>
 									<a href="obh/v.html">
 										<i class="fa fa-user-circle"></i> <span>Data OBH</span>
+									</a>
+								</li>
+								<li <?php if($menu=='tambahobh'){echo " class='active'";} ?>>
+									<a href="tambahobh/v.html">
+										<i class="fa fa-user-plus"></i> <span>Registrasi OBH</span>
 									</a>
 								</li>
 								<li <?php if($menu=='laporan' AND $sub_menu=='v'){echo " class='active'";} ?>>

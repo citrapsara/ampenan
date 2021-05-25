@@ -35,6 +35,10 @@ a.custom-brand {
    float: left;
    margin-right: 45px;
 }
+.img-pengayoman-banner {
+   opacity: 0.2;
+   width: 90%;
+}
 .banner-text {
    padding-top: 20px;
 }
@@ -111,7 +115,7 @@ h3.title-peta-sebaran {
    width: 100%;
    box-shadow: 4px 4px 1px rgb(0 0 0 / 10%);
    border-radius: 8px;
-   padding: 15px;
+   padding: 10px;
    border: 1px solid;
 }
 .info-number {

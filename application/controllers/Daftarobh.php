@@ -10,6 +10,12 @@ class DaftarObh extends CI_Controller {
 		$this->db->join('tbl_user','tbl_user.id_user=tbl_data_obh.id_user');
 		$this->db->order_by('id_data_notaris', 'DESC');
 		$data['query'] = $this->db->get("tbl_data_obh");
+		$this->db->order_by('nama_kota','ASC');
+		$data['kota'] = $this->db->get("tbl_kota_ntb");
+
+		// foreach ($data['kota']->result() as $row) {
+
+		// }
 
 		$this->load->view('web/header', $data);
 		$this->load->view('web/daftar_obh', $data);

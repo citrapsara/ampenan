@@ -19,7 +19,7 @@ class Realisasi_anggaran extends CI_Controller {
 		}else{
 			$data['user']  			  = $this->Mcrud->get_users_by_un($ceks);
 
-			if ($level == 'obh') {
+			if ($level == 'obh' OR $level == 'user') {
 					redirect('404_content');
 			}
 
