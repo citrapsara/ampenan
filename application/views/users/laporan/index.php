@@ -59,7 +59,7 @@
                                 <thead>
                                     <tr>
                                         <th width="1%">No.</th>
-                                        <th width="15%">Hari/Tggl</th>
+                                        <th width="15%">Hari/Tgl</th>
                                         <th width="55%">Uraian Laporan</th>
                                         <th width="14%">Status</th>
                                         <th width="15%">Opsi</th>
@@ -70,34 +70,34 @@
                                   $no=1;
                                    foreach ($query->result() as $baris):?>
                                     <tr>
-                                        <td><b><?php echo $no++; ?>.</b> </td>
-																				<td><?php echo $this->Mcrud->tgl_id(date('d-m-Y H:i:s', strtotime($baris->tgl_laporan)),'full'); ?></td>
-																				<td><?php echo $baris->isi_laporan; ?></td>
-																				<td><?php echo $this->Mcrud->cek_status($baris->status); ?></td>
-																				<td align="center">
-																					<a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/d/<?php echo hashids_encrypt($baris->id_laporan); ?>" class="btn btn-info btn-xs" title="Detail"><i class="fa fa-search"></i></a>
-																				<?php if ($level=='superadmin'){ ?>
-																					<?php if ($baris->status=='proses'){ ?>
-																						 <a href="javascript:;" class="btn btn-primary btn-xs" title="Konfirmasi" data-toggle="modal" onclick="modal_show(<?php echo $baris->id_laporan; ?>);"><i class="fa fa-file"></i> Konfirmasi</a>
-																					<?php }else{ ?>
-																						<a href="javascript:;" class="btn btn-success btn-xs" title="Terkonfirmasi" disabled><i class="fa fa-check"></i> Diproses</a>
-																					<?php }if ($baris->status=='Terkonfirmasi'){ ?>
-																						<a href="javascript:;" class="btn btn-success btn-xs" title="Edit" ><i class="fa fa-check"></i> Edit</a>
-																					<?php } ?>
-																				<?php }elseif ($level=='petugas'){ ?>
-																					<?php //if ($baris->status=='konfirmasi'){ ?>
-																						 <a class="btn btn-success btn-xs" title="Edit" data-toggle="modal" onclick="modal_show(<?php echo $baris->id_laporan; ?>);"><i class="fa fa-pencil"></i> Edit</a>
-																					<?php //}else{ ?>
-																						<!-- <a href="javascript:;" class="btn btn-success btn-xs" title="Edit" disabled><i class="fa fa-check"></i> Edit</a> -->
-																					<?php //} ?>
-																				<?php }else{ ?>
-																						<?php if ($baris->status=='proses'){ ?>
-																							<a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/h/<?php echo hashids_encrypt($baris->id_laporan); ?>" class="btn btn-danger btn-xs" title="Hapus" onclick="return confirm('Anda yakin?');"><i class="fa fa-trash-o"></i></a>
-																						<?php }else{ ?>
-																							<a href="javascript:;" class="btn btn-danger btn-xs" title="Hapus" disabled><i class="fa fa-trash-o"></i></a>
-																						<?php } ?>
-																				<?php } ?>
-																				</td>
+                                       <td><b><?php echo $no++; ?>.</b> </td>
+													<td><?php echo $this->Mcrud->tgl_id(date('d-m-Y H:i:s', strtotime($baris->tgl_laporan)),'full'); ?></td>
+													<td><?php echo $baris->isi_laporan; ?></td>
+													<td><?php echo $this->Mcrud->cek_status($baris->status); ?></td>
+													<td align="center">
+														<a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/d/<?php echo hashids_encrypt($baris->id_laporan); ?>" class="btn btn-info btn-xs" title="Detail"><i class="fa fa-search"></i></a>
+														<?php if ($level=='superadmin'){ ?>
+															<?php if ($baris->status=='proses'){ ?>
+																<a href="javascript:;" class="btn btn-primary btn-xs" title="Konfirmasi" data-toggle="modal" onclick="modal_show(<?php echo $baris->id_laporan; ?>);"><i class="fa fa-file"></i> Konfirmasi</a>
+															<?php }else{ ?>
+																<a href="javascript:;" class="btn btn-success btn-xs" title="Terkonfirmasi" disabled><i class="fa fa-check"></i> Diproses</a>
+															<?php }if ($baris->status=='Terkonfirmasi'){ ?>
+																<a href="javascript:;" class="btn btn-success btn-xs" title="Edit" ><i class="fa fa-check"></i> Edit</a>
+															<?php } ?>
+														<?php }elseif ($level=='petugas'){ ?>
+															<?php //if ($baris->status=='konfirmasi'){ ?>
+																<a class="btn btn-success btn-xs" title="Edit" data-toggle="modal" onclick="modal_show(<?php echo $baris->id_laporan; ?>);"><i class="fa fa-pencil"></i> Edit</a>
+																<?php //}else{ ?>
+																	<!-- <a href="javascript:;" class="btn btn-success btn-xs" title="Edit" disabled><i class="fa fa-check"></i> Edit</a> -->
+														<?php //} ?>
+														<?php }else{ ?>
+															<?php if ($baris->status=='proses'){ ?>
+																<a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/h/<?php echo hashids_encrypt($baris->id_laporan); ?>" class="btn btn-danger btn-xs" title="Hapus" onclick="return confirm('Anda yakin?');"><i class="fa fa-trash-o"></i></a>
+															<?php }else{ ?>
+																<a href="javascript:;" class="btn btn-danger btn-xs" title="Hapus" disabled><i class="fa fa-trash-o"></i></a>
+															<?php } ?>
+														<?php } ?>
+													</td> 
                                     </tr>
                                   <?php endforeach; ?>
                                 </tbody>

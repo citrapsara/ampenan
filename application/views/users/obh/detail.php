@@ -27,7 +27,7 @@ $link4 = strtolower($this->uri->segment(4));
                 <?php
                 echo $this->session->flashdata('msg');
                 $foto = "img/user/user-default.jpg";
-                $foto_k = $query->foto;
+                $foto_k = $query->foto_obh;
               	if ($foto_k!='') {
               		if(file_exists("$foto_k")){
               			$foto = $foto_k;
@@ -39,7 +39,7 @@ $link4 = strtolower($this->uri->segment(4));
                     <tbody>
                       <tr>
                         <th colspan="3">
-                          <center><img src="<?php echo $foto; ?>" alt="" width="100"></cneter>
+                          <center><img src="<?php echo $foto; ?>" alt="image obh" width="100"></center>
                         </th>
                       </tr>
 					   <tr>
@@ -52,10 +52,60 @@ $link4 = strtolower($this->uri->segment(4));
                         <th>:</th>
                         <th><?php echo $query->nama_singkat; ?></th>
                       </tr>
-					  <tr>
-                        <th>Nomor SK</th>
+                      <tr>
+                        <th>Tanggal Berdiri</th>
+                        <th>:</th>
+                        <th><?php echo $this->Mcrud->tgl_id(date('d-m-Y', strtotime($query->tgl_berdiri)),'full'); ?></th>
+                      </tr>
+                      <tr>
+                        <th>Status Badan Hukum</th>
+                        <th>:</th>
+                        <th><?php echo $query->status_obh; ?></th>
+                      </tr>
+                      <tr>
+                        <th>Akta OBH</th>
+                        <th>:</th>
+                        <th><?php echo $query->akta_obh; ?></th>
+                      </tr>
+                      <tr>
+                        <th>NPWP OBH</th>
+                        <th>:</th>
+                        <th><?php echo $query->npwp_obh; ?></th>
+                      </tr>
+                      <tr>
+                        <th>Akreditasi</th>
+                        <th>:</th>
+                        <th><?php echo $query->akreditasi_obh; ?></th>
+                      </tr>
+                      <tr>
+                        <th>Pagu Awal Anggaran Litigasi</th>
+                        <th>:</th>
+                        <th id="pagu_litigasi"></th>
+                      </tr>
+                      <tr>
+                        <th>Pagu Awal Anggaran Non Litigasi</th>
+                        <th>:</th>
+                        <th id="pagu_non_litigasi"></th>
+                      </tr>
+					            <tr>
+                        <th>Nomor SK AHU</th>
                         <th>:</th>
                         <th><?php echo $query->no_sk; ?></th>
+                      </tr>
+                      <tr>
+                        <th>Tanggal SK</th>
+                        <th>:</th>
+                        <th><?php echo $this->Mcrud->tgl_id(date('d-m-Y', strtotime($query->tgl_sk)),'full'); ?></th>
+                      </tr>
+                      <tr>
+                        <th>Nomor Kontrak</th>
+                        <th>:</th>
+                        <th><?php echo $query->no_kontrak; ?></th>
+                      </tr>
+                      <tr>
+                        <th>Tanggal Kontrak</th>
+                        <th>:</th>
+                        <th><?php echo $this->Mcrud->tgl_id(date('d-m-Y', strtotime($query->tgl_kontrak)),'full'); ?></th>
                       </tr>
                       <tr>
                         <th>Kota</th>
@@ -92,11 +142,6 @@ $link4 = strtolower($this->uri->segment(4));
                         <th width="1">:</th>
                         <th><?php echo $query->no_idn; ?></th>
                       </tr>
-                      <tr>
-                        <th>Tanggal Terdaftar</th>
-                        <th>:</th>
-                        <th><?php echo $this->Mcrud->tgl_id(date('d-m-Y',strtotime($query->tgl_daftar)),'full'); ?></th>
-                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -108,3 +153,19 @@ $link4 = strtolower($this->uri->segment(4));
       </div>
     </div>
     <!-- /dashboard content -->
+
+<script type="text/javascript">
+  var pagu_litigasi = <?php echo $query->pagu_litigasi; ?>;
+  var pagu_non_litigasi = <?php echo $query->pagu_non_litigasi; ?>;
+
+  function pisah_ribuan(bilangan) {
+    var	reverse = bilangan.toString().split('').reverse().join(''),
+    ribuan 	= reverse.match(/\d{1,3}/g);
+    ribuan	= ribuan.join('.').split('').reverse().join('');
+    return ribuan;
+  }
+
+  document.getElementById("pagu_litigasi").innerHTML = 'Rp ' +  pisah_ribuan(pagu_litigasi);
+  document.getElementById("pagu_non_litigasi").innerHTML = 'Rp ' +  pisah_ribuan(pagu_non_litigasi);
+
+</script>

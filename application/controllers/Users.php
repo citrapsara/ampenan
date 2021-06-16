@@ -261,7 +261,7 @@ class Users extends CI_Controller {
 									</div>
  								 <br>'
 								);
-						}else{
+						} else {
 									$data = array(
 										'password'	=> $password
 									);

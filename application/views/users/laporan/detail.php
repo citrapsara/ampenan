@@ -36,19 +36,29 @@
                       <td><b><?php echo $this->Mcrud->d_notaris($query->id_kategori_lap,'kategori_lap'); ?></b></td>
                     </tr>
 					                    <tr>
-                      <th valign="top">Nama Client</th>
+                      <th valign="top">Nama Penerima Bantuan Hukum</th>
                       <th valign="top">:</th>
                       <td><?php echo $query->nama_client; ?></td>
                     </tr>
+                    <tr>
+                      <th valign="top">Nomor Induk Kependudukan</th>
+                      <th valign="top">:</th>
+                      <td><?php echo $query->nik_client; ?></td>
+                    </tr>
 					 <tr>
-                      <th valign="top">Alamat Client</th>
+                      <th valign="top">Alamat Penerima Bantuan Hukum</th>
                       <th valign="top">:</th>
                       <td><?php echo $query->alamat_client; ?></td>
                     </tr>
 					<tr>
-                      <th valign="top">Nomor Pembukuan</th>
+                      <th valign="top">Nomor Permohonan</th>
                       <th valign="top">:</th>
-                      <td><?php echo $query->no_buku; ?></td>
+                      <td><?php echo $query->no_permohonan; ?></td>
+                    </tr>
+                    <tr>
+                      <th valign="top">Jenis Perkara</th>
+                      <th valign="top">:</th>
+                      <td><?php echo $query->jenis_perkara; ?></td>
                     </tr>
                     <tr>
                       <th valign="top">Hari / Tggl Kegiatan</th>

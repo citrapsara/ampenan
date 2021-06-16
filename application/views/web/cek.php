@@ -24,11 +24,11 @@
 		<div class="container">
 			<center>
 					<!-- <div class="panel-heading">Silahkan Masukkan Nomor KTP Anda.</div> -->
-				<input type="text" name="no_ktp" required="required" class="form-control" id="c_ktp" value="<?php echo $no_ktp; ?>" placeholder="Silahkan Masukkan Nomor KTP Anda..." autofocus onfocus="this.value=this.value" onkeypress="return hanyaAngka(event);" onkeydown="if(event.key==='Enter'){link();}">
+				<input type="text" name="nik_pelapor" required="required" class="form-control" id="c_ktp" value="<?php echo $nik_pelapor; ?>" placeholder="Silahkan Masukkan Nomor KTP Anda..." autofocus onfocus="this.value=this.value" onkeypress="return hanyaAngka(event);" onkeydown="if(event.key==='Enter'){link();}">
 				<button class="btn btn-primary btn-lg" id="btn-cek" onclick="link();">C E K</button>
 			</center>
 
-			<?php if ($no_ktp!=''): ?>
+			<?php if ($nik_pelapor!=''): ?>
 				<br>
 				<style>
 					#bg-white{color:#fff;}
@@ -44,7 +44,7 @@
 												<th id="bg-white" width="1">No.</th>
 												<th id="bg-white">PENGADUAN</th>
 												<th id="bg-white" width="210">TANGGAL LAPORAN</th>
-												<th id="bg-white" width="200">STATUS</th>
+												<th id="bg-white" width="150">STATUS</th>
 											</tr>
 										</thead>
 										<tbody>

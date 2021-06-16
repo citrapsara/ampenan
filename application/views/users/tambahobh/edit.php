@@ -28,16 +28,17 @@ $link4 = strtolower($this->uri->segment(4));
                 echo $this->session->flashdata('msg');
                 ?>
                 <form class="form-horizontal" action="" data-parsley-validate="true" method="post" enctype="multipart/form-data">
-				  <div class="form-group">
-                    <label class="control-label col-lg-3">Nomor SK</label>
+                  <div class="form-group">
+                    <label class="control-label col-lg-3">Foto OBH</label>
                     <div class="col-lg-9">
-                      <input type="text" name="no_sk" class="form-control" value="<?php echo $query->no_sk; ?>" placeholder="No SK/ Tanggal Pengukuhan" required>
+                      <input type="file" name="foto" class="form-control" value="" placeholder="Foto Slide">
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="control-label col-lg-3">No.Registrasi</label>
                     <div class="col-lg-9">
-                      <input type="text" name="no_idn" class="form-control" value="<?php echo $query->no_idn; ?>" placeholder="Nomor Registrasi OBH" onkeypress="return hanyaAngka(event)" required autofocus onfocus="this.value = this.value;">
+                      <input type="text" id="noPaste" name="no_idn" class="form-control" value="<?php echo $query->no_idn; ?>" placeholder="Nomor Registrasi OBH" onkeypress="return hanyaAngka(event)" required autofocus onfocus="this.value = this.value;">
+                      <i style="color: red;">*Masukkan hanya angka.</i>
                     </div>
                   </div>
                   <div class="form-group">
@@ -50,6 +51,57 @@ $link4 = strtolower($this->uri->segment(4));
                     <label class="control-label col-lg-3">Nama Singkat</label>
                     <div class="col-lg-9">
                       <input type="text" name="nama_singkat" class="form-control" value="<?php echo $query->nama_singkat; ?>" placeholder="Nama Singkat" required autofocus onfocus="this.value = this.value;">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-lg-3">Tanggal Berdiri</label>
+                    <div class="col-lg-9">
+                      <div class="input-group">
+                        <input type="date" name="tgl_berdiri" class="form-control daterange-single" value="<?php echo date('Y-m-d', strtotime($query->tgl_berdiri)); ?>" maxlength="10" required>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-lg-3">Status Badan Hukum</label>
+                    <div class="col-lg-9">
+                      <input type="text" name="status_obh" class="form-control" value="<?php echo $query->status_obh; ?>" placeholder="Status Badan Hukum" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-lg-3">Akta OBH</label>
+                    <div class="col-lg-9">
+                      <input type="text" name="akta_obh" class="form-control" value="<?php echo $query->akta_obh; ?>" placeholder="Akta OBH" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-lg-3">NPWP OBH</label>
+                    <div class="col-lg-9">
+                      <input type="text" name="npwp_obh" class="form-control" value="<?php echo $query->npwp_obh; ?>" placeholder="NPWP OBH" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-lg-3">Akreditasi</label>
+                    <div class="col-lg-9">
+                      <select class="form-control default-select2" name="akreditasi_obh" selected="<?php echo $query->akreditasi_obh; ?>" required>
+                        <option value="">- Pilih -</option>
+                        <option value="A" <?php if($query->akreditasi_obh=='A') echo 'selected="selected"'; ?>>A</option>
+                        <option value="B" <?php if($query->akreditasi_obh=='B') echo 'selected="selected"'; ?>>B</option>
+                        <option value="C" <?php if($query->akreditasi_obh=='C') echo 'selected="selected"'; ?>>C</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-lg-3">Pagu Awal Anggaran Litigasi</label>
+                    <div class="col-lg-9">
+                      <input type="text" name="pagu_litigasi" class="form-control" value="<?php echo $query->pagu_litigasi; ?>" onkeypress="return hanyaAngka(event)" onpaste="return false;" placeholder="Pagu Awal Anggaran Litigasi" required>
+                      <i style="color: red;">*Masukkan hanya angka.</i>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-lg-3">Pagu Awal Anggaran Non Litigasi</label>
+                    <div class="col-lg-9">
+                      <input type="text" name="pagu_non_litigasi" class="form-control" value="<?php echo $query->pagu_non_litigasi; ?>" onkeypress="return hanyaAngka(event)" onpaste="return false;" placeholder="Pagu Awal Anggaran Non Litigasi" required>
+                      <i style="color: red;">*Masukkan hanya angka.</i>
                     </div>
                   </div>
                   <div class="form-group">
@@ -98,6 +150,34 @@ $link4 = strtolower($this->uri->segment(4));
                     </div>
                   </div>
                   <div class="form-group">
+                    <label class="control-label col-lg-3">Nomor SK AHU</label>
+                    <div class="col-lg-9">
+                      <input type="text" name="no_sk" class="form-control" value="<?php echo $query->no_sk; ?>" placeholder="Nomor SK AHU" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-lg-3">Tanggal SK</label>
+                    <div class="col-lg-9">
+                      <div class="input-group">
+                        <input type="date" name="tgl_sk" class="form-control daterange-single" value="<?php echo date('Y-m-d', strtotime($query->tgl_sk)); ?>" maxlength="10" required>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-lg-3">Nomor Kontrak</label>
+                    <div class="col-lg-9">
+                      <input type="text" name="no_kontrak" class="form-control" value="<?php echo $query->no_kontrak; ?>" placeholder="Nomor Kontrak" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-lg-3">Tanggal Kontrak</label>
+                    <div class="col-lg-9">
+                      <div class="input-group">
+                        <input type="date" name="tgl_kontrak" class="form-control daterange-single" value="<?php echo date('Y-m-d', strtotime($query->tgl_kontrak)); ?>" maxlength="10" required>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
                     <label class="control-label col-lg-3">Username</label>
                     <div class="col-lg-9">
                       <input type="text" name="username" class="form-control" value="<?php echo $query->username; ?>" placeholder="Username" required>
@@ -126,3 +206,4 @@ $link4 = strtolower($this->uri->segment(4));
       </div>
     </div>
     <!-- /dashboard content -->
+

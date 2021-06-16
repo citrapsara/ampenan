@@ -123,6 +123,21 @@ h3.title-peta-sebaran {
    font-weight: 700;
 }
 
+/* Detail OBH  */
+.img-obh img {
+   width: 100%;
+}
+.ul-detail-obh li {
+   list-style: none;
+   margin-bottom: 30px;
+}
+.ul-detail-obh li h4 {
+   font-weight: 600;
+   text-transform: uppercase;
+} 
+
+#wajib_isi{color:red;}
+
 @media (max-width: 540px) {
    /* Header */
    .c-layout-header .c-navbar .c-mega-menu {

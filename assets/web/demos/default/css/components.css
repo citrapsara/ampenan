@@ -12034,8 +12034,8 @@ h1 {
             transition: all 0.2s; }
   .c-content-accordion-1 .panel > .panel-collapse > .panel-body {
     border-top: none;
-    padding: 0px 30px 35px 30px;
-    color: #ffffff; }
+    padding: 25px;
+    color: #3f444a; }
 
 .c-content-accordion-1.c-accordion-white .panel > .panel-heading > .panel-title > a {
   background-color: #FFFFFF; }

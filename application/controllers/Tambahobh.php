@@ -69,11 +69,27 @@ class TambahObh extends CI_Controller {
 					date_default_timezone_set('Asia/Jakarta');
 					$tgl = date('Y-m-d H:i:s');
 
+					$lokasi = 'img/user';
+					$file_size = 1024 * 3; // 3 MB
+					$this->upload->initialize(array(
+						"file_type"     => "image/jpeg",
+						"upload_path"   => "./$lokasi",
+						"allowed_types" => "jpg|jpeg|png",
+						"max_size" => "$file_size"
+					));
+
 					if (isset($_POST['btnsimpan'])) {
 						$no_idn 	 = htmlentities(strip_tags($this->input->post('no_idn')));
 						$nama 	 = htmlentities(strip_tags($this->input->post('nama')));
 						$nama_singkat 	 = htmlentities(strip_tags($this->input->post('nama_singkat')));
+						$status_obh  = htmlentities(strip_tags($this->input->post('status_obh')));
+						$akta_obh  = htmlentities(strip_tags($this->input->post('akta_obh')));
+						$npwp_obh  = htmlentities(strip_tags($this->input->post('npwp_obh')));
+						$akreditasi_obh  = htmlentities(strip_tags($this->input->post('akreditasi_obh')));
+						$pagu_litigasi  = htmlentities(strip_tags($this->input->post('pagu_litigasi')));
+						$pagu_non_litigasi  = htmlentities(strip_tags($this->input->post('pagu_non_litigasi')));
 						$no_sk 	 = htmlentities(strip_tags($this->input->post('no_sk')));
+						$no_kontrak 	 = htmlentities(strip_tags($this->input->post('no_kontrak')));
 						$kota  = htmlentities(strip_tags($this->input->post('kota')));
 						$alamat_notaris  = htmlentities(strip_tags($this->input->post('alamat_notaris')));
 						$latitude  = htmlentities(strip_tags($this->input->post('latitude')));
@@ -83,14 +99,30 @@ class TambahObh extends CI_Controller {
 						$username = htmlentities(strip_tags($this->input->post('username')));
 						$password  = htmlentities(strip_tags($this->input->post('password')));
 						$password2 = htmlentities(strip_tags($this->input->post('password2')));
+						$tgl_berdiri 	 = htmlentities(strip_tags($this->input->post('tgl_berdiri')));
+						$tgl_sk 	 = htmlentities(strip_tags($this->input->post('tgl_sk')));
+						$tgl_kontrak 	 = htmlentities(strip_tags($this->input->post('tgl_kontrak')));
 
 						$cek_data = $this->db->get_where('tbl_user', array('username'=>$username));
-						$simpan = 'y';
 						$pesan  = '';
+
+						if ( ! $this->upload->do_upload('foto'))
+						{
+							$simpan = 'n';
+							$pesan  = htmlentities(strip_tags($this->upload->display_errors('<p>', '</p>')));
+						}
+					 	else
+						{
+								$gbr = $this->upload->data();
+								$filename = "$lokasi/".$gbr['file_name'];
+								$foto = preg_replace('/ /', '_', $filename);
+								$simpan = 'y';
+						}
+
 						if ($cek_data->num_rows()!=0) {
 							$simpan = 'n';
 							$pesan  = "Username '<b>$username</b>' sudah ada";
-						}else {
+						} else {
 							if ($password!=$password2) {
 								$simpan = 'n';
 								$pesan  = "Password tidak cocok!";
@@ -110,16 +142,27 @@ class TambahObh extends CI_Controller {
 										$this->db->insert('tbl_user',$data);
 
 										$data2 = array(
+											'foto_obh' => $foto,
 											'no_idn' => $no_idn,
 											'nama' => $nama,
 											'nama_singkat' => $nama_singkat,
+											'status_obh' => $status_obh,
+											'akta_obh' => $akta_obh,
+											'npwp_obh' => $npwp_obh,
+											'akreditasi_obh' => $akreditasi_obh,
+											'pagu_litigasi' => $pagu_litigasi,
+											'pagu_non_litigasi' => $pagu_non_litigasi,
 											'no_sk' => $no_sk,
+											'no_kontrak' => $no_kontrak,
 											'kota' => $kota,
 											'alamat_notaris' => $alamat_notaris,
 											'latitude' => $latitude,
 											'longitude' => $longitude,
 											'telpon' => $telpon,
 											'email_notaris' => $email_notaris,
+											'tgl_berdiri' => $tgl_berdiri,
+											'tgl_sk' => $tgl_sk,
+											'tgl_kontrak' => $tgl_kontrak,
 											'id_user' => $this->db->insert_id()
 										);
 										$this->db->insert('tbl_data_obh',$data2);
@@ -155,20 +198,53 @@ class TambahObh extends CI_Controller {
 						$no_idn 	 = htmlentities(strip_tags($this->input->post('no_idn')));						
 						$nama 	 = htmlentities(strip_tags($this->input->post('nama')));
 						$nama_singkat 	 = htmlentities(strip_tags($this->input->post('nama_singkat')));
+						$status_obh  = htmlentities(strip_tags($this->input->post('status_obh')));
+						$akta_obh  = htmlentities(strip_tags($this->input->post('akta_obh')));
+						$npwp_obh  = htmlentities(strip_tags($this->input->post('npwp_obh')));
+						$akreditasi_obh  = htmlentities(strip_tags($this->input->post('akreditasi_obh')));
+						$pagu_litigasi  = htmlentities(strip_tags($this->input->post('pagu_litigasi')));
+						$pagu_non_litigasi  = htmlentities(strip_tags($this->input->post('pagu_non_litigasi')));
 						$no_sk 	 = htmlentities(strip_tags($this->input->post('no_sk')));
+						$no_kontrak 	 = htmlentities(strip_tags($this->input->post('no_kontrak')));
 						$kota  = htmlentities(strip_tags($this->input->post('kota')));
 						$alamat_notaris  = htmlentities(strip_tags($this->input->post('alamat_notaris')));
 						$latitude  = htmlentities(strip_tags($this->input->post('latitude')));
 						$longitude  = htmlentities(strip_tags($this->input->post('longitude')));
 						$telpon = htmlentities(strip_tags($this->input->post('telpon')));
 						$email_notaris 	 = htmlentities(strip_tags($this->input->post('email_notaris')));
+						$tgl_berdiri 	 = htmlentities(strip_tags($this->input->post('tgl_berdiri')));
+						$tgl_sk 	 = htmlentities(strip_tags($this->input->post('tgl_sk')));
+						$tgl_kontrak 	 = htmlentities(strip_tags($this->input->post('tgl_kontrak')));
 						$username = htmlentities(strip_tags($this->input->post('username')));
 						$password  = htmlentities(strip_tags($this->input->post('password')));
 						$password2 = htmlentities(strip_tags($this->input->post('password2')));
 						$data_lama = $this->db->get_where('tbl_user', array('id_user'=>$id))->row();
 						$cek_data  = $this->db->get_where('tbl_user', array('username'=>$username,'username!='=>$data_lama->username));
-						$simpan = 'y';
+						// $simpan = 'y';
 						$pesan  = '';
+
+						$cek_foto = $this->db->get_where("tbl_data_obh", array('id_user' => "$id"))->row()->foto_obh;
+						if ($_FILES['foto']['error'] <> 4) {
+							if ( ! $this->upload->do_upload('foto'))
+							{
+									$simpan = 'n';
+									$pesan  = htmlentities(strip_tags($this->upload->display_errors('<p>', '</p>')));
+							}
+							else
+							{
+								if ($cek_foto!='') {
+									unlink($cek_foto);
+								}
+										$gbr = $this->upload->data();
+										$filename = "$lokasi/".$gbr['file_name'];
+										$foto = preg_replace('/ /', '_', $filename);
+										$simpan = 'y';
+							}
+						}else {
+							$foto = $cek_foto;
+							$simpan = 'y';
+						}
+
 						if ($cek_data->num_rows()!=0) {
 							$simpan = 'n';
 							$pesan  = "Username '<b>$username</b>' sudah ada";
@@ -193,9 +269,17 @@ class TambahObh extends CI_Controller {
 										$this->db->update('tbl_user',$data, array('id_user'=>$id));
 
 										$data2 = array(
+											'foto_obh' => $foto,
 											'nama' => $nama,
 											'nama_singkat' => $nama_singkat,
+											'status_obh' => $status_obh,
+											'akta_obh' => $akta_obh,
+											'npwp_obh' => $npwp_obh,
+											'akreditasi_obh' => $akreditasi_obh,
+											'pagu_litigasi' => $pagu_litigasi,
+											'pagu_non_litigasi' => $pagu_non_litigasi,
 											'no_sk' => $no_sk,
+											'no_kontrak' => $no_kontrak,
 											'no_idn' => $no_idn,
 											'kota' => $kota,
 											'alamat_notaris' => $alamat_notaris,
@@ -203,6 +287,7 @@ class TambahObh extends CI_Controller {
 											'longitude' => $longitude,
 											'telpon' => $telpon,
 											'email_notaris' => $email_notaris,
+											'tgl_berdiri' => $tgl_berdiri
 										);
 										$this->db->update('tbl_data_obh',$data2, array('id_user'=>$id));
 

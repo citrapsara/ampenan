@@ -28,18 +28,19 @@ $link4 = strtolower($this->uri->segment(4));
                 echo $this->session->flashdata('msg');
                 ?>
                 <form class="form-horizontal" action="" data-parsley-validate="true" method="post" enctype="multipart/form-data">
-					<div class="form-group">
-						<label class="control-label col-lg-3">No.Registrasi</label>
+          <div class="form-group">
+						<label class="control-label col-lg-3">Foto OBH</label>
 						<div class="col-lg-9">
-						  <input type="text" name="no_idn" class="form-control" value="" placeholder="Nomor Registrasi OBH " onkeypress="return hanyaAngka(event)" required autofocus onfocus="this.value = this.value;">
+            <input type="file" name="foto" class="form-control" value="" placeholder="Foto OBH" required>
 						</div>
 					</div>
-				   <div class="form-group">
-                    <label class="control-label col-lg-3">Nomor SK</label>
-                    <div class="col-lg-9">
-                      <input type="text" name="no_sk" class="form-control" value="" placeholder="Nomor SK OBH" required>
-                    </div>
-                  </div>	
+            <div class="form-group">
+              <label class="control-label col-lg-3">No.Registrasi</label>
+              <div class="col-lg-9">
+                <input type="text" id="noPaste" name="no_idn" class="form-control" value="" placeholder="Nomor Registrasi OBH " onkeypress="return hanyaAngka(event)" required autofocus onfocus="this.value = this.value;">
+                <i style="color: red;">*Masukkan hanya angka.</i>
+              </div>
+            </div>
                   <div class="form-group">
                     <label class="control-label col-lg-3">Nama OBH</label>
                     <div class="col-lg-9">
@@ -50,6 +51,57 @@ $link4 = strtolower($this->uri->segment(4));
                     <label class="control-label col-lg-3">Nama Singkat OBH</label>
                     <div class="col-lg-9">
                       <input type="text" name="nama_singkat" class="form-control" value="" placeholder="Nama Singkat OBH" required autofocus onfocus="this.value = this.value;">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-lg-3">Tanggal Berdiri</label>
+                    <div class="col-lg-9">
+                      <div class="input-group">
+                        <input type="date" name="tgl_berdiri" class="form-control daterange-single" value="" maxlength="10" required>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-lg-3">Status Badan Hukum</label>
+                    <div class="col-lg-9">
+                      <input type="text" name="status_obh" class="form-control" value="" placeholder="Status Badan Hukum" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-lg-3">Akta OBH</label>
+                    <div class="col-lg-9">
+                      <input type="text" name="akta_obh" class="form-control" value="" placeholder="Akta OBH" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-lg-3">NPWP OBH</label>
+                    <div class="col-lg-9">
+                      <input type="text" name="npwp_obh" class="form-control" value="" placeholder="NPWP OBH" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-lg-3">Akreditasi</label>
+                    <div class="col-lg-9">
+                      <select class="form-control default-select2" name="akreditasi_obh" required>
+                        <option value="">- Pilih -</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-lg-3">Pagu Awal Anggaran Litigasi</label>
+                    <div class="col-lg-9">
+                      <input type="text" name="pagu_litigasi" class="form-control" value="" onkeypress="return hanyaAngka(event)" onpaste="return false;" placeholder="Pagu Awal Anggaran Litigasi" required>
+                      <i style="color: red;">*Masukkan hanya angka.</i>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-lg-3">Pagu Awal Anggaran Non Litigasi</label>
+                    <div class="col-lg-9">
+                      <input type="text" name="pagu_non_litigasi" class="form-control" value="" onkeypress="return hanyaAngka(event)" onpaste="return false;" placeholder="Pagu Awal Anggaran Non Litigasi" required>
+                      <i style="color: red;">*Masukkan hanya angka.</i>
                     </div>
                   </div>
                   <div class="form-group">
@@ -69,7 +121,7 @@ $link4 = strtolower($this->uri->segment(4));
                   <div class="form-group">
                     <label class="control-label col-lg-3">Alamat</label>
                     <div class="col-lg-9">
-                      <input type="text" name="alamat_notaris" class="form-control" value="" placeholder="Alamat OBH" required>
+                      <input type="text" name="alamat_notaris" class="form-control" value="" placeholder="Alamat Lengkap OBH" required>
                     </div>
                   </div>
                   <div class="form-group">
@@ -94,6 +146,34 @@ $link4 = strtolower($this->uri->segment(4));
                     <label class="control-label col-lg-3">Email</label>
                     <div class="col-lg-9">
                       <input type="email" name="email_notaris" class="form-control" value="" placeholder="Email" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-lg-3">Nomor SK AHU</label>
+                    <div class="col-lg-9">
+                      <input type="text" name="no_sk" class="form-control" value="" placeholder="Nomor SK OBH" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-lg-3">Tanggal SK</label>
+                    <div class="col-lg-9">
+                      <div class="input-group">
+                        <input type="date" name="tgl_sk" class="form-control daterange-single" value="" maxlength="10" required>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-lg-3">Nomor Kontrak</label>
+                    <div class="col-lg-9">
+                      <input type="text" name="no_kontrak" class="form-control" value="" placeholder="Nomor Kontrak" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-lg-3">Tanggal Kontrak</label>
+                    <div class="col-lg-9">
+                      <div class="input-group">
+                        <input type="date" name="tgl_kontrak" class="form-control daterange-single" value="" maxlength="10" required>
+                      </div>
                     </div>
                   </div>
                   <div class="form-group">

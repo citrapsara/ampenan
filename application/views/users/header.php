@@ -176,77 +176,6 @@ $sub_menu3 = strtolower($this->uri->segment(3));
 				
 					<!-- MENU SUPER ADMIN -->
 					<?php if ($level=='superadmin'): ?>
-					<li <?php if($menu=='petugas'){echo " class='active'";} ?>>
-						<a href="petugas/v.html">
-							<div class="icon-img"><i class="fa fa-balance-scale"></i></div>
-						  <span>Petugas</span>
-						</a>
-					</li>
-					<li <?php if($menu=='tambahobh'){echo " class='active'";} ?>>
-						<a href="tambahobh/v.html">
-							<div class="icon-img"><i class="fa fa-user-plus"></i></div>
-						  <span>+Registrasi OBH</span>
-						</a>
-					</li>
-						<li class="nav-header"></li>
-						<li <?php if($menu=='users' AND $sub_menu=='v'){echo " class='active'";} ?>>
-							<a href="users/v.html">
-								<div class="icon-img"><i class="fa fa-users"></i></div>
-							  <span>Masyarakat</span>
-							</a>
-						</li>
-						<li <?php if($menu=='pengaduan' AND $sub_menu=='v'){echo " class='active'";} ?>>
-							<a href="pengaduan/v.html">
-								<div class="icon-img"><i class="fa fa-comments"></i></div>
-							  <span>Lap.Masyarakat</span>
-							</a>
-						</li>
-						<li class="nav-header"></li>
-						<li <?php if($menu=='obh'){echo " class='active'";} ?>>
-							<a href="obh/v.html">
-								<div class="icon-img"><i class="fa fa-user-circle"></i></div>
-							  <span>Daftar OBH</span>
-							</a>
-						</li>
-						<li <?php if($menu=='laporan' AND $sub_menu=='v'){echo " class='active'";} ?>>
-							<a href="laporan/v.html">
-								<div class="icon-img"><i class="fa fa-file-text"></i></div>
-							  <span>Laporan OBH</span>
-							</a>
-						</li>
-						<li class="nav-header"></li>
-						<li <?php if($menu=='slide'){echo " class='active'";} ?>>
-							<a href="slide/v.html">
-								<div class="icon-img"><i class="fa fa-newspaper-o"></i></div>
-							  <span>Info Publik</span>
-							</a>
-						</li>
-						<li class="has-sub <?php if($menu=='kategori'){echo " active";} ?>">
-							<a href="javascript:;">
-								<b class="caret pull-right"></b>
-								<i class="fa fa-cogs bg-gray"></i>
-								<span>Kategori Pengaduan</span>
-							</a>
-							<ul class="sub-menu">
-								<li<?php if($menu=='kategori' AND $sub_menu='v'){echo " class='active'";} ?>><a href="kategori/v.html">Kategori Aduan</a></li>
-								<li<?php if($menu=='kategori' AND $sub_menu='sub'){echo " class='active'";} ?>><a href="kategori/sub.html">Sub Kategori</a></li>
-							</ul>
-						</li>					
-						<li class="has-sub <?php if($menu=='kategori_lap'){echo " active";} ?>">
-							<a href="javascript:;">
-								<b class="caret pull-right"></b>
-								<i class="fa fa-cogs bg-gray"></i>
-								<span>Kategori Laporan</span>
-							</a>
-							<ul class="sub-menu">
-								<li<?php if($menu=='kategori_lap' AND $sub_menu='v'){echo " class='active'";} ?>><a href="kategori_lap/v.html">Kategori Laporan</a></li>
-								<li<?php if($menu=='kategori_lap' AND $sub_menu='sub'){echo " class='active'";} ?>><a href="kategori_lap/sub.html">Sub Kategori</a></li>
-							</ul>
-						</li>
-					<?php endif; ?>
-					<!-- akhir sesi super admin -->
-					<!-- MENU PETUGAS-->
-					<?php if ($level=='petugas'): ?>
 						<li class="has-sub <?php if($menu=='pengaduan'){echo " active";} ?>">
 							<a href="javascript:;">
 								<b class="caret pull-right"></b>
@@ -304,28 +233,32 @@ $sub_menu3 = strtolower($this->uri->segment(3));
 								</li>
 							</ul>
 						</li>
-
-						
-					<?php endif; ?>
-					<!-- akhir sesi PETUGAS -->
-					<!-- MENU USER -->
-					<?php if ($level=='user'): ?>
-						<li <?php if($menu=='pengaduan' AND $sub_menu=='v'){echo " class='active'";} ?>>
-							<a href="pengaduan/v.html">
-								<div class="icon-img"><i class="fa fa-comments"></i></div>
-							  <span>Pengaduan</span>
+						<li class="has-sub <?php if($menu=='kategori'){echo " active";} ?>">
+							<a href="javascript:;">
+								<b class="caret pull-right"></b>
+								<i class="fa fa-cogs bg-gray"></i>
+								<span>Kategori Pengaduan</span>
 							</a>
-						</li>
-						<li class="nav-header"></li>
-						<li <?php if($menu=='obh'){echo " class='active'";} ?>>
-							<a href="obh/v.html">
-								<div class="icon-img"><i class="fa fa-info-circle"></i></div>
-							  <span>Daftar OBH-NTB</span>
+							<ul class="sub-menu">
+								<li<?php if($menu=='kategori' AND $sub_menu='v'){echo " class='active'";} ?>><a href="kategori/v.html">Kategori Aduan</a></li>
+								<li<?php if($menu=='kategori' AND $sub_menu='sub'){echo " class='active'";} ?>><a href="kategori/sub.html">Sub Kategori</a></li>
+							</ul>
+						</li>					
+						<li class="has-sub <?php if($menu=='kategori_lap'){echo " active";} ?>">
+							<a href="javascript:;">
+								<b class="caret pull-right"></b>
+								<i class="fa fa-cogs bg-gray"></i>
+								<span>Kategori Laporan</span>
 							</a>
+							<ul class="sub-menu">
+								<li<?php if($menu=='kategori_lap' AND $sub_menu='v'){echo " class='active'";} ?>><a href="kategori_lap/v.html">Kategori Laporan</a></li>
+								<li<?php if($menu=='kategori_lap' AND $sub_menu='sub'){echo " class='active'";} ?>><a href="kategori_lap/sub.html">Sub Kategori</a></li>
+							</ul>
 						</li>
 					<?php endif; ?>
+					<!-- akhir sesi super admin -->
 					
-					<!-- MENU NOTARIS -->
+					<!-- MENU OBH -->
 						<?php if ($level=='obh'): ?>
 						<li <?php if($menu=='laporan' AND $sub_menu=='v'){echo " class='active'";} ?>>
 							<a href="laporan/v.html">

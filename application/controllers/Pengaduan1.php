@@ -1,27 +1,27 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Laporan extends CI_Controller {
+class Pengaduan extends CI_Controller {
 
 	public function index()
 	{
-		$data['judul_web'] = "Laporan";
-		$this->db->order_by('id_laporan', 'DESC');
-		$data['query'] = $this->db->get("tbl_laporan");
+		$data['judul_web'] = "Pengaduan";
+		$this->db->order_by('id_pengaduan', 'DESC');
+		$data['query'] = $this->db->get("tbl_pengaduan");
 		$this->load->view('web/header', $data);
-		$this->load->view('web/laporan', $data);
+		$this->load->view('web/pengaduan', $data);
 		$this->load->view('web/footer', $data);
 	}
 
-	public function cek($no_idn='')
+	public function cek($no_ktp='')
 	{
-		$data['judul_web'] = "Laporan";
-		if ($no_idn!='') {
-			$this->db->join('tbl_data_obh','tbl_data_obh.id_user=tbl_laporan.user');
-			$this->db->order_by('id_laporan', 'DESC');
-			$data['query'] = $this->db->get_where("tbl_laporan", array('no_idn'=>"$no_idn"));
+		$data['judul_web'] = "Pengaduan";
+		if ($no_ktp!='') {
+			$this->db->join('tbl_data_user','tbl_data_user.id_user=tbl_pengaduan.user');
+			$this->db->order_by('id_pengaduan', 'DESC');
+			$data['query'] = $this->db->get_where("tbl_pengaduan", array('no_ktp'=>"$no_ktp"));
 		}
-		$data['no_idn'] = $no_idn;
+		$data['no_ktp'] = $no_ktp;
 		$this->load->view('web/header', $data);
 		$this->load->view('web/cek', $data);
 		$this->load->view('web/footer', $data);
@@ -42,14 +42,14 @@ class Laporan extends CI_Controller {
 			if ($level=='petugas') {
 				$this->db->where('petugas',$id_user);
 			}
-			if ($level=='obh') {
-				$this->db->where('notaris',$id_user);
+			if ($level=='user') {
+				$this->db->where('user',$id_user);
 			}
 			if ($aksi=='proses' or $aksi=='konfirmasi' or $aksi=='selesai') {
 				$this->db->where('status',$aksi);
 			}
-			$this->db->order_by('id_laporan', 'DESC');
-			$data['query'] = $this->db->get("tbl_laporan");
+			$this->db->order_by('id_pengaduan', 'DESC');
+			$data['query'] = $this->db->get("tbl_pengaduan");
 
 			$cek_notif = $this->db->get_where("tbl_notif", array('penerima'=>"$id_user"));
 			foreach ($cek_notif->result() as $key => $value) {
@@ -61,28 +61,28 @@ class Laporan extends CI_Controller {
 			}
 
 			if ($aksi == 't') {
-				if ($level!='obh') {
+				if ($level!='user') {
 					redirect('404');
 				}
 				$p = "tambah";
-				$data['judul_web'] 	  = "BUAT LAPORAN";
+				$data['judul_web'] 	  = "BUAT PENGADUAN BARU";
 			}elseif ($aksi == 'd') {
 				$p = "detail";
-				$data['judul_web'] 	  = "RINCIAN LAPORAN";
-				$data['query'] = $this->db->get_where("tbl_laporan", array('id_laporan' => "$id"))->row();
-				if ($data['query']->id_laporan=='') {redirect('404');}
+				$data['judul_web'] 	  = "Detail Pengaduan";
+				$data['query'] = $this->db->get_where("tbl_pengaduan", array('id_pengaduan' => "$id"))->row();
+				if ($data['query']->id_pengaduan=='') {redirect('404');}
 			}
 			elseif ($aksi == 'h') {
-				$cek_data = $this->db->get_where("tbl_laporan", array('id_laporan' => "$id"));
+				$cek_data = $this->db->get_where("tbl_pengaduan", array('id_pengaduan' => "$id"));
 				if ($cek_data->num_rows() != 0) {
 						if ($cek_data->row()->status!='proses') {
 							redirect('404');
 						}
-						if ($cek_data->row()->lampiran != '') {
-							unlink($cek_data->row()->lampiran);
+						if ($cek_data->row()->bukti != '') {
+							unlink($cek_data->row()->bukti);
 						}
-						$this->db->delete('tbl_notif', array('pengirim'=>$id_user,'id_laporan'=>$id));
-						$this->db->delete('tbl_laporan', array('id_laporan' => $id));
+						$this->db->delete('tbl_notif', array('pengirim'=>$id_user,'id_pengaduan'=>$id));
+						$this->db->delete('tbl_pengaduan', array('id_pengaduan' => $id));
 						$this->session->set_flashdata('msg',
 							'
 							<div class="alert alert-success alert-dismissible" role="alert">
@@ -93,17 +93,17 @@ class Laporan extends CI_Controller {
 							</div>
 							<br>'
 						);
-						redirect("laporan/v");
+						redirect("pengaduan/v");
 				}else {
 					redirect('404_content');
 				}
 			}else{
 				$p = "index";
-				$data['judul_web'] 	  = "Laporan OBH";
+				$data['judul_web'] 	  = "Pengaduan";
 			}
 
 				$this->load->view('users/header', $data);
-				$this->load->view("users/laporan/$p", $data);
+				$this->load->view("users/pengaduan/$p", $data);
 				$this->load->view('users/footer');
 
 				date_default_timezone_set('Asia/Jakarta');
@@ -118,18 +118,12 @@ class Laporan extends CI_Controller {
 				));
 
 				if (isset($_POST['btnsimpan'])) {
-					$id_kategori_lap 		 = htmlentities(strip_tags($this->input->post('id_kategori_lap')));
-					$id_sub_kategori_lap = htmlentities(strip_tags($this->input->post('id_sub_kategori_lap')));
-					$isi_laporan 	 = htmlentities(strip_tags($this->input->post('isi_laporan')));
-					$ket_laporan 	 = htmlentities(strip_tags($this->input->post('ket_laporan')));
-					$no_permohonan 	 = htmlentities(strip_tags($this->input->post('no_permohonan')));
-					$jenis_perkara 	 = htmlentities(strip_tags($this->input->post('jenis_perkara')));
-					$alamat_client 	 = htmlentities(strip_tags($this->input->post('alamat_client')));
-					$nama_client 	 = htmlentities(strip_tags($this->input->post('nama_client')));
-					$nik_client 	 = htmlentities(strip_tags($this->input->post('nik_client')));
-					$tgl_kegiatan 	 = htmlentities(strip_tags($this->input->post('tgl_kegiatan')));
+					$id_kategori 		 = htmlentities(strip_tags($this->input->post('id_kategori')));
+					$id_sub_kategori = htmlentities(strip_tags($this->input->post('id_sub_kategori')));
+					$isi_pengaduan 	 = htmlentities(strip_tags($this->input->post('isi_pengaduan')));
+					$ket_pengaduan 	 = htmlentities(strip_tags($this->input->post('ket_pengaduan')));
 
-					if ( ! $this->upload->do_upload('lampiran'))
+					if ( ! $this->upload->do_upload('bukti'))
 					{
 							$simpan = 'n';
 							$pesan  = htmlentities(strip_tags($this->upload->display_errors('<p>', '</p>')));
@@ -138,31 +132,25 @@ class Laporan extends CI_Controller {
 					{
 								$gbr = $this->upload->data();
 								$filename = "$lokasi/".$gbr['file_name'];
-								$lampiran = preg_replace('/ /', '_', $filename);
+								$bukti = preg_replace('/ /', '_', $filename);
 								$simpan = 'y';
 					}
 
 					if ($simpan=='y') {
 									$data = array(
-										'id_kategori_lap' 		=> $id_kategori_lap,
-										'id_sub_kategori_lap' => $id_sub_kategori_lap,
-										'isi_laporan'   => $isi_laporan,
-										'ket_laporan'   => $ket_laporan,
-										'lampiran'						=> $lampiran,
-										'notaris'						=> $id_user,
-										'no_permohonan'   => $no_permohonan,
-										'jenis_perkara'   => $jenis_perkara,
-										'nama_client'   => $nama_client,
-										'nik_client'   => $nik_client,
-										'alamat_client'   => $alamat_client,
-										'tgl_kegiatan'   => $tgl_kegiatan,
+										'id_kategori' 		=> $id_kategori,
+										'id_sub_kategori' => $id_sub_kategori,
+										'isi_pengaduan'   => $isi_pengaduan,
+										'ket_pengaduan'   => $ket_pengaduan,
+										'bukti'						=> $bukti,
+										'user'						=> $id_user,
 										'status'					=> 'proses',
-										'tgl_laporan'   => $tgl
+										'tgl_pengaduan'   => $tgl
 									);
-									$this->db->insert('tbl_laporan',$data);
+									$this->db->insert('tbl_pengaduan',$data);
 
-									$id_laporan = $this->db->insert_id();
-									$this->Mcrud->kirim_notif($id_user,'superadmin',$id_laporan,'notaris_kirim_laporan');
+									$id_pengaduan = $this->db->insert_id();
+									$this->Mcrud->kirim_notif($id_user,'superadmin',$id_pengaduan,'user_kirim_pengaduan');
 
 									$this->session->set_flashdata('msg',
 										'
@@ -185,15 +173,15 @@ class Laporan extends CI_Controller {
 	 							</div>
 	 						 <br>'
 	 						);
-							redirect("laporan/v/$aksi/".hashids_decrypt($id));
+							redirect("pengaduan/v/$aksi/".hashids_decrypt($id));
 					 }
-					 redirect("laporan/v");
+					 redirect("pengaduan/v");
 				}
 
 
 				if (isset($_POST['btnkirim'])) {
-					$id_laporan = htmlentities(strip_tags($this->input->post('id_laporan')));
-					$data_lama = $this->db->get_where('tbl_laporan',array('id_laporan'=>$id_laporan))->row();
+					$id_pengaduan = htmlentities(strip_tags($this->input->post('id_pengaduan')));
+					$data_lama = $this->db->get_where('tbl_pengaduan',array('id_pengaduan'=>$id_pengaduan))->row();
 					$simpan = 'y';
 					$pesan = '';
 					if ($level=='superadmin') {
@@ -204,8 +192,8 @@ class Laporan extends CI_Controller {
 							'tgl_konfirmasi'  => $tgl
 						);
 						$pesan = 'Berhasil dikirim ke petugas';
-						$this->Mcrud->kirim_notif('superadmin',$id_petugas,$id_laporan,'superadmin_ke_petugas');
-						$this->Mcrud->kirim_notif('superadmin',$data_lama->user,$id_laporan,'superadmin_ke_notaris');
+						$this->Mcrud->kirim_notif('superadmin',$id_petugas,$id_pengaduan,'superadmin_ke_petugas');
+						$this->Mcrud->kirim_notif('superadmin',$data_lama->user,$id_pengaduan,'superadmin_ke_user');
 					}else {
 						$pesan_petugas = htmlentities(strip_tags($this->input->post('pesan_petugas')));
 						$status = htmlentities(strip_tags($this->input->post('status')));
@@ -234,11 +222,11 @@ class Laporan extends CI_Controller {
 							'file_petugas'  => $file,
 							'tgl_selesai'   => $tgl
 						);
-						$this->Mcrud->kirim_notif($data_lama->petugas,$data_lama->notaris,$id_laporan,'petugas_ke_notaris');
+						$this->Mcrud->kirim_notif($data_lama->petugas,$data_lama->user,$id_pengaduan,'petugas_ke_user');
 					}
 
 					if ($simpan=='y') {
-						$this->db->update('tbl_laporan',$data, array('id_laporan'=>$id_laporan));
+						$this->db->update('tbl_pengaduan',$data, array('id_pengaduan'=>$id_pengaduan));
 						$this->session->set_flashdata('msg',
 							'
 							<div class="alert alert-success alert-dismissible" role="alert">
@@ -261,7 +249,7 @@ class Laporan extends CI_Controller {
 						 <br>'
 						);
 					}
-					redirect('laporan/v');
+					redirect('pengaduan/v');
 				}
 
 	}
@@ -271,7 +259,7 @@ class Laporan extends CI_Controller {
 	{
 		if (isset($_POST['btnkirim'])) {
 			$id = $this->input->post('id');
-			$data = $this->db->get_where('tbl_laporan',array('id_laporan'=>$id))->row();
+			$data = $this->db->get_where('tbl_pengaduan',array('id_pengaduan'=>$id))->row();
 			$pesan_petugas = $data->pesan_petugas;
 			$status = $data->status;
 			echo json_encode(array('pesan_petugas'=>$pesan_petugas,'status'=>$status));

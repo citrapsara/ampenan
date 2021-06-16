@@ -6,22 +6,103 @@ class Pengaduan extends CI_Controller {
 	public function index()
 	{
 		$data['judul_web'] = "Pengaduan";
-		$this->db->order_by('id_pengaduan', 'DESC');
-		$data['query'] = $this->db->get("tbl_pengaduan");
+		
 		$this->load->view('web/header', $data);
 		$this->load->view('web/pengaduan', $data);
 		$this->load->view('web/footer', $data);
+
+		date_default_timezone_set('Asia/Jakarta');
+		$tgl = date('Y-m-d H:i:s');
+
+		$lokasi = 'file';
+		$file_size = 1024 * 3; // 3 MB
+		$this->upload->initialize(array(
+			"upload_path"   => "./$lokasi",
+			"allowed_types" => "*",
+			"max_size" => "$file_size"
+		));
+
+		if (isset($_POST['btnsimpan'])) {
+			$nama_pelapor 		 = htmlentities(strip_tags($this->input->post('nama_pelapor')));
+			$nik_pelapor = htmlentities(strip_tags($this->input->post('nik_pelapor')));
+			$kontak_pelapor = htmlentities(strip_tags($this->input->post('kontak_pelapor')));
+			$isi_pengaduan 	 = htmlentities(strip_tags($this->input->post('isi_pengaduan')));
+
+			if ( ! $this->upload->do_upload('bukti'))
+			{
+				$simpan = 'n';
+				$pesan  = htmlentities(strip_tags($this->upload->display_errors('<p>', '</p>')));
+			}
+			else
+			{
+				$gbr = $this->upload->data();
+				$filename = "$lokasi/".$gbr['file_name'];
+				$bukti = preg_replace('/ /', '_', $filename);
+				$simpan = 'y';
+			}
+
+			if ($simpan=='y') {
+				$data = array(
+					'nama_pelapor'		=> $nama_pelapor,
+					'nik_pelapor'		=> $nik_pelapor,
+					'kontak_pelapor'	=> $kontak_pelapor,
+					'isi_pengaduan'   => $isi_pengaduan,
+					'bukti'				=> $bukti,
+					'status'				=> 'proses',
+					'tgl_pengaduan'   => $tgl
+				);
+
+				$this->db->insert('tbl_pengaduan',$data);
+
+				$id_pengaduan = $this->db->insert_id();
+				$this->Mcrud->kirim_notif($nama_pelapor,'superadmin',$id_pengaduan,'user_kirim_pengaduan');
+
+				$this->session->set_flashdata('msg',
+					'
+					<div class="alert alert-success alert-dismissible" role="alert">
+						 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							 <span aria-hidden="true">&times;</span>
+						 </button>
+						 <strong>Sukses!</strong> Berhasil disimpan.
+					</div>
+				 <br>'
+				);
+				
+			 }else {
+					 $this->session->set_flashdata('msg',
+						 '
+						 <div class="alert alert-warning alert-dismissible" role="alert">
+							  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								  <span aria-hidden="true">&times;</span>
+							  </button>
+							  <strong>Gagal!</strong> '.$pesan.'.
+						 </div>
+					  <br>'
+					 );
+					redirect("pengaduan");
+			 }
+			 redirect("pengaduan/s");
+		}
+		
+		
 	}
 
-	public function cek($no_ktp='')
+	public function s() {
+		$data['judul_web'] = "Pengaduan Berhasil Disimpan";
+		
+		$this->load->view('web/header', $data);
+		$this->load->view('web/pengaduan_sukses', $data);
+		$this->load->view('web/footer', $data);
+	}
+
+	public function cek($nik_pelapor='')
 	{
 		$data['judul_web'] = "Pengaduan";
-		if ($no_ktp!='') {
-			$this->db->join('tbl_data_user','tbl_data_user.id_user=tbl_pengaduan.user');
+		if ($nik_pelapor!='') {
 			$this->db->order_by('id_pengaduan', 'DESC');
-			$data['query'] = $this->db->get_where("tbl_pengaduan", array('no_ktp'=>"$no_ktp"));
+			$data['query'] = $this->db->get_where("tbl_pengaduan", array('nik_pelapor'=>"$nik_pelapor"));
 		}
-		$data['no_ktp'] = $no_ktp;
+		$data['nik_pelapor'] = $nik_pelapor;
 		$this->load->view('web/header', $data);
 		$this->load->view('web/cek', $data);
 		$this->load->view('web/footer', $data);
@@ -39,12 +120,12 @@ class Pengaduan extends CI_Controller {
 
 			$data['user']  			  = $this->Mcrud->get_users_by_un($ceks);
 
-			if ($level=='petugas') {
-				$this->db->where('petugas',$id_user);
-			}
-			if ($level=='user') {
-				$this->db->where('user',$id_user);
-			}
+			// if ($level=='petugas') {
+			// 	$this->db->where('petugas',$id_user);
+			// }/
+			// if ($level=='user') {
+			// 	$this->db->where('user',$id_user);
+			// }
 			if ($aksi=='proses' or $aksi=='konfirmasi' or $aksi=='selesai') {
 				$this->db->where('status',$aksi);
 			}
@@ -60,13 +141,7 @@ class Pengaduan extends CI_Controller {
 				}
 			}
 
-			if ($aksi == 't') {
-				if ($level!='user') {
-					redirect('404');
-				}
-				$p = "tambah";
-				$data['judul_web'] 	  = "BUAT PENGADUAN BARU";
-			}elseif ($aksi == 'd') {
+			if ($aksi == 'd') {
 				$p = "detail";
 				$data['judul_web'] 	  = "Detail Pengaduan";
 				$data['query'] = $this->db->get_where("tbl_pengaduan", array('id_pengaduan' => "$id"))->row();
@@ -116,68 +191,6 @@ class Pengaduan extends CI_Controller {
 					"allowed_types" => "*",
 					"max_size" => "$file_size"
 				));
-
-				if (isset($_POST['btnsimpan'])) {
-					$id_kategori 		 = htmlentities(strip_tags($this->input->post('id_kategori')));
-					$id_sub_kategori = htmlentities(strip_tags($this->input->post('id_sub_kategori')));
-					$isi_pengaduan 	 = htmlentities(strip_tags($this->input->post('isi_pengaduan')));
-					$ket_pengaduan 	 = htmlentities(strip_tags($this->input->post('ket_pengaduan')));
-
-					if ( ! $this->upload->do_upload('bukti'))
-					{
-							$simpan = 'n';
-							$pesan  = htmlentities(strip_tags($this->upload->display_errors('<p>', '</p>')));
-					}
-					 else
-					{
-								$gbr = $this->upload->data();
-								$filename = "$lokasi/".$gbr['file_name'];
-								$bukti = preg_replace('/ /', '_', $filename);
-								$simpan = 'y';
-					}
-
-					if ($simpan=='y') {
-									$data = array(
-										'id_kategori' 		=> $id_kategori,
-										'id_sub_kategori' => $id_sub_kategori,
-										'isi_pengaduan'   => $isi_pengaduan,
-										'ket_pengaduan'   => $ket_pengaduan,
-										'bukti'						=> $bukti,
-										'user'						=> $id_user,
-										'status'					=> 'proses',
-										'tgl_pengaduan'   => $tgl
-									);
-									$this->db->insert('tbl_pengaduan',$data);
-
-									$id_pengaduan = $this->db->insert_id();
-									$this->Mcrud->kirim_notif($id_user,'superadmin',$id_pengaduan,'user_kirim_pengaduan');
-
-									$this->session->set_flashdata('msg',
-										'
-										<div class="alert alert-success alert-dismissible" role="alert">
-											 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-												 <span aria-hidden="true">&times;</span>
-											 </button>
-											 <strong>Sukses!</strong> Berhasil disimpan.
-										</div>
-									 <br>'
-									);
-					 }else {
-							 $this->session->set_flashdata('msg',
-	 							'
-	 							<div class="alert alert-warning alert-dismissible" role="alert">
-	 								 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-	 									 <span aria-hidden="true">&times;</span>
-	 								 </button>
-	 								 <strong>Gagal!</strong> '.$pesan.'.
-	 							</div>
-	 						 <br>'
-	 						);
-							redirect("pengaduan/v/$aksi/".hashids_decrypt($id));
-					 }
-					 redirect("pengaduan/v");
-				}
-
 
 				if (isset($_POST['btnkirim'])) {
 					$id_pengaduan = htmlentities(strip_tags($this->input->post('id_pengaduan')));

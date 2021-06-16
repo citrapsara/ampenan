@@ -156,17 +156,17 @@ a {
 
 .c-theme-btn.btn {
   color: #ffffff;
-  background:#0f018b;
-  border-color:#0f018b; }
+  background:#f3662d;
+  border-color:#f3662d; }
   .c-theme-btn.btn.btn-no-focus:focus, .c-theme-btn.btn.btn-no-focus.focus {
     color: #ffffff;
-    background:#0f018b;
-    border-color:#0f018b; }
+    background:#f3662d;
+    border-color:#f3662d; }
   .c-theme-btn.btn.btn-no-focus:hover, .c-theme-btn.btn:hover, .c-theme-btn.btn.btn-no-focus:active, .c-theme-btn.btn:active, .c-theme-btn.btn.active,
   .open > .c-theme-btn.btn.dropdown-toggle {
     color: #ffffff;
-    background: #27a8b4;
-    border-color: #27a8b4; }
+    background: #f37644;
+    border-color: #f37644; }
   .c-theme-btn.btn:active, .c-theme-btn.btn.active,
   .open > .c-theme-btn.btn.dropdown-toggle {
     background-image: none; }
@@ -246,14 +246,14 @@ a {
     background:#0f018b; }
 
 .c-theme.form-control:focus, .c-theme.form-control:active, .c-theme.form-control.active {
-  border-color:#0f018b !important; }
+  border-color:#f3662d !important; }
 
 .c-content-line-icon.c-theme {
   background-image: url(../../../../base/img/content/line-icons/default.png); }
 
 .c-content-list-1.c-theme.c-separator-dot > li:before,
 .c-content-list-1.c-theme > li:before {
-  background:#0f018b; }
+  background:#f3662d; }
 
 .c-content-tab-1.c-theme .nav > li:hover > a, .c-content-tab-1.c-theme .nav > li:focus > a, .c-content-tab-1.c-theme .nav > li:active > a, .c-content-tab-1.c-theme .nav > li.active > a,
 .c-content-tab-1.c-theme .nav.nav-justified > li:hover > a,
@@ -280,14 +280,14 @@ a {
   border-left-color:#0f018b; }
 
 .c-content-accordion-1.c-theme .panel > .panel-heading > .panel-title > a {
-  background-color:#0f018b; }
+  background-color:#f3662d; }
   .c-content-accordion-1.c-theme .panel > .panel-heading > .panel-title > a.collapsed {
     background-color: #ffffff; }
     .c-content-accordion-1.c-theme .panel > .panel-heading > .panel-title > a.collapsed:hover, .c-content-accordion-1.c-theme .panel > .panel-heading > .panel-title > a.collapsed:focus {
-      background-color:#0f018b; }
+      background-color:#f3662d; }
 
 .c-content-accordion-1.c-theme .panel > .panel-collapse > .panel-body {
-  background-color:#0f018b; }
+  background-color:#fbe5d6; }
 
 .c-mega-menu-onepage-dots.c-theme .c-onepage-dots-nav > li.c-onepage-link:hover > a, .c-mega-menu-onepage-dots.c-theme .c-onepage-dots-nav > li.c-onepage-link.c-active > a, .c-mega-menu-onepage-dots.c-theme .c-onepage-dots-nav > li.c-onepage-link.active > a {
   background: rgba(9, 6, 160, 0.9); }

@@ -48,30 +48,42 @@
 					</div>
                     <br>
 				    <div class="form-group">
-                    <label class="col-lg-12">Nomor Pembukuan<b id='wajib_isi'>*</b></label>
+                    <label class="col-lg-12">Nomor Permohonan<b id='wajib_isi'>*</b></label>
                     <div class="col-lg-12">
-                      <input type="text" name="no_buku" class="form-control" value="" placeholder="Nomor Pembukuan.." >
-                    </div>
-                  </div>
-				 <div class="form-group">
-                    <label class="col-lg-12">NIK & Nama Client<b id='wajib_isi'>*</b></label>
-                    <div class="col-lg-12">
-                      <input type="text" name="nama_client" class="form-control" value="" placeholder="Nama Client..." >
+                      <input type="text" name="no_permohonan" class="form-control" value="" placeholder="Nomor Permohonan.." >
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-lg-12">Alamat Client<b id='wajib_isi'>*</b></label>
+                    <label class="col-lg-12">Jenis Perkara<b id='wajib_isi'>*</b></label>
                     <div class="col-lg-12">
-                      <input type="text" name="alamat_client" class="form-control" value="" placeholder="Alamat Client..." required>
+                      <input type="text" name="jenis_perkara" class="form-control" value="" placeholder="Jenis Perkara.." >
                     </div>
                   </div>
 				 <div class="form-group">
+                    <label class="col-lg-12">Nama Penerima Bantuan Hukum<b id='wajib_isi'>*</b></label>
+                    <div class="col-lg-12">
+                      <input type="text" name="nama_client" class="form-control" value="" placeholder="Nama Penerima Bantuan Hukum..." >
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-lg-12">Nomor Induk Kependudukan<b id='wajib_isi'>*</b></label>
+                    <div class="col-lg-12">
+                      <input type="text" name="nik_client" class="form-control" value="" placeholder="NIK Client..." >
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-lg-12">Alamat Penerima Bantuan Hukum<b id='wajib_isi'>*</b></label>
+                    <div class="col-lg-12">
+                      <input type="text" name="alamat_client" class="form-control" value="" placeholder="Alamat Penerima Bantuan Hukum..." required>
+                    </div>
+                  </div>
+                  <div class="form-group">
                     <label class="col-lg-12">Hari, Tanggal Pelaksanaan<b id='wajib_isi'>*</b></label>
-						<div class="col-lg-12">
-						<div class="input-group">
-							<input type="date" name="tgl_kegiatan" class="form-control daterange-single" value="" maxlength="10" required>
-						</div>
-						</div>
+                    <div class="col-lg-12">
+                      <div class="input-group">
+                        <input type="date" name="tgl_kegiatan" class="form-control daterange-single" value="" maxlength="10" required>
+                      </div>
+                    </div>
                   </div>
                   <div class="form-group">
                     <label class="col-lg-12">Uraian Laporan<b id='wajib_isi'>*</b></label>
