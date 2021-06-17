@@ -44,9 +44,16 @@
 <!-- END: LAYOUT/FOOTERS/FOOTER-6 -->
 
 <!-- BEGIN: LAYOUT/FOOTERS/GO2TOP -->
-<div class="c-layout-go2top">
+<!-- <div class="c-layout-go2top">
   <i class="icon-arrow-up"></i>
-</div><!-- END: LAYOUT/FOOTERS/GO2TOP -->
+</div> -->
+<!-- END: LAYOUT/FOOTERS/GO2TOP -->
+
+<!-- BEGIN: LAYOUT/FOOTERS/icon-mandalika -->
+<div class="mandalika-icon hidden-xs">
+  <a href="pengaduan"><img src="img/mandalika-icon.png" alt="icon mandalika button"></a>
+</div>
+<!-- END: LAYOUT/FOOTERS/icon-mandalika -->
 
 <!-- BEGIN: LAYOUT/BASE/BOTTOM -->
 <!-- BEGIN: CORE PLUGINS -->

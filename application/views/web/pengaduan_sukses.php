@@ -23,10 +23,14 @@
       <h1 align="center"><b>PENGADUAN BERHASIL</b></h1>
       <hr>
 
-		<?php
-                echo $this->session->flashdata('msg');
-                
-                ?>
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        <p>Form Pengaduan berhasil di input!</p>
+        <p>Terima kasih atas laporan Anda.</p>
+        <p>Pengaduan Anda sedang dalam proses.</p>
+      </div>
+      <div class="col-md-4"></div>
+      
 
       
 

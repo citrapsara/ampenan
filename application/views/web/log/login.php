@@ -3,7 +3,7 @@
 	<div class="container-login100">
 		<div class="wrap-login100" style="padding:40px;">
 			<div class="login100-pic js-tilt">
-				<center><img src="img/logo.png" alt="IMG"></center>
+				<center><img src="img/maskot-mandalika.png" alt="IMG"></center>
 			</div>
 			<form class="login100-form validate-form" action="" method="post">
 				<span class="login100-form-title" style="padding:40px;">

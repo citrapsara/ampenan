@@ -28,20 +28,25 @@
                     <tr>
                       <th valign="top" width="160">N a m a</th>
                       <th valign="top" width="1">:</th>
-                      <td><?php echo $this->Mcrud->d_pelapor($query->user,'nama_pelapor'); ?></td>
+                      <td><?php echo $query->nama_pelapor; ?></td>
                     </tr>
                     <tr>
-                      <th valign="top">Kategori</th>
-                      <th valign="top">:</th>
-                      <td><?php echo $this->Mcrud->d_pelapor($query->id_kategori,'kategori'); ?></td>
+                      <th valign="top" width="160">Nomor Identitas</th>
+                      <th valign="top" width="1">:</th>
+                      <td><?php echo $query->nik_pelapor; ?></td>
                     </tr>
                     <tr>
-                      <th valign="top">Sub Kateg</th>
-                      <th valign="top">:</th>
-                      <td><?php echo $this->Mcrud->d_pelapor($query->id_sub_kategori,'sub_kategori'); ?></td>
+                      <th valign="top" width="160">Alamat</th>
+                      <th valign="top" width="1">:</th>
+                      <td><?php echo $query->alamat_pelapor; ?></td>
                     </tr>
                     <tr>
-                      <th valign="top">Hari/tggl</th>
+                      <th valign="top" width="160">Kontak</th>
+                      <th valign="top" width="1">:</th>
+                      <td><?php echo $query->kontak_pelapor; ?></td>
+                    </tr>
+                    <tr>
+                      <th valign="top">Hari/tgl</th>
                       <th valign="top">:</th>
                       <td><?php echo $this->Mcrud->tgl_id(date('d-m-Y H:i:s', strtotime($query->tgl_pengaduan)),'full'); ?></td>
                     </tr>
@@ -49,11 +54,6 @@
                       <th valign="top">Uraian</th>
                       <th valign="top">:</th>
                       <td><?php echo $query->isi_pengaduan; ?></td>
-                    </tr>
-                    <tr>
-                      <th valign="top">Keterangan</th>
-                      <th valign="top">:</th>
-                      <td><?php echo $query->ket_pengaduan; ?></td>
                     </tr>
                     <tr>
                       <th valign="top">Lampiran </th>
@@ -85,19 +85,9 @@
 
               <hr style="margin-top:0px;">
               <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>.html" class="btn btn-default"><< Kembali</a>
-              <?php if ($level=='superadmin'){ ?>
-                <?php if ($query->status=='proses'){ ?>
-                   <a href="javascript:;" class="btn btn-primary" title="Konfirmasi" data-toggle="modal" onclick="modal_show(<?php echo $query->id_pengaduan; ?>);" style="float:right;"><i class="fa fa-file"></i> Konfirmasi</a>
-                <?php }else{ ?>
-                  <a href="javascript:;" class="btn btn-success" title="Terkonfirmasi" disabled style="float:right;"><i class="fa fa-check"></i> konfirmasi</a>
-                <?php } ?>
-              <?php }elseif ($level=='petugas'){ ?>
-                <?php //if ($query->status=='konfirmasi'){ ?>
+              
                    <a class="btn btn-success" title="Edit" data-toggle="modal" onclick="modal_show(<?php echo $query->id_pengaduan; ?>);" style="float:right;"><i class="fa fa-pencil"></i> Edit</a>
-                <?php //}else{ ?>
-                  <!-- <a href="javascript:;" class="btn btn-success btn-xs" title="Edit" disabled><i class="fa fa-check"></i> Edit</a> -->
-                <?php //} ?>
-              <?php } ?>
+               
             </div>
 
         </div>

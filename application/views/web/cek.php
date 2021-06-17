@@ -55,7 +55,12 @@
 	                        <td><b><?php echo $no++; ?>.</b></td>
 	                        <td><?php echo $value->isi_pengaduan; ?></td>
 	                        <td><?php echo $this->Mcrud->waktu($value->tgl_pengaduan,'full'); ?></td>
-	                        <td align="center"><?php echo $this->Mcrud->cek_status($value->status); ?></td>
+	                        <td>
+										<?php echo $this->Mcrud->cek_status($value->status); ?>
+										<?php if ($value->status == 'selesai') { ?>
+											<div><?php echo $value->pesan_petugas; ?></div>
+										<?php } ?>
+									</td>
 	                      </tr>
 	                    <?php endforeach; ?>
 											<?php if ($query->num_rows()==0): ?>

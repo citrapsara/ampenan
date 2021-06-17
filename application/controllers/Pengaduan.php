@@ -25,6 +25,7 @@ class Pengaduan extends CI_Controller {
 		if (isset($_POST['btnsimpan'])) {
 			$nama_pelapor 		 = htmlentities(strip_tags($this->input->post('nama_pelapor')));
 			$nik_pelapor = htmlentities(strip_tags($this->input->post('nik_pelapor')));
+			$alamat_pelapor = htmlentities(strip_tags($this->input->post('alamat_pelapor')));
 			$kontak_pelapor = htmlentities(strip_tags($this->input->post('kontak_pelapor')));
 			$isi_pengaduan 	 = htmlentities(strip_tags($this->input->post('isi_pengaduan')));
 
@@ -45,6 +46,7 @@ class Pengaduan extends CI_Controller {
 				$data = array(
 					'nama_pelapor'		=> $nama_pelapor,
 					'nik_pelapor'		=> $nik_pelapor,
+					'alamat_pelapor'	=> $alamat_pelapor,
 					'kontak_pelapor'	=> $kontak_pelapor,
 					'isi_pengaduan'   => $isi_pengaduan,
 					'bukti'				=> $bukti,
@@ -81,7 +83,7 @@ class Pengaduan extends CI_Controller {
 					 );
 					redirect("pengaduan");
 			 }
-			 redirect("pengaduan/s");
+			 redirect("pengaduan");
 		}
 		
 		
@@ -197,17 +199,8 @@ class Pengaduan extends CI_Controller {
 					$data_lama = $this->db->get_where('tbl_pengaduan',array('id_pengaduan'=>$id_pengaduan))->row();
 					$simpan = 'y';
 					$pesan = '';
-					if ($level=='superadmin') {
-						$id_petugas 	= htmlentities(strip_tags($this->input->post('id_petugas')));
-						$data = array(
-							'petugas'					=> $id_petugas,
-							'status'					=> 'konfirmasi',
-							'tgl_konfirmasi'  => $tgl
-						);
-						$pesan = 'Berhasil dikirim ke petugas';
-						$this->Mcrud->kirim_notif('superadmin',$id_petugas,$id_pengaduan,'superadmin_ke_petugas');
-						$this->Mcrud->kirim_notif('superadmin',$data_lama->user,$id_pengaduan,'superadmin_ke_user');
-					}else {
+					
+						
 						$pesan_petugas = htmlentities(strip_tags($this->input->post('pesan_petugas')));
 						$status = htmlentities(strip_tags($this->input->post('status')));
 						$file = $data_lama->file_petugas;
@@ -235,8 +228,8 @@ class Pengaduan extends CI_Controller {
 							'file_petugas'  => $file,
 							'tgl_selesai'   => $tgl
 						);
-						$this->Mcrud->kirim_notif($data_lama->petugas,$data_lama->user,$id_pengaduan,'petugas_ke_user');
-					}
+						// $this->Mcrud->kirim_notif($data_lama->petugas,$data_lama->user,$id_pengaduan,'petugas_ke_user');
+					
 
 					if ($simpan=='y') {
 						$this->db->update('tbl_pengaduan',$data, array('id_pengaduan'=>$id_pengaduan));

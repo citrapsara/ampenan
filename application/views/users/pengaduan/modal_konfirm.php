@@ -2,18 +2,18 @@
 $level 	= $this->session->userdata('level');
 $link3  = strtolower($this->uri->segment(3));
 ?>
-<?php if ($level!='user'): ?>
+<?php if ($level=='superadmin'): ?>
 <script type="text/javascript">
 	function modal_show(id)
 	{
 		$('#id_pengaduan').val(id);
-		<?php if($level=='petugas'){ ?>
+		
 			tampilkan_data(id);
-		<?php } ?>
+		
 		$('#modal-konfirm').modal('show');
 	}
 
-<?php if($level=='petugas'){ ?>
+
 	function tampilkan_data(id){
 		$('[name="pesan_petugas"]').val('');
 		$('[name="file"]').val('');
@@ -46,33 +46,22 @@ $link3  = strtolower($this->uri->segment(3));
 			});
 		return false;
 		}
-<?php } ?>
+
 </script>
 
 		<div class="modal" id="modal-konfirm">
-			<div class="modal-dialog<?php if($level=='superadmin'){echo " modal-sm";} ?>">
+			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 						<h4 class="modal-title">
-							<?php if($level=='superadmin'){echo "Disposisikan ke Petugas";}else{echo "Update Data Pengaduan";} ?>
+							<?php echo "Update Data Pengaduan"; ?>
 						</h4>
 					</div>
 					<form class="form-horizontal" action="" data-parsley-validate="true" method="post" enctype="multipart/form-data">
 					<div class="modal-body">
 						<input type="hidden" name="id_pengaduan" id="id_pengaduan" value="">
-						<?php if ($level=='superadmin'){ ?>
-							<b>Pilih Petugas</b> <br>
-							<select class="form-control default-select2" name="id_petugas" required style="width:100%">
-								<option value="">- Pilih -</option>
-								<?php
-														 $this->db->order_by('nama','ASC');
-								$v_petugas = $this->db->get('tbl_petugas');
-								foreach ($v_petugas->result() as $key => $value): ?>
-									<option value="<?php echo $value->id_user; ?>"><?php echo ucwords($value->nama); ?></option>
-								<?php endforeach; ?>
-							</select>
-						<?php }else{ ?>
+						
 							<div class="pesan_ajax"></div>
 							<div class="form-group" id="f_ajax1">
 								<label class="col-lg-4">LAMPIRAN</label>
@@ -92,11 +81,11 @@ $link3  = strtolower($this->uri->segment(3));
 									</select>
 								</div>
 							</div>
-						<?php } ?>
+						
 					</div>
 					<div class="modal-footer">
 						<a href="javascript:;" class="btn btn-white" data-dismiss="modal">Tutup</a>
-						<button type="submit" name="btnkirim" id="f_ajax3" class="btn btn-primary"><i class="fa fa-send"></i> <?php if($level=='superadmin'){echo "Kirim";}else{echo "Simpan";}?></button>
+						<button type="submit" name="btnkirim" id="f_ajax3" class="btn btn-primary"><i class="fa fa-send"></i> <?php echo "Simpan";?></button>
 					</div>
 					</form>
 				</div>

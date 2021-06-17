@@ -138,6 +138,21 @@ h3.title-peta-sebaran {
 
 #wajib_isi{color:red;}
 
+/* ==== Home Content ==== */
+.mandalika-icon img {
+   width: 180px;
+}
+.mandalika-icon {
+   display: inline-block;
+   position: fixed;
+   bottom: 20px;
+   right: 10px;
+   cursor: pointer;
+   z-index: 999;
+   width: 180px;
+   height: 180px;
+}
+
 @media (max-width: 540px) {
    /* Header */
    .c-layout-header .c-navbar .c-mega-menu {

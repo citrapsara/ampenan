@@ -20,8 +20,12 @@
   <div class="c-content-box c-bg-grey-1">
 		<div class="container">
       <br>
-      <h1 align="center"><b>BUAT PENGADUAN</b></h1>
+      <h1 align="center"><b>PENGADUAN</b></h1>
       <hr>
+
+		<?php
+			if (empty($this->session->flashdata('msg'))) {
+      ?>
 
       <p>Laporkan penyimpangan dalam proses pemberian Bantuan Hukum dengan mengisi Form Pengaduan berikut:</p>
 
@@ -31,10 +35,7 @@
 				<strong>Note :</strong> Isikan data aduan dengan jujur & bertanggung Jawab. Bersama kita wujudkan NTB yang Bersih & jujur!
 			</div>
 
-			<?php
-                echo $this->session->flashdata('msg');
-                
-                ?>
+			
 
       <form class="form-horizontal" action="" data-parsley-validate="true" method="post" enctype="multipart/form-data">
         <div class="form-group">
@@ -46,13 +47,15 @@
         <div class="form-group">
 				 	<label for="inputEmail3" class="col-md-4 control-label">Nomor Identitas</label>
 				 	<div class="col-md-6">
-				 		<input type="text" name="nik_pelapor" class="form-control  c-square c-theme" id="inputEmail3" placeholder="Nomor Identitas">
+				 		<input type="text" name="nik_pelapor" class="form-control  c-square c-theme" id="inputEmail3" placeholder="Nomor Identitas" onkeypress="return hanyaAngka(event)" required>
+						<i style="color: red;">*Masukkan hanya angka.</i>
 				 	</div>
 				</div>
         <div class="form-group">
 				 	<label for="inputEmail3" class="col-md-4 control-label">Kontak yang Dapat Dihubungi <b id='wajib_isi'>*</b></label>
 				 	<div class="col-md-6">
-				 		<input type="text" name="kontak_pelapor" class="form-control  c-square c-theme" id="inputEmail3" placeholder="Nomor Telepon" required>
+				 		<input type="text" name="kontak_pelapor" class="form-control  c-square c-theme" id="inputEmail3" placeholder="Nomor Telepon" onkeypress="return hanyaAngka(event)" required>
+						<i style="color: red;">*Masukkan hanya angka.</i>
 				 	</div>
 				</div>
         <div class="form-group">
@@ -80,7 +83,11 @@
 				 	</div>
 				</div>
 			</form>
-
+			<?php 
+				} else {
+					echo $this->session->flashdata('msg');
+				}
+			?>
 
     </div>
     <br>
