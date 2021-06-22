@@ -106,17 +106,7 @@
               <hr style="margin-top:0px;">
               <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>.html" class="btn btn-default"><< Kembali</a>
               <?php if ($level=='superadmin'){ ?>
-                <?php if ($query->status=='proses'){ ?>
-                   <a href="javascript:;" class="btn btn-primary" title="Konfirmasi" data-toggle="modal" onclick="modal_show(<?php echo $query->id_laporan; ?>);" style="float:right;"><i class="fa fa-file"></i> Konfirmasi</a>
-                <?php }else{ ?>
-                  <a href="javascript:;" class="btn btn-success" title="Terkonfirmasi" disabled style="float:right;"><i class="fa fa-check"></i> konfirmasi</a>
-                <?php } ?>
-              <?php }elseif ($level=='petugas'){ ?>
-                <?php //if ($query->status=='konfirmasi'){ ?>
-                   <a class="btn btn-success" title="Edit" data-toggle="modal" onclick="modal_show(<?php echo $query->id_laporan; ?>);" style="float:right;"><i class="fa fa-pencil"></i> Edit</a>
-                <?php //}else{ ?>
-                  <!-- <a href="javascript:;" class="btn btn-success btn-xs" title="Edit" disabled><i class="fa fa-check"></i> Edit</a> -->
-                <?php //} ?>
+                <a class="btn btn-success" title="Edit" data-toggle="modal" onclick="modal_show(<?php echo $query->id_laporan; ?>);" style="float:right;"><i class="fa fa-pencil"></i> Edit</a>
               <?php } ?>
             </div>
 

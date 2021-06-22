@@ -190,7 +190,7 @@ $sub_menu3 = strtolower($this->uri->segment(3));
 								</li>
 							</ul>
 						</li>
-						<li class="has-sub <?php if($menu=='obh' OR ($menu=='laporan' AND $sub_menu=='v') OR $menu=='tambahobh'){echo " active";} ?>">
+						<li class="has-sub <?php if($menu=='obh' OR ($menu=='laporan' AND $sub_menu=='v') OR $menu=='tambahobh' OR ($menu=='monev' AND $sub_menu=='v')){echo " active";} ?>">
 							<a href="javascript:;">
 								<b class="caret pull-right"></b>
 								<i class="fa fa-user bg-gray"></i>
@@ -212,23 +212,28 @@ $sub_menu3 = strtolower($this->uri->segment(3));
 										<i class="fa fa-file-text"></i> <span>Laporan OBH</span>
 									</a>
 								</li>
-								<li <?php if($menu=='laporan' AND $sub_menu=='v'){echo " class='active'";} ?>>
-									<a href="laporan/v.html">
+								<li <?php if($menu=='monev' AND $sub_menu=='v'){echo " class='active'";} ?>>
+									<a href="monev/v.html">
 										<i class="fa fa-video-camera"></i> <span>Monev OBH</span>
 									</a>
 								</li>
 							</ul>
 						</li>
-						<li class="has-sub <?php if($menu=='realisasi_anggaran'){echo " active";} ?>">
+						<li class="has-sub <?php if($menu=='realisasi_anggaran' OR $menu=='file_manager'){echo " active";} ?>">
 							<a href="javascript:;">
 								<b class="caret pull-right"></b>
 								<i class="fa fa-newspaper-o bg-gray"></i>
-								<span>Informasi</span>
+								<span>Info Publik</span>
 							</a>
 							<ul class="sub-menu">
 								<li <?php if($menu=='realisasi_anggaran'){echo " class='active'";} ?>>
 									<a href="realisasi_anggaran/v.html">
 										<i class="fa fa-bar-chart"></i> <span>Realisasi Anggaran</span>
+									</a>
+								</li>
+								<li <?php if($menu=='file_manager'){echo " class='active'";} ?>>
+									<a href="file_manager/v.html">
+										<i class="fa fa-bar-chart"></i> <span>File Manager</span>
 									</a>
 								</li>
 							</ul>
@@ -259,11 +264,17 @@ $sub_menu3 = strtolower($this->uri->segment(3));
 					<!-- akhir sesi super admin -->
 					
 					<!-- MENU OBH -->
-						<?php if ($level=='obh'): ?>
+					<?php if ($level=='obh'): ?>
 						<li <?php if($menu=='laporan' AND $sub_menu=='v'){echo " class='active'";} ?>>
 							<a href="laporan/v.html">
 								<div class="icon-img"><i class="fa fa-file-text"></i></div>
 							  <span>Laporan</span>
+							</a>
+						</li>
+						<li <?php if($menu=='monev' AND $sub_menu=='v'){echo " class='active'";} ?>>
+							<a href="monev/v.html">
+								<div class="icon-img"><i class="fa fa-video-camera"></i></div>
+							  <span>Monev</span>
 							</a>
 						</li>
 					<?php endif; ?>

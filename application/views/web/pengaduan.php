@@ -48,14 +48,14 @@
 				 	<label for="inputEmail3" class="col-md-4 control-label">Nomor Identitas</label>
 				 	<div class="col-md-6">
 				 		<input type="text" name="nik_pelapor" class="form-control  c-square c-theme" id="inputEmail3" placeholder="Nomor Identitas" onkeypress="return hanyaAngka(event)" required>
-						<i style="color: red;">*Masukkan hanya angka.</i>
+						<i style="color: red; font-size: 13px;">*Masukkan hanya angka.</i>
 				 	</div>
 				</div>
         <div class="form-group">
 				 	<label for="inputEmail3" class="col-md-4 control-label">Kontak yang Dapat Dihubungi <b id='wajib_isi'>*</b></label>
 				 	<div class="col-md-6">
 				 		<input type="text" name="kontak_pelapor" class="form-control  c-square c-theme" id="inputEmail3" placeholder="Nomor Telepon" onkeypress="return hanyaAngka(event)" required>
-						<i style="color: red;">*Masukkan hanya angka.</i>
+						<i style="color: red; font-size: 13px;">*Masukkan hanya angka.</i>
 				 	</div>
 				</div>
         <div class="form-group">
@@ -86,8 +86,14 @@
 			<?php 
 				} else {
 					echo $this->session->flashdata('msg');
-				}
 			?>
+			<div>
+				<p>Terima kasih atas laporan Anda, Form Pengaduan telah berhasil di input!</p>
+				<p>Pengaduan Anda sedang dalam proses</p>
+			</div>
+			<div class="text-center">“Kami PASTI Memberikan Layanan Terbaik”</div>
+
+			<?php } ?>
 
     </div>
     <br>

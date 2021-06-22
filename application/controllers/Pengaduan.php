@@ -67,6 +67,7 @@ class Pengaduan extends CI_Controller {
 						 </button>
 						 <strong>Sukses!</strong> Berhasil disimpan.
 					</div>
+					
 				 <br>'
 				);
 				
@@ -87,14 +88,6 @@ class Pengaduan extends CI_Controller {
 		}
 		
 		
-	}
-
-	public function s() {
-		$data['judul_web'] = "Pengaduan Berhasil Disimpan";
-		
-		$this->load->view('web/header', $data);
-		$this->load->view('web/pengaduan_sukses', $data);
-		$this->load->view('web/footer', $data);
 	}
 
 	public function cek($nik_pelapor='')

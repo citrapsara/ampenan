@@ -5,26 +5,19 @@ class Laporan extends CI_Controller {
 
 	public function index()
 	{
-		$data['judul_web'] = "Laporan";
-		$this->db->order_by('id_laporan', 'DESC');
-		$data['query'] = $this->db->get("tbl_laporan");
-		$this->load->view('web/header', $data);
-		$this->load->view('web/laporan', $data);
-		$this->load->view('web/footer', $data);
-	}
+		$ceks = $this->session->userdata('username');
+		$id_user = $this->session->userdata('id_user');
+		if(!isset($ceks)) {
+			redirect('web/login');
+		}else{
+			$data['user']   	 = $this->Mcrud->get_users_by_un($ceks);
+			$data['users']  	 = $this->Mcrud->get_users();
+			$data['judul_web'] = "Dashboard";
 
-	public function cek($no_idn='')
-	{
-		$data['judul_web'] = "Laporan";
-		if ($no_idn!='') {
-			$this->db->join('tbl_data_obh','tbl_data_obh.id_user=tbl_laporan.user');
-			$this->db->order_by('id_laporan', 'DESC');
-			$data['query'] = $this->db->get_where("tbl_laporan", array('no_idn'=>"$no_idn"));
+			$this->load->view('users/header', $data);
+			$this->load->view('users/dashboard', $data);
+			$this->load->view('users/footer');
 		}
-		$data['no_idn'] = $no_idn;
-		$this->load->view('web/header', $data);
-		$this->load->view('web/cek', $data);
-		$this->load->view('web/footer', $data);
 	}
 
 	public function v($aksi='',$id='')
@@ -39,9 +32,9 @@ class Laporan extends CI_Controller {
 
 			$data['user']  			  = $this->Mcrud->get_users_by_un($ceks);
 
-			if ($level=='petugas') {
-				$this->db->where('petugas',$id_user);
-			}
+			// if ($level=='petugas') {
+			// 	$this->db->where('petugas',$id_user);
+			// }
 			if ($level=='obh') {
 				$this->db->where('notaris',$id_user);
 			}
@@ -109,7 +102,7 @@ class Laporan extends CI_Controller {
 				date_default_timezone_set('Asia/Jakarta');
 				$tgl = date('Y-m-d H:i:s');
 
-				$lokasi = 'file';
+				$lokasi = 'file/laporan';
 				$file_size = 1024 * 3; // 3 MB
 				$this->upload->initialize(array(
 					"upload_path"   => "./$lokasi",
@@ -196,17 +189,7 @@ class Laporan extends CI_Controller {
 					$data_lama = $this->db->get_where('tbl_laporan',array('id_laporan'=>$id_laporan))->row();
 					$simpan = 'y';
 					$pesan = '';
-					if ($level=='superadmin') {
-						$id_petugas 	= htmlentities(strip_tags($this->input->post('id_petugas')));
-						$data = array(
-							'petugas'					=> $id_petugas,
-							'status'					=> 'konfirmasi',
-							'tgl_konfirmasi'  => $tgl
-						);
-						$pesan = 'Berhasil dikirim ke petugas';
-						$this->Mcrud->kirim_notif('superadmin',$id_petugas,$id_laporan,'superadmin_ke_petugas');
-						$this->Mcrud->kirim_notif('superadmin',$data_lama->user,$id_laporan,'superadmin_ke_notaris');
-					}else {
+					
 						$pesan_petugas = htmlentities(strip_tags($this->input->post('pesan_petugas')));
 						$status = htmlentities(strip_tags($this->input->post('status')));
 						$file = $data_lama->file_petugas;
@@ -234,8 +217,8 @@ class Laporan extends CI_Controller {
 							'file_petugas'  => $file,
 							'tgl_selesai'   => $tgl
 						);
-						$this->Mcrud->kirim_notif($data_lama->petugas,$data_lama->notaris,$id_laporan,'petugas_ke_notaris');
-					}
+						// $this->Mcrud->kirim_notif($data_lama->petugas,$data_lama->notaris,$id_laporan,'petugas_ke_notaris');
+					
 
 					if ($simpan=='y') {
 						$this->db->update('tbl_laporan',$data, array('id_laporan'=>$id_laporan));

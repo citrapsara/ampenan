@@ -50,25 +50,25 @@
 				    <div class="form-group">
                     <label class="col-lg-12">Nomor Permohonan<b id='wajib_isi'>*</b></label>
                     <div class="col-lg-12">
-                      <input type="text" name="no_permohonan" class="form-control" value="" placeholder="Nomor Permohonan.." >
+                      <input type="text" name="no_permohonan" class="form-control" value="" placeholder="Nomor Permohonan.." required>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-lg-12">Jenis Perkara<b id='wajib_isi'>*</b></label>
                     <div class="col-lg-12">
-                      <input type="text" name="jenis_perkara" class="form-control" value="" placeholder="Jenis Perkara.." >
+                      <input type="text" name="jenis_perkara" class="form-control" value="" placeholder="Jenis Perkara.." required>
                     </div>
                   </div>
 				 <div class="form-group">
                     <label class="col-lg-12">Nama Penerima Bantuan Hukum<b id='wajib_isi'>*</b></label>
                     <div class="col-lg-12">
-                      <input type="text" name="nama_client" class="form-control" value="" placeholder="Nama Penerima Bantuan Hukum..." >
+                      <input type="text" name="nama_client" class="form-control" value="" placeholder="Nama Penerima Bantuan Hukum..." required>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-lg-12">Nomor Induk Kependudukan<b id='wajib_isi'>*</b></label>
                     <div class="col-lg-12">
-                      <input type="text" name="nik_client" class="form-control" value="" placeholder="NIK Client..." >
+                      <input type="text" name="nik_client" class="form-control" value="" placeholder="NIK Client..." onkeypress="return hanyaAngka(event)" required>
                     </div>
                   </div>
                   <div class="form-group">
