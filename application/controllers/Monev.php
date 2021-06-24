@@ -43,7 +43,7 @@ class Monev extends CI_Controller {
 			}
 			$this->db->order_by('id_monev', 'DESC');
 			$data['query'] = $this->db->get("tbl_monev");
-			$data['file'] = $this->db->get("tbl_file_manager");
+			
 
 			$cek_notif = $this->db->get_where("tbl_notif", array('penerima'=>"$id_user"));
 			foreach ($cek_notif->result() as $key => $value) {
@@ -60,6 +60,7 @@ class Monev extends CI_Controller {
 				}
 				$p = "tambah";
 				$data['judul_web'] 	  = "BUAT LAPORAN MONEV";
+				$data['file'] = $this->db->get("tbl_file_manager");
 			}elseif ($aksi == 'd') {
 				$p = "detail";
 				$data['judul_web'] 	  = "RINCIAN LAPORAN MONEV";
@@ -306,6 +307,17 @@ class Monev extends CI_Controller {
 		} else {
 			redirect('404');
 		}
+	}
+
+	public function coba() {
+		$data['file'] = $this->db->get("tbl_file_manager");
+		foreach ($data['file']->result() as $baris) {
+			if ($baris->name_file == "Monev") {
+				
+				echo $baris->name_file;
+			}
+		}
+		// echo '<pre>'; print_r($data);
 	}
 
 }

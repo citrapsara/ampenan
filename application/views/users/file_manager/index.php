@@ -38,7 +38,8 @@
                                     <tr>
                                         <th width="1%">NO.</th>
                                         <th width="10%">FOTO</th>
-                                        <th width="65%">NAMA FILE</th>
+                                        <th width="45%">NAMA FILE</th>
+                                        <th width="20%">HALAMAN</th>
                                         <th width="14%">WAKTU</th>
                                         <th width="10%">Opsi</th>
                                     </tr>
@@ -63,6 +64,7 @@
 																					</a>
 																				</td>
 																				<td><?php echo $baris->name_file; ?></td>
+                                        <td><?php echo $baris->page; ?></td>
 																				<td><?php echo $this->Mcrud->tgl_id(date('d-m-Y H:i:s', strtotime($baris->tgl_file)),'full'); ?></td>
 																				<td align="center">
 																					<a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/e/<?php echo hashids_encrypt($baris->id_file); ?>" class="btn btn-success btn-xs" title="Edit"><i class="fa fa-edit"></i></a>

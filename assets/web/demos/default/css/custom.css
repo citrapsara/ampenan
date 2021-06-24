@@ -72,8 +72,11 @@ a.btn-banner:hover {
 
 /* ==== Home Content ==== */
 
-.home-content-title {
+.home-content-title-1 {
    background-image: linear-gradient(90deg, #f3662d 50%, #fff 50%);
+}
+.home-content-title-2 {
+   background-color: #fbe5d6;
 }
 .home-content-title h3 {
    margin-left: 25px;
@@ -92,8 +95,11 @@ h3.title-peta-sebaran {
    padding-left: 0;
    padding-right: 0;
 }
-.home-content {
+.home-content.home-content-1 {
    background-image: linear-gradient(90deg, #e7e6e6 50%, #f3662d 50%);
+}
+.home-content.home-content-2 {
+   background: #e7e6e6;
 }
 
 #map {
@@ -151,6 +157,16 @@ h3.title-peta-sebaran {
    z-index: 999;
    width: 180px;
    height: 180px;
+}
+
+/* Peraturan Terkait */
+.panel-peraturan .panel-heading {
+   background-color: #fbe5d6;
+   border-color: #f3662d;
+}
+
+.table-home {
+   overflow-x: hidden;
 }
 
 @media (max-width: 540px) {

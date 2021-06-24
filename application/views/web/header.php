@@ -104,7 +104,7 @@ var button=document.getElementById("autoKlik");
                         <a href="pengaduan/cek" class="c-link">Realisasi Anggaran</a>
                       </li>
                       <li class="dropdown-submenu <?php if($menu=='' AND $sub_menu=='cek'){echo "c-active ";} ?>">
-                        <a href="pengaduan/cek" class="c-link">Peraturan Terkait</a>
+                        <a href="peraturan_terkait" class="c-link">Peraturan Terkait</a>
                       </li>
                       <li class="dropdown-submenu <?php if($menu=='' AND $sub_menu=='cek'){echo "c-active ";} ?>">
                         <a href="pengaduan/cek" class="c-link">Panduan Pembuatan Laporan Kegiatan</a>

@@ -51,8 +51,9 @@ $link4 = strtolower($this->uri->segment(4));
 										<style>
                       #bg-white{color:#fff;}
                     </style>
-                    <div class="table-responsive">
-                      <table id="myTable" class="table table-bordered table-striped">
+                    <div class="table-responsive table-home">
+                      
+                      <table id="" class="table table-bordered table-striped display">
                         <thead>
                           <tr style="background:gray;">
                             <th id="bg-white" width="2%">N0.</th>
@@ -101,3 +102,5 @@ $link4 = strtolower($this->uri->segment(4));
 
 </div>
 <!-- END: PAGE CONTAINER -->
+
+

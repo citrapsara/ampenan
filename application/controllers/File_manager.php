@@ -37,7 +37,7 @@ class File_manager extends CI_Controller {
 				if ($data['query']->id_file=='') {redirect('404');}
 			}
 			elseif ($aksi == 'h') {
-				$cek_data = $this->db->get_where("tbl_file", array('id_file' => "$id"));
+				$cek_data = $this->db->get_where("tbl_file_manager", array('id_file' => "$id"));
 				if ($cek_data->num_rows() != 0) {
 						if ($cek_data->row()->dir_file != '') {
 							unlink($cek_data->row()->dir_file);

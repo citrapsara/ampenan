@@ -24,7 +24,7 @@
   </section>
 
   <section id="home-content">
-    <div class="home-content-title">
+    <div class="home-content-title home-content-title-1">
       <div class="container">
         <div class="row">
 
@@ -41,7 +41,7 @@
       </div>
     </div>
 
-    <div class="home-content">
+    <div class="home-content home-content-1">
       <div class="container-fluid">
         <!-- REALISASI ANGGARAN -->
         <div class="col-md-6 realisasi-anggaran">
@@ -72,6 +72,61 @@
             
             </div>
           </div>
+        </div>
+
+        <!-- PETA SEBARAN OBH NTB -->
+        <div class="col-md-6 peta-sebaran">
+          <div id='map'></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="home-content-title home-content-title-2">
+      <div class="container">
+        <div class="row">
+          <!-- PERATURAN TERKAIT -->
+          <div class="col-md-12">
+            <h3 class="text-center">Peraturan Terkait</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="home-content home-content-2">
+      <div class="container">
+        <!-- REALISASI ANGGARAN -->
+        <div class="col-md-12">
+        <style>
+                      #bg-white{color:#fff;}
+                    </style>
+
+                    <div class="table-responsive table-home">
+                      <table id="myTable" class="table table-bordered table-striped">
+                        <thead>
+                          <tr style="background:gray;">
+                            <th id="bg-white" width="2%">N0.</th>
+                            <th id="bg-white" width="78%">PERATURAN</th>
+                            <th id="bg-white" width="20%" class="text-center">DETAIL</th>
+                            
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <?php
+                            $no=1;
+                            foreach ($query->result() as $value):
+                          ?>
+                            <tr>
+                              <td><b><?php echo $no++; ?>.</b></td>
+                              <td><?php echo $value->name_file; ?></td>
+                              <td class="text-center"><a href="<?php echo $value->dir_file; ?>" class="btn btn-primary btn-sm" target="_blank" >Lihat</a></td>
+                              
+                              
+                            </tr>
+                          <?php endforeach; ?>
+                        </tbody>
+                      </table>
+                    </div>
         </div>
 
         <!-- PETA SEBARAN OBH NTB -->

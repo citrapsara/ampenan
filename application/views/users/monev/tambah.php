@@ -24,6 +24,27 @@
                 ?>
                 <form class="form-horizontal" action="" data-parsley-validate="true" method="post" enctype="multipart/form-data">
                   
+                <h4>Download File</h4>
+                <div class="table-responsive">
+                <table class="table table-bordered table-striped" width="100%">
+                  <tbody>
+                    <?php
+                      foreach ($file->result() as $baris) {                    
+                        if ($baris->page == "Monev") { ?>
+                          <tr>
+                            <th valign="top" width="200"><?php echo $baris->name_file; ?></th>
+                            <td>
+                              <a href="<?php echo $baris->dir_file; ?>" class="btn btn-primary btn-sm" target="_blank" >Download</a>
+                            </td>
+                          </tr>
+                    <?php 
+                        };
+                      };
+                    ?>
+                  </tbody>
+                </table>
+              </div>
+
                   <hr>
                   
                     <style>

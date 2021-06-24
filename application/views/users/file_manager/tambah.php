@@ -31,7 +31,11 @@
                   <div class="form-group">
                     <label class="control-label col-lg-3">Halaman</label>
                     <div class="col-lg-9">
-                      <input type="text" name="page" class="form-control" value="" placeholder="Halaman file ditampilkan" required autofocus onfocus="this.value = this.value;">
+                      <select class="form-control default-select2" name="page" required>
+                        <option value="">- Pilih -</option>
+                        <option value="Monev">Monev</option>
+                        <option value="Peraturan Terkait">Peraturan Terkait</option>
+                      </select>
                     </div>
                   </div>
                   <div class="form-group">

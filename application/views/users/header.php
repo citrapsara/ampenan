@@ -233,7 +233,7 @@ $sub_menu3 = strtolower($this->uri->segment(3));
 								</li>
 								<li <?php if($menu=='file_manager'){echo " class='active'";} ?>>
 									<a href="file_manager/v.html">
-										<i class="fa fa-bar-chart"></i> <span>File Manager</span>
+										<i class="fa fa-folder-open"></i> <span>File Manager</span>
 									</a>
 								</li>
 							</ul>
