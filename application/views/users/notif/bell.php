@@ -4,25 +4,24 @@
 $no = '1';
 $foto  = "img/user/user-default.jpg";
 $id_user = $this->session->userdata('id_user');
+
 foreach ($query->result() as $key => $value):
   $cek_penerima = $this->db->get_where('tbl_user', array('id_user'=>$value->penerima));
   if ($cek_penerima->num_rows()!=0) {
     $cek_pengirim = $this->db->get_where('tbl_user', array('id_user'=>$value->pengirim));
     if ($cek_pengirim->num_rows()==0) {
-      $nama  = ""; $pesan = ""; $waktu = "";
+      if ($value->nama_client=='') {
+        $nama  = ""; $pesan = ""; $waktu = "";
+      } else {
+        $nama  = $value->nama_client;
+        $pesan = $value->pesan;
+        $waktu = $this->Mcrud->waktu($value->tgl_notif,'full');
+      }
     }else {
       $baris = $cek_pengirim->row();
       $nama  = $baris->nama_lengkap;
       $pesan = $value->pesan;
       $waktu = $this->Mcrud->waktu($value->tgl_notif,'full');
-      if ($baris->level=='user') {
-        $foto_k = $this->db->get_where('tbl_data_user', array('id_user'=>$value->pengirim))->row()->foto;
-      	if ($foto_k!='') {
-      		if(file_exists("$foto_k")){
-      			$foto = $foto_k;
-      		}
-      	}
-      }
     }
 
     if ($no <= '5') {
@@ -32,8 +31,9 @@ foreach ($query->result() as $key => $value):
       }
       if(!preg_match("/$id_user/i", $value->hapus_notif)) {
   ?>
+  <!-- <p><?php //echo '<pre>'; print_r($query->result()); ?></p> -->
   <li class="media">
-      <a href="<?php echo $link; ?>">
+      <a href="<?php echo $link; ?>" id="notif_click">
           <div class="media-left"><img src="<?php echo $foto; ?>" class="media-object" alt=""></div>
           <div class="media-body">
               <h6 class="media-heading"><?php echo $nama; ?></h6>
@@ -58,3 +58,6 @@ endforeach; ?>
       <a href="web/notif.html" style="padding:10px;">Tampilkan Semua</a>
     <?php } ?>
   </li>
+
+<script>
+</script>

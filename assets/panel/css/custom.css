@@ -1,0 +1,99 @@
+.widget-stats .stats-icon.stats-icon-lg.stat-lap {
+  font-size: 128px !important;
+  top: 15px !important;
+  color: #fff !important;
+  width: 128px !important;
+  height: 50px !important;
+  line-height: 50px !important;
+  text-shadow: 3px 7px rgba(0, 0, 0, 0.25) !important;
+  opacity: 0.15 !important;
+  right: 0 !important;
+}
+
+.panel-body.panel-stat-lap {
+  display: none;
+}
+
+/* Dashboard */
+.dashboard .row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+}
+.dashboard .row > [class*="col-"] {
+  display: flex;
+  flex-direction: column;
+}
+
+.realisasi-card {
+  background-color: #2d353c;
+  padding: 10px;
+}
+
+.penyerapan-chart img {
+  position: absolute;
+  bottom: 0;
+  right: 10px;
+}
+
+.progress-title {
+  color: #adb5bd;
+}
+.progress-angka {
+  font-size: 20px;
+  margin-bottom: 6px;
+}
+.dashboard-progress .progress {
+  height: 10px;
+}
+.dashboard-progress .progress-bar-success {
+  background-color: #00acac;
+}
+.dashboard-progress .progress-bar-danger {
+  background-color: #ea4272;
+}
+
+/* Dipa Collapse Accordion */
+.dipa-collapse .mb-0 {
+  margin: 0 !important;
+}
+.dipa-collapse .card-header {
+  padding: 0 !important;
+}
+.dipa-accordion-btn {
+  width: 100%;
+  background: #20252a;
+  text-align: left;
+  padding: 13px;
+  border-radius: 3px 3px 0px 0px;
+}
+.dipa-accordion-btn.collapsed {
+  border-radius: 3px !important;
+}
+.dipa-accordion-btn a {
+  color: #fff;
+}
+.dipa-accordion-btn.btn-link:hover,
+.dipa-accordion-btn.btn-link:focus,
+.dipa-accordion-btn.btn-link:active {
+  background: #20252a;
+  text-transform: none !important;
+}
+.dipa-accordion-btn .caret {
+  position: absolute;
+  right: 20px;
+}
+.dipa-accordion-btn .caret::before {
+  font-weight: 900;
+}
+.dipa-collapse .card-body {
+  padding: 20px;
+  border: 1px solid lightgrey;
+  border-top: 0px;
+  border-radius: 0px 0px 4px 4px;
+}
+.dipa-collapse.invisible {
+  display: none !important;
+}

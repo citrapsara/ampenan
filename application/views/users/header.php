@@ -6,15 +6,6 @@ $username   = $cek->username;
 
 $level  = $cek->level;
 $foto = "img/user/user-default.jpg";
-if ($level=='user') {
-	$d_k = $this->db->get_where('tbl_data_user', array('id_user'=>$cek->id_user))->row();
-	$foto_k = $d_k->foto;
-	if ($foto_k!='') {
-		if(file_exists("$foto_k")){
-			$foto = $foto_k;
-		}
-	}
-}
 
 $menu 		= strtolower($this->uri->segment(1));
 $sub_menu = strtolower($this->uri->segment(2));
@@ -123,17 +114,11 @@ $sub_menu3 = strtolower($this->uri->segment(3));
 							<span class="user-image online">
 								<img src="<?php echo $foto;?>" alt="" />
 							</span>
-							<span class="hidden-xs"><?php echo ucwords($nama); ?></span> <b class="caret"></b>
+							<b class="caret"></b>
 						</a>
 						<ul class="dropdown-menu animated fadeInLeft">
 							<li class="arrow"></li>
-							<li <?php if($menu=='profile'){echo " class='active'";}?>><a href="profile.html"><?php if($level=='user'){echo "Lengkapi ";} ?>Profile</a></li>
-							<li <?php if($menu=='ubah_pass'){echo " class='active'";}?>><a href="ubah_pass.html">Ubah Password</a></li>
-							<!--
-							 <li><a href="javascript:;"><span class="badge badge-danger pull-right">2</span> Inbox</a></li> 
-							 <li><a href="javascript:;">Calendar</a></li> 
-							 <li><a href="javascript:;">Setting</a></li>
-							-->
+							<li <?php if($menu=='profile'){echo " class='active'";}?>><a href="profile.html">Profile</a></li>
 							<li class="divider"></li>
 							<li><a href="web/logout.html">Logout</a></li>
 						</ul>
@@ -146,6 +131,7 @@ $sub_menu3 = strtolower($this->uri->segment(3));
 		<!-- end #header -->
 
 		<!-- begin #sidebar -->
+		
 		<div id="sidebar" class="sidebar">
 			<!-- begin sidebar scrollbar -->
 			<div data-scrollbar="true" data-height="100%">
@@ -162,20 +148,73 @@ $sub_menu3 = strtolower($this->uri->segment(3));
 					</li>
 				</ul>
 				<!-- end sidebar user -->
+
 				<!-- begin sidebar nav -->
 				<ul class="nav">
-				<!-- MENU UMUM DARI SINI -->
 					<li class="nav-header"><big ">Menu Navigasi</big></li>
+					<li class="has-sub<?php if($menu=='users' AND $sub_menu=='' or $menu=='dashboard'){echo " active";} ?>">
+						<a href="dashboard.html">
+						    <i class="fa fa-th-large"></i>
+						    <span>Dashboard</span>
+					   </a>
+					</li>
+					<li class="has-sub <?php if($menu=='perencanaan' OR ($menu=='dipa' AND $sub_menu=='v') OR ($menu=='folder_data_dukung' AND $sub_menu=='v') OR ($menu=='data_dukung' AND $sub_menu=='v') OR ($menu=='rpd' AND $sub_menu=='v')){echo " active";} ?>">
+						<a href="javascript:;">
+							<b class="caret pull-right"></b>
+							<i class="fa fa-calculator bg-gray"></i>
+							<span>Perencanaan</span>
+						</a>
+						<ul class="sub-menu">
+							<li <?php if($menu=='dipa'){echo " class='active'";} ?>>
+								<a href="dipa/v.html">
+									<i class="fa fa-file-text"></i> <span>DIPA</span>
+								</a>
+							</li>
+							<li <?php if($menu=='revisi_dipa'){echo " class='active'";} ?>>
+								<a href="">
+									<i class="fa fa-pencil-square"></i> <span>Usulan Revisi DIPA</span>
+								</a>
+							</li>
+							<li <?php if($menu=='data_dukung' or $menu=='folder_data_dukung'){echo " class='active'";} ?>>
+								<a href="folder_data_dukung">
+									<i class="fa fa-folder-open"></i> <span>Data Dukung</span>
+								</a>
+							</li>
+							<li <?php if($menu=='rpd' AND $sub_menu=='v'){echo " class='active'";} ?>>
+								<a href="">
+									<i class="fa fa-calendar-check-o"></i> <span>RPD</span>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li class="has-sub<?php if($menu=='pelaksanaan_anggaran' AND $sub_menu=='' or $menu=='pelaksanaan_anggaran'){echo " active";} ?>">
+						<a href="">
+						    <i class="fa fa-line-chart"></i>
+						    <span>Pelaksanaan Anggaran</span>
+					   </a>
+					</li>
+					<!-- <li class="has-sub<?php //if($menu=='pengadaan' AND $sub_menu=='' or $menu=='pengadaan'){echo " active";} ?>">
+						<a href="">
+						    <i class="fa fa-cart-plus"></i>
+						    <span>Pengadaan</span>
+					   </a>
+					</li> -->
+				<!-- </ul> -->
+
+				<!-- begin sidebar nav -->
+				<!-- <ul class="nav"> -->
+				<!-- MENU UMUM DARI SINI -->
+					<!-- <li class="nav-header"><big ">Menu Navigasi</big></li>
 					<li class="has-sub<?php if($menu=='users' AND $sub_menu=='' or $menu=='dashboard'){echo " active";} ?>">
 						<a href="dashboard.html">
 						    <i class="ion-ios-pulse-strong"></i>
 						    <span>Dashboard</span>
 					   </a>
-					</li>
+					</li> -->
 				<!-- MENU UMUM SAMPAI SINI -->
 				
 					<!-- MENU SUPER ADMIN -->
-					<?php if ($level=='superadmin'): ?>
+					<!-- <?php if ($level=='superadmin'): ?>
 						<li class="has-sub <?php if($menu=='pengaduan'){echo " active";} ?>">
 							<a href="javascript:;">
 								<b class="caret pull-right"></b>
@@ -190,7 +229,7 @@ $sub_menu3 = strtolower($this->uri->segment(3));
 								</li>
 							</ul>
 						</li>
-						<li class="has-sub <?php if($menu=='obh' OR ($menu=='laporan' AND $sub_menu=='v') OR $menu=='tambahobh' OR ($menu=='monev' AND $sub_menu=='v')){echo " active";} ?>">
+						<li class="has-sub <?php if($menu=='obh' OR ($menu=='laporan' AND $sub_menu=='v') OR $menu=='tambahobh' OR ($menu=='laporan_semester' AND $sub_menu=='v')){echo " active";} ?>">
 							<a href="javascript:;">
 								<b class="caret pull-right"></b>
 								<i class="fa fa-user bg-gray"></i>
@@ -209,28 +248,23 @@ $sub_menu3 = strtolower($this->uri->segment(3));
 								</li>
 								<li <?php if($menu=='laporan' AND $sub_menu=='v'){echo " class='active'";} ?>>
 									<a href="laporan/v.html">
-										<i class="fa fa-file-text"></i> <span>Laporan OBH</span>
+										<i class="fa fa-file-text"></i> <span>Laporan Kegiatan OBH</span>
 									</a>
 								</li>
-								<li <?php if($menu=='monev' AND $sub_menu=='v'){echo " class='active'";} ?>>
-									<a href="monev/v.html">
-										<i class="fa fa-video-camera"></i> <span>Monev OBH</span>
+								<li <?php if($menu=='laporan_semester' AND $sub_menu=='v'){echo " class='active'";} ?>>
+									<a href="laporan_semester/v.html">
+										<i class="fa fa-calendar-check-o"></i> <span>Laporan Semester OBH</span>
 									</a>
 								</li>
 							</ul>
 						</li>
-						<li class="has-sub <?php if($menu=='realisasi_anggaran' OR $menu=='file_manager'){echo " active";} ?>">
+						<li class="has-sub <?php if($menu=='file_manager'){echo " active";} ?>">
 							<a href="javascript:;">
 								<b class="caret pull-right"></b>
 								<i class="fa fa-newspaper-o bg-gray"></i>
 								<span>Info Publik</span>
 							</a>
 							<ul class="sub-menu">
-								<li <?php if($menu=='realisasi_anggaran'){echo " class='active'";} ?>>
-									<a href="realisasi_anggaran/v.html">
-										<i class="fa fa-bar-chart"></i> <span>Realisasi Anggaran</span>
-									</a>
-								</li>
 								<li <?php if($menu=='file_manager'){echo " class='active'";} ?>>
 									<a href="file_manager/v.html">
 										<i class="fa fa-folder-open"></i> <span>File Manager</span>
@@ -238,17 +272,6 @@ $sub_menu3 = strtolower($this->uri->segment(3));
 								</li>
 							</ul>
 						</li>
-						<li class="has-sub <?php if($menu=='kategori'){echo " active";} ?>">
-							<a href="javascript:;">
-								<b class="caret pull-right"></b>
-								<i class="fa fa-cogs bg-gray"></i>
-								<span>Kategori Pengaduan</span>
-							</a>
-							<ul class="sub-menu">
-								<li<?php if($menu=='kategori' AND $sub_menu='v'){echo " class='active'";} ?>><a href="kategori/v.html">Kategori Aduan</a></li>
-								<li<?php if($menu=='kategori' AND $sub_menu='sub'){echo " class='active'";} ?>><a href="kategori/sub.html">Sub Kategori</a></li>
-							</ul>
-						</li>					
 						<li class="has-sub <?php if($menu=='kategori_lap'){echo " active";} ?>">
 							<a href="javascript:;">
 								<b class="caret pull-right"></b>
@@ -260,24 +283,30 @@ $sub_menu3 = strtolower($this->uri->segment(3));
 								<li<?php if($menu=='kategori_lap' AND $sub_menu='sub'){echo " class='active'";} ?>><a href="kategori_lap/sub.html">Sub Kategori</a></li>
 							</ul>
 						</li>
-					<?php endif; ?>
+					<?php endif; ?> -->
 					<!-- akhir sesi super admin -->
 					
 					<!-- MENU OBH -->
-					<?php if ($level=='obh'): ?>
+					<!-- <?php if ($level=='obh'): ?>
 						<li <?php if($menu=='laporan' AND $sub_menu=='v'){echo " class='active'";} ?>>
 							<a href="laporan/v.html">
 								<div class="icon-img"><i class="fa fa-file-text"></i></div>
-							  <span>Laporan</span>
+							  <span>Laporan Kegiatan</span>
 							</a>
 						</li>
-						<li <?php if($menu=='monev' AND $sub_menu=='v'){echo " class='active'";} ?>>
-							<a href="monev/v.html">
-								<div class="icon-img"><i class="fa fa-video-camera"></i></div>
-							  <span>Monev</span>
+						<li <?php if($menu=='laporan_semester' AND $sub_menu=='v'){echo " class='active'";} ?>>
+							<a href="laporan_semester/v.html">
+								<div class="icon-img"><i class="fa fa-calendar-check-o"></i></div>
+							  <span>Laporan Semester</span>
 							</a>
 						</li>
-					<?php endif; ?>
+						<li <?php if($menu=='permohonan_bankum' AND $sub_menu=='v'){echo " class='active'";} ?>>
+							<a href="permohonan_bankum/v.html">
+								<div class="icon-img"><i class="fa fa-envelope"></i></div>
+							  <span>Permohonan Bantuan</span>
+							</a>
+						</li>
+					<?php endif; ?> -->
 					
 					<!-- AKHIR MENU NOTARIS-->
 					<li class="nav-header"></li>

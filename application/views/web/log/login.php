@@ -39,12 +39,6 @@
 						Beranda
 						<i class="fa fa-home m-l-5" aria-hidden="true"></i>
 					</a>
-					<!-- <span>  | </span> -->
-					<!-- Button for registration -->
-					<!-- <a class="txt2" href="web/user_register.html">
-						Buat Akun Baru
-						<i class="fa fa-user m-l-5" aria-hidden="true"></i>
-					</a> -->
 				 <div class="text-center"></div>
 			</form>
 		</div>

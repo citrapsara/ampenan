@@ -124,7 +124,6 @@ class Mcrud extends CI_Model {
 	{
 			$this->db->from($this->tbl_users);
 			$this->db->where('tbl_user.dihapus', 'tidak');
-			$this->db->where('tbl_user.level', 'user');
 			$this->db->where('tbl_user.level', 'obh');
 			$this->db->where('tbl_user.id_user', $id);
 			$query = $this->db->get();
@@ -225,19 +224,6 @@ class Mcrud extends CI_Model {
 		return $data;
 	}
 
-	function d_pelapor($id='',$aksi='')
-	{
-		if ($aksi=='nama_pelapor') {
-			$data = $this->db->get_where('tbl_data_user', array('id_user'=>$id))->row()->nama;
-		}elseif ($aksi=='kategori') {
-			$data = $this->db->get_where('tbl_kategori', array('id_kategori'=>$id))->row()->nama_kategori;
-		}elseif ($aksi=='sub_kategori') {
-			$data = $this->db->get_where('tbl_sub_kategori', array('id_sub_kategori'=>$id))->row()->nama_sub_kategori;
-		}else {
-			$data = '-';
-		}
-		return $data;
-	}
 	//d_pelapor notaris
 	function d_notaris($id='',$aksi='')
 	{
@@ -253,12 +239,11 @@ class Mcrud extends CI_Model {
 		return $data;
 	}
 
-	function cek_status($data)
+	//cek status permohonan bankum
+	function cek_status_permohonan($data)
 	{
 		if ($data=='proses') {
-			$data = '<label class="label label-danger">BELUM DI KONFIRMASI</label>';
-		}elseif ($data=='konfirmasi') {
-			$data = '<label class="label label-primary">SEDANG DITANGANI</label>';
+			$data = '<label class="label label-danger">BELUM TERKONFIRMASI</label>';
 		}elseif ($data=='selesai') {
 			$data = '<label class="label label-success">SELESAI</label>';
 		}else {
@@ -267,13 +252,13 @@ class Mcrud extends CI_Model {
 		return $data;
 	}
 
-	//cek ststus laporan notaris
-		function cek_status_notaris($data)
+	//cek status pengaduan
+		function cek_status_pengaduan($data)
 	{
 		if ($data=='proses') {
-			$v_data = '<label class="label label-danger">BELUM DITANGGAPI</label>';
+			$v_data = '<label class="label label-danger">BELUM DIVERIFIKASI</label>';
 		}elseif ($data=='konfirmasi') {
-			$v_data = '<label class="label label-primary">SEDANG DIPROSES</label>';
+			$v_data = '<label class="label label-primary">SEDANG DITANGANI</label>';
 		}elseif ($data=='selesai') {
 			$v_data = '<label class="label label-success">SELESAI</label>';
 		}else {
@@ -282,54 +267,93 @@ class Mcrud extends CI_Model {
 		return $v_data;
 	}
 
-	function kirim_notif($pengirim,$penerima,$id_pengaduan,$id_laporan='',$pesan='')
+	//cek status laporan
+		function cek_status_laporan($data)
+	{
+		if ($data=='proses') {
+			$v_data = '<label class="label label-danger">BELUM DIVERIFIKASI</label>';
+		}elseif ($data=='konfirmasi') {
+			$v_data = '<label class="label label-primary">PERBAIKAN</label>';
+		}elseif ($data=='selesai') {
+			$v_data = '<label class="label label-success">SELESAI</label>';
+		}else {
+			$v_data = '';
+		}
+		return $v_data;
+	}
+
+	function kirim_notif($pengirim,$penerima,$id_for_link,$notif_type,$pesan,$nama_client)
 	{
 		date_default_timezone_set('Asia/Jakarta');
 		$tgl = date('Y-m-d H:i:s');
 		if ($pengirim=='superadmin') { $pengirim = '1'; }
 		if ($penerima=='superadmin') { $penerima = '1'; }
 
-		if ($pesan=='user_kirim_pengaduan') {
-			$pesan = "Mengirim Pengaduan baru";
-			//notaris kirim laporan
-		}elseif ($pesan=='notaris_kirim_laporan') {
-			$pesan = "Mengirim Laporan baru";
-			// <--- >//	
-		}elseif ($pesan=='superadmin_ke_petugas') {
-			$pesan = "Mengirim Pekerjaan baru";
-		}elseif ($pesan=='superadmin_ke_user') {
-			$pesan = "Pengaduan dikonfirmasi";
-		}elseif ($pesan=='petugas_ke_user') {
-			$pesan = "Pengaduan Selesai";
-			//copy lagi
-		}elseif ($pesan=='superadmin_ke_notaris') {
-			$pesan = "Laporan dikonfirmasi";
-		}elseif ($pesan=='petugas_ke_notaris') {
-			$pesan = "Laporan diterima";	
+		if ($notif_type == 'laporan') {
+			if ($pesan=='notaris_kirim_laporan') {
+				$pesan = "Mengirim Laporan baru";
+				// <--- >//	
+			}elseif ($pesan=='superadmin_konfirmasi_laporan') {
+				$pesan = "Laporan perlu perbaikan";
+			}elseif ($pesan=='superadmin_selesai_laporan') {
+				$pesan = "Laporan telah selesai diverifikasi";	
+			}
+			// id laporan notaris
+			if ($id_for_link=='' OR $id_for_link==0) {
+				$link = '';
+			}else{
+				$link = "laporan/v/d/".hashids_encrypt($id_for_link);
+			}
+			//sampai sini
+		}
+		elseif ($notif_type == 'laporan_semester') {
+			if ($pesan=='notaris_kirim_laporan') {
+				$pesan = "Mengirim Laporan Semester baru";
+				// <--- >//	
+			}elseif ($pesan=='superadmin_konfirmasi_laporan') {
+				$pesan = "Laporan perlu perbaikan";
+			}elseif ($pesan=='superadmin_selesai_laporan') {
+				$pesan = "Laporan telah selesai diverifikasi";	
+			}
+			// id laporan notaris
+			if ($id_for_link=='' OR $id_for_link==0) {
+				$link = '';
+			}else{
+				$link = "laporan_semester/v/d/".hashids_encrypt($id_for_link);
+			}
+			//sampai sini
+		}
+		elseif ($notif_type == 'pengaduan') {
+			if ($pesan=='user_kirim_pengaduan') {
+				$pesan = "Pengaduan baru dari masyarakat";
+			}
+			if ($id_for_link=='' OR $id_for_link==0) {
+				$link = '';
+			}else{
+				$link = "pengaduan/v/d/".hashids_encrypt($id_for_link);
+			}
+		}
+		elseif ($notif_type == 'permohonan') {
+			if ($pesan=='user_kirim_permohonan') {
+				$pesan = "Permohonan Bantuan Hukum baru dari masyarakat";
+			}
+			if ($id_for_link=='' OR $id_for_link==0) {
+				$link = '';
+			}else{
+				$link = "permohonan_bankum/v/d/".hashids_encrypt($id_for_link);
+			}
 		}
 
-		if ($id_pengaduan=='') {
-			$link = '';
-		}else{
-			$link = "pengaduan/v/d/".hashids_encrypt($id_pengaduan);
-		}
 
-		// id laporan notaris
-		if ($id_laporan=='') {
-			$link = '';
-		}else{
-			$link = "laporan/v/d/".hashids_encrypt($id_laporan);
-		}
-		//sampai sini
 
 		$data2 = array(
 			'pengirim'  => $pengirim,
 			'penerima'  => $penerima,
 			'pesan'  		=> $pesan,
 			'link'			=> $link,
-			'id_pengaduan' => $id_pengaduan,
-			'id_laporan' => $id_laporan,
-			'tgl_notif' => $tgl
+			'id_for_link' => $id_for_link,
+			'tgl_notif' => $tgl,
+			'nama_client' => $nama_client
 		);
 		$this->db->insert('tbl_notif',$data2);
 		
