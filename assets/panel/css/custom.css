@@ -38,7 +38,8 @@
   right: 10px;
 }
 
-.progress-title {
+.progress-title,
+.dashboard-all .panel-heading {
   color: #adb5bd;
 }
 .progress-angka {
@@ -53,6 +54,15 @@
 }
 .dashboard-progress .progress-bar-danger {
   background-color: #ea4272;
+}
+.dashboard-progress .progress-bar-bp {
+  background-color: #14afff;
+}
+.dashboard-progress .progress-bar-bb {
+  background-color: #ffd11c;
+}
+.dashboard-progress .progress-bar-bm {
+  background-color: #8753de;
 }
 
 /* Dipa Collapse Accordion */
@@ -72,7 +82,8 @@
 .dipa-accordion-btn.collapsed {
   border-radius: 3px !important;
 }
-.dipa-accordion-btn a {
+.dipa-accordion-btn a,
+.dipa-accordion-btn.btn-link {
   color: #fff;
 }
 .dipa-accordion-btn.btn-link:hover,
@@ -96,4 +107,36 @@
 }
 .dipa-collapse.invisible {
   display: none !important;
+}
+
+/* Dashboard collapse */
+.dashboard-all .dipa-accordion-btn,
+.dashboard-all .dipa-accordion-btn.btn-link:hover,
+.dashboard-all .dipa-accordion-btn.btn-link:focus,
+.dashboard-all .dipa-accordion-btn.btn-link:active {
+  background-color: #2d353c;
+}
+.dashboard-all .panel-collapse > .panel-body {
+  padding: 0;
+  border-top: 0 !important;
+}
+.dashboard-all .realisasi-card.card {
+  border-radius: 0 0 4px 4px;
+}
+
+/* Pelaksanaan Anggaran */
+.verifikasi-icon i {
+  font-size: 18px;
+}
+.col-9 .radio-btn-verifikasi {
+  padding-top: 7px;
+}
+.radio-btn-verifikasi {
+  margin: 7px 10px 0 0;
+}
+.form-group.input-dinamis {
+  padding: 0 10px;
+}
+.col-input-dinamis {
+  padding: 0 5px;
 }

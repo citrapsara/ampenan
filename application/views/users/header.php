@@ -91,7 +91,7 @@ $sub_menu3 = strtolower($this->uri->segment(3));
 			<div class="container-fluid">
 				<!-- begin mobile sidebar expand / collapse button -->
 				<div class="navbar-header">
-					<a href="" class="navbar-brand"><span class="navbar-logo"><i class="fa fa-vcard"></i></span> &nbsp;<b>Panel</b> <?php echo ucwords($level); ?></a>
+					<!-- <a href="" class="navbar-brand"><span class="navbar-logo"><i class="fa fa-vcard"></i></span> &nbsp;<b>Panel</b> <?php //echo ucwords($level); ?></a> -->
 					<button type="button" class="navbar-toggle" data-click="sidebar-toggled">
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
@@ -188,7 +188,7 @@ $sub_menu3 = strtolower($this->uri->segment(3));
 						</ul>
 					</li>
 					<li class="has-sub<?php if($menu=='pelaksanaan_anggaran' AND $sub_menu=='' or $menu=='pelaksanaan_anggaran'){echo " active";} ?>">
-						<a href="">
+						<a href="pelaksanaan_anggaran">
 						    <i class="fa fa-line-chart"></i>
 						    <span>Pelaksanaan Anggaran</span>
 					   </a>

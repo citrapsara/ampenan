@@ -219,4 +219,52 @@ class Guzzle_model extends CI_model {
         return $result;
     }
 
+    // Model Pelaksanaan Anggaran
+    public function getAllPelaksanaanAnggaran()
+    {
+        $response = $this->_client->request('GET', 'PelaksanaanAnggaran');
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function getPelaksanaanAnggaranById($id)
+    {
+        $response = $this->_client->request('GET', 'PelaksanaanAnggaran/detail' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function getPelaksanaanAnggaranByDipaId($id)
+    {
+        $response = $this->_client->request('GET', 'PelaksanaanAnggaran/getDetailByDipa/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function createPelaksanaanAnggaran($data)
+    {
+        $response = $this->_client->request('POST', 'PelaksanaanAnggaran/create', [
+            'json' => $data
+        ]);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function updatePelaksanaanAnggaran($id, $data)
+    {
+        // var_dump($data); exit;
+        $response = $this->_client->request('PUT', 'PelaksanaanAnggaran/update/' . $id, [
+            'json' => $data
+        ]);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function deletePelaksanaanAnggaran($id)
+    {
+        $response = $this->_client->request('DELETE', 'PelaksanaanAnggaran/delete/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
 }
