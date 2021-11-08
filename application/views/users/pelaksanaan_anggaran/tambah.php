@@ -17,7 +17,7 @@
                 </div>
                 <h4 class="panel-title"><?php echo $judul_web; ?></h4>
             </div>
-            <div class="panel-body">
+            <div class="panel-body pelaksanaan-anggaran">
                 <?php
                 echo $this->session->flashdata('msg');
                 ?>
@@ -26,13 +26,13 @@
                     #wajib_isi{color:red;}
                   </style>
                   <div class="alert alert-success">
-                    <strong><i>Catatan :</i></strong> Pastikan Laporan Pertanggungjawaban Anda telah lengkap dan sesuai dengan ketentuan. Ketentuan Pertanggungjawaban dapat dilihat pada link berikut ini <a class="btn btn-info btn-xs" href="file/ketentuan_pertanggungjawaban/Kelengkapan data pertanggungjawaban belanja.pdf" target="_blank"><i class="fa fa-download"></i> Kelengkapan Pertanggungjawaban</a>
+                    <strong><i>Catatan :</i></strong> Pastikan Laporan Pertanggungjawaban Anda telah lengkap dan sesuai dengan ketentuan. Ketentuan Pertanggungjawaban dapat dilihat pada link berikut ini    <a class="btn btn-info btn-xs" href="file/ketentuan_pertanggungjawaban/Kelengkapan data pertanggungjawaban belanja.pdf" target="_blank"><i class="fa fa-download"></i> Kelengkapan Pertanggungjawaban</a>
                   </div>
                   <br>
-                  <div class="form-group">
+                  <div class="form-group" methode="post">
                     <label class="col-lg-3">Nama Pelaksanaan Anggaran<b id='wajib_isi'>*</b></label>
                     <div class="col-lg-9">
-                      <input type="text" name="nama_pelaksanaan_anggaran" class="form-control" value="" placeholder="Nama Folder" required autofocus onfocus="this.value = this.value;">
+                      <input type="text" name="nama_pelaksanaan_anggaran" class="form-control" value="" placeholder="Nama Pelaksanaan Anggaran" required autofocus onfocus="this.value = this.value;">
                     </div>
                   </div>
                   <div class="form-group">
@@ -50,25 +50,47 @@
                     </div>
                   </div>
                   <hr>
-                  <div class="form-group input-dinamis">
-                    <div class="col-input-dinamis col-lg-3">
-                      <input type="text" name="kode_akun" class="form-control" value="" placeholder="Kode Akun">
+                  <div class="control-group after-add-more">
+                    <div class="form-group input-dinamis">
+                      <div class="col-input-dinamis col-lg-3">
+                        <input type="text" name="kode_akun[]" class="form-control" value="" placeholder="Kode Akun" required>
+                      </div>
+                      <div class="col-input-dinamis col-lg-5">
+                        <input type="text" name="uraian_detil[]" class="form-control" value="" placeholder="Uraian" required>
+                      </div>
+                      <div class="col-input-dinamis col-lg-3">
+                        <input type="text" name="jumlah_realisasi[]" class="form-control" value="" placeholder="Jumlah Realisasi" onkeypress="return hanyaAngka(event)" required>
+                      </div>
+                      <div class="col-input-dinamis col-lg-1">
+                        <button class="btn btn-success add-more" type="button">
+                          <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                        </button>
+                      </div>
                     </div>
-                    <div class="col-input-dinamis col-lg-5">
-                      <input type="text" name="uraian_detil" class="form-control" value="" placeholder="Uraian">
-                    </div>
-                    <div class="col-input-dinamis col-lg-3">
-                      <input type="text" name="jumlah_realisasi" class="form-control" value="" placeholder="Jumlah Realisasi" onkeypress="return hanyaAngka(event)">
-                    </div>
-                    <div class="col-input-dinamis col-lg-1">
-                      <button class="btn btn-success add-more" type="button">
-                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                      </button>
+                  </div>
+                  <div class="copy hide">
+                    <div class="control-group">
+                      <div class="form-group input-dinamis">
+                        <div class="col-input-dinamis col-lg-3">
+                          <input type="text" name="kode_akun[]" class="form-control" value="" placeholder="Kode Akun">
+                        </div>
+                        <div class="col-input-dinamis col-lg-5">
+                          <input type="text" name="uraian_detil[]" class="form-control" value="" placeholder="Uraian">
+                        </div>
+                        <div class="col-input-dinamis col-lg-3">
+                          <input type="text" name="jumlah_realisasi[]" class="form-control" value="" placeholder="Jumlah Realisasi" onkeypress="return hanyaAngka(event)">
+                        </div>
+                        <div class="col-input-dinamis col-lg-1">
+                          <button class="btn btn-danger remove" type="button">
+                            <i class="fa fa-minus-circle"></i>
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <hr>
                   <div class="form-group">
-                    <label class="col-lg-3">Verifikasi<b id='wajib_isi'>*</b></label>
+                    <label class="col-lg-3">Verifikasi</label>
                     <div class="col-lg-9">
                       <input class="radio-btn-verifikasi" type="radio" name="status_verifikasi" value="belum">Tolak
                       <input class="radio-btn-verifikasi" type="radio" name="status_verifikasi" value="sudah">Setuju
@@ -77,16 +99,15 @@
                   <div class="form-group">
                     <label class="col-lg-3">Catatan</label>
                     <div class="col-lg-9">
-                      <textarea name="catatan" class="form-control" placeholder="Catatan Perbaikan" rows="4" cols="100" required></textarea>
+                      <textarea name="catatan" class="form-control" placeholder="Catatan Perbaikan" rows="4" cols="100"></textarea>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-lg-3">Skor<b id='wajib_isi'>*</b></label>
+                    <label class="col-lg-3">Skor</label>
                     <div class="col-lg-9">
                       <input class="radio-btn-verifikasi" type="radio" name="skor_warna" value="hijau">Hijau
                       <input class="radio-btn-verifikasi" type="radio" name="skor_warna" value="kuning">Kuning
                       <input class="radio-btn-verifikasi" type="radio" name="skor_warna" value="merah">Merah
-                      
                     </div>
                   </div>
                   <hr>
@@ -99,3 +120,17 @@
       </div>
     </div>
     <!-- /dashboard content -->
+
+<script type="text/javascript">
+    $(document).ready(function() {
+      $(".add-more").click(function(){ 
+          var html = $(".copy").html();
+          $(".after-add-more").after(html);
+      });
+
+      // saat tombol remove dklik control group akan dihapus 
+      $("body").on("click",".remove",function(){ 
+          $(this).parents(".control-group").remove();
+      });
+    });
+</script>

@@ -82,16 +82,48 @@ class Pelaksanaan_anggaran extends CI_Controller {
 		date_default_timezone_set('Asia/Singapore');
 		$tgl = date('Y-m-d H:i:s');
 
+		$lokasi = 'file/pelaksanaan_anggaran';
+		$file_size = 1024 * 10; // 10 MB
+		$this->upload->initialize(array(
+			"upload_path"   => "./$lokasi",
+			"allowed_types" => "*",
+			"max_size" => "$file_size"
+		));
+
 		if (isset($_POST['btnsimpan'])) {
-			$name_folder = htmlentities(strip_tags($this->input->post('name_folder')));
-			$simpan = 'y';
+			$nama_pelaksanaan_anggaran = htmlentities(strip_tags($this->input->post('nama_pelaksanaan_anggaran')));
+			$tanggal_pelaksanaan 	 = htmlentities(strip_tags($this->input->post('tanggal_pelaksanaan')));
+
+			if ( ! $this->upload->do_upload('file_pertanggungjawaban'))
+			{
+				$simpan = 'n';
+				$pesan  = htmlentities(strip_tags($this->upload->display_errors('<p>', '</p>')));
+			}
+			 else
+			{
+				$gbr = $this->upload->data();
+				$filename = "$lokasi/".$gbr['file_name'];
+				$file_pertanggungjawaban = preg_replace('/ /', '_', $filename);
+				$simpan = 'y';
+			}
 
 			if ($simpan=='y') {
-				$data = array(
-					'uraian'	=> $name_folder,
-					'id_dipa'	=> $id_dipa
+				$data_pelaksanaan = array(
+					'uraian'				=> $nama_pelaksanaan_anggaran,
+					'id_dipa'				=> $id_dipa,
+					'url_file'				=> $file_pertanggungjawaban,
+					'tanggal_pelaksanaan'	=> $tanggal_pelaksanaan
 				);
-				$this->Guzzle_model->createFolderDataDukung($data);
+				// $this->Guzzle_model->createPelaksanaanAnggaran($data_pelaksanaan);
+
+				$kode_akun = $_POST['kode_akun'];
+				// $kode_akun = htmlentities(strip_tags($this->input->post('kode_akun[]')));
+				// $uraian_detil 	 = htmlentities(strip_tags($this->input->post('uraian_detil')));
+				// $jumlah_realisasi 	 = htmlentities(strip_tags($this->input->post('jumlah realisasi')));
+
+				echo '<pre>'; print_r($kode_akun); echo '</pre>'; exit;
+
+
 
 				$this->session->set_flashdata('msg',
 					'
