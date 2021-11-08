@@ -229,7 +229,7 @@ class Guzzle_model extends CI_model {
 
     public function getPelaksanaanAnggaranById($id)
     {
-        $response = $this->_client->request('GET', 'PelaksanaanAnggaran/detail' . $id);
+        $response = $this->_client->request('GET', 'PelaksanaanAnggaran/detail/' . $id);
         $result = json_decode($response->getBody()->getContents(), true);
         return $result;
     }
@@ -263,6 +263,54 @@ class Guzzle_model extends CI_model {
     public function deletePelaksanaanAnggaran($id)
     {
         $response = $this->_client->request('DELETE', 'PelaksanaanAnggaran/delete/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    // Model Pelaksanaan Anggaran Akun Detil
+    public function getAllPelaksanaanAnggaranAkunDetil()
+    {
+        $response = $this->_client->request('GET', 'PelaksanaanAnggaranAkunDetil');
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function getPelaksanaanAnggaranAkunDetilById($id)
+    {
+        $response = $this->_client->request('GET', 'PelaksanaanAnggaranAkunDetil/detail/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function getPelaksanaanAnggaranAkunDetilByPelaksanaanAnggaran($id)
+    {
+        $response = $this->_client->request('GET', 'PelaksanaanAnggaranAkunDetil/getDetailByPelaksanaanAnggaran/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function createPelaksanaanAnggaranAkunDetil($data)
+    {
+        $response = $this->_client->request('POST', 'PelaksanaanAnggaranAkunDetil/create', [
+            'json' => $data
+        ]);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function updatePelaksanaanAnggaranAkunDetil($id, $data)
+    {
+        // var_dump($data); exit;
+        $response = $this->_client->request('PUT', 'PelaksanaanAnggaranAkunDetil/update/' . $id, [
+            'json' => $data
+        ]);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function deletePelaksanaanAnggaranAkunDetil($id)
+    {
+        $response = $this->_client->request('DELETE', 'PelaksanaanAnggaranAkunDetil/delete/' . $id);
         $result = json_decode($response->getBody()->getContents(), true);
         return $result;
     }

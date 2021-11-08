@@ -114,16 +114,26 @@ class Pelaksanaan_anggaran extends CI_Controller {
 					'url_file'				=> $file_pertanggungjawaban,
 					'tanggal_pelaksanaan'	=> $tanggal_pelaksanaan
 				);
-				// $this->Guzzle_model->createPelaksanaanAnggaran($data_pelaksanaan);
+				$data_pelaksanaan_result = $this->Guzzle_model->createPelaksanaanAnggaran($data_pelaksanaan);
 
+				$id_pelaksanaan_anggaran = $data_pelaksanaan_result['id'];
+				
+				
 				$kode_akun = $_POST['kode_akun'];
-				// $kode_akun = htmlentities(strip_tags($this->input->post('kode_akun[]')));
-				// $uraian_detil 	 = htmlentities(strip_tags($this->input->post('uraian_detil')));
-				// $jumlah_realisasi 	 = htmlentities(strip_tags($this->input->post('jumlah realisasi')));
+				$uraian_detil = $_POST['uraian_detil'];
+				$jumlah_realisasi = $_POST['jumlah_realisasi'];
+				
+				for ($i=0; $i < count($kode_akun)-1; $i++) { 
+					$data_detil_akun = array(
+						'kode_akun'				=> $kode_akun[$i],
+						'uraian_detil'			=> $uraian_detil[$i],
+						'jumlah_realisasi'		=> $jumlah_realisasi[$i],
+						'id_pelaksanaan_anggaran'	=> $id_pelaksanaan_anggaran
+					);
+					// echo '<pre>'; print_r($data_detil_akun); echo '</pre>'; exit;
 
-				echo '<pre>'; print_r($kode_akun); echo '</pre>'; exit;
-
-
+					$this->Guzzle_model->createPelaksanaanAnggaranAkunDetil($data_detil_akun);
+				}
 
 				$this->session->set_flashdata('msg',
 					'

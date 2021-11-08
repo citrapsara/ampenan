@@ -50,7 +50,8 @@
                     </div>
                   </div>
                   <hr>
-                  <div class="control-group after-add-more">
+                  <!-- <div class="control-group after-add-more"> -->
+                  <div class="field_wrapper">
                     <div class="form-group input-dinamis">
                       <div class="col-input-dinamis col-lg-3">
                         <input type="text" name="kode_akun[]" class="form-control" value="" placeholder="Kode Akun" required>
@@ -68,7 +69,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="copy hide">
+                  <!-- <div class="copy hide">
                     <div class="control-group">
                       <div class="form-group input-dinamis">
                         <div class="col-input-dinamis col-lg-3">
@@ -87,7 +88,7 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                   <hr>
                   <div class="form-group">
                     <label class="col-lg-3">Verifikasi</label>
@@ -122,15 +123,38 @@
     <!-- /dashboard content -->
 
 <script type="text/javascript">
-    $(document).ready(function() {
-      $(".add-more").click(function(){ 
-          var html = $(".copy").html();
-          $(".after-add-more").after(html);
-      });
+    // $(document).ready(function() {
+    //   $(".add-more").click(function(){ 
+    //       var html = $(".copy").html();
+    //       $(".after-add-more").after(html);
+    //   });
 
-      // saat tombol remove dklik control group akan dihapus 
-      $("body").on("click",".remove",function(){ 
-          $(this).parents(".control-group").remove();
-      });
-    });
+    //   // saat tombol remove dklik control group akan dihapus 
+    //   $("body").on("click",".remove",function(){ 
+    //       $(this).parents(".control-group").remove();
+    //   });
+    // });
+
+  var addButton = $('.add-more'); //Add button selector
+  var wrapper = $('.field_wrapper'); //Input field wrapper
+
+  var fieldHTML = '<div class="form-group input-dinamis"><div class="col-input-dinamis col-lg-3"><input type="text" name="kode_akun[]" class="form-control" value="" placeholder="Kode Akun" required></div><div class="col-input-dinamis col-lg-5"><input type="text" name="uraian_detil[]" class="form-control" value="" placeholder="Uraian" required></div><div class="col-input-dinamis col-lg-3"><input type="text" name="jumlah_realisasi[]" class="form-control" value="" placeholder="Jumlah Realisasi" onkeypress="return hanyaAngka(event)" required></div><div class="col-input-dinamis col-lg-1"><button class="btn btn-danger remove" type="button"><i class="fa fa-minus-circle"></i></button></div></div>'; //New input field html 
+
+  // var x = 1; //Initial field counter is 1
+
+  //Once add button is clicked
+  $(addButton).click(function(){
+      //Check maximum number of input fields
+      // x++; //Increment field counter
+      $(wrapper).append(fieldHTML); //Add field html
+  });
+  
+  //Once remove button is clicked
+  $(wrapper).on('click', '.remove', function(e){
+      e.preventDefault();
+      $(this).parents('.input-dinamis').remove(); //Remove field html
+      // x--; //Decrement field counter
+  });
+  
+
 </script>
