@@ -5,8 +5,8 @@
 
     <!-- Dashboard content -->
     <div class="row">
-      <div class="col-md-3"></div>
-      <div class="col-md-6">
+      <div class="col-md-2"></div>
+      <div class="col-md-8">
         <div class="panel panel-inverse">
             <div class="panel-heading">
                 <div class="panel-heading-btn">
@@ -17,16 +17,84 @@
                 </div>
                 <h4 class="panel-title"><?php echo $judul_web; ?></h4>
             </div>
-            <div class="panel-body">
+            <div class="panel-body pelaksanaan-anggaran">
                 <?php
                 echo $this->session->flashdata('msg');
                 ?>
                 <form class="form-horizontal" action="" data-parsley-validate="true" method="post" enctype="multipart/form-data">
-                  <input type="hidden" name="id_folder_data_dukung" id="id_folder_data_dukung" value="<?php echo $folder_data_dukung['id']; ?>">
-                  <div class="form-group">
-                    <label class="control-label col-lg-3">Nama Folder</label>
+                  <style>
+                    #wajib_isi{color:red;}
+                  </style>
+                  <div class="alert alert-success">
+                    <strong><i>Catatan :</i></strong> Pastikan Laporan Pertanggungjawaban Anda telah lengkap dan sesuai dengan ketentuan. Ketentuan Pertanggungjawaban dapat dilihat pada link berikut ini    <a class="btn btn-info btn-xs" href="file/ketentuan_pertanggungjawaban/Kelengkapan data pertanggungjawaban belanja.pdf" target="_blank"><i class="fa fa-download"></i> Kelengkapan Pertanggungjawaban</a>
+                  </div>
+                  <br>
+                  <div class="form-group" methode="post">
+                    <label class="col-lg-3">Nama Pelaksanaan Anggaran<b id='wajib_isi'>*</b></label>
                     <div class="col-lg-9">
-                      <input type="text" name="name_folder" class="form-control" value="<?php echo $folder_data_dukung['uraian']; ?>" placeholder="Nama Folder" required autofocus onfocus="this.value = this.value;">
+                      <input type="text" name="nama_pelaksanaan_anggaran" class="form-control" value="<?php echo $pelaksanaan_anggaran['uraian']; ?>" placeholder="Nama Pelaksanaan Anggaran" required autofocus onfocus="this.value = this.value;">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-lg-3">Upload File Pertanggungjawaban<b id='wajib_isi'>*</b></label>
+                    <div class="col-lg-9">
+                      <input type="file" name="file_pertanggungjawaban" class="form-control" value="" placeholder="File" required>
+                      <a href="<?php echo $pelaksanaan_anggaran['uraian']; ?>" target="_blank"><?php echo $pelaksanaan_anggaran['url_file']; ?></a>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-lg-3">Tanggal Pelaksanaan<b id='wajib_isi'>*</b></label>
+                    <div class="col-lg-9">
+                      <div class="input-group">
+                        <input type="date" name="tanggal_pelaksanaan" class="form-control daterange-single" value="<?php echo $pelaksanaan_anggaran['tanggal_pelaksanaan']; ?>" maxlength="10" required>
+                      </div>
+                    </div>
+                  </div>
+                  <hr>
+                  <!-- <div class="control-group after-add-more"> -->
+                    <div class="field_wrapper">
+                    <?php foreach ($pelaksanaan_anggaran_akun_detil as $key => $value):?>
+                    <div class="form-group input-dinamis">
+                      <div class="col-input-dinamis col-lg-3">
+                        <label>Kode Akun</label>
+                        <input type="text" name="kode_akun[]" class="form-control" value="<?php echo $value['kode_akun']; ?>" placeholder="Kode Akun" required>
+                      </div>
+                      <div class="col-input-dinamis col-lg-5">
+                        <label>Uraian</label>
+                        <input type="text" name="uraian_detil[]" class="form-control" value="<?php echo $value['uraian_detil']; ?>" placeholder="Uraian" required>
+                      </div>
+                      <div class="col-input-dinamis col-lg-3">
+                        <label>Realisasi</label>
+                        <input type="text" name="jumlah_realisasi[]" class="form-control" value="<?php echo $value['jumlah_realisasi']; ?>" placeholder="Jumlah Realisasi" onkeypress="return hanyaAngka(event)" required>
+                      </div>
+                      <div class="col-input-dinamis col-lg-1">
+                        <button class="btn btn-success add-more" type="button">
+                          <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <?php endforeach; ?>
+                  </div>
+                  <hr>
+                  <div class="form-group">
+                    <label class="col-lg-3">Verifikasi</label>
+                    <div class="col-lg-9">
+                      <input class="radio-btn-verifikasi" type="radio" name="status_verifikasi" value="tolak" readonly>Tolak
+                      <input class="radio-btn-verifikasi" type="radio" name="status_verifikasi" value="sudah" readonly>Setuju
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-lg-3">Catatan</label>
+                    <div class="col-lg-9">
+                      <textarea name="catatan" class="form-control" placeholder="Catatan Perbaikan" rows="4" cols="100" readonly><?php echo $pelaksanaan_anggaran['catatan_verifikator']; ?></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-lg-3">Skor</label>
+                    <div class="col-lg-9">
+                      <input class="radio-btn-verifikasi" type="radio" name="skor_warna" value="hijau" readonly>Hijau
+                      <input class="radio-btn-verifikasi" type="radio" name="skor_warna" value="kuning" readonly>Kuning
+                      <input class="radio-btn-verifikasi" type="radio" name="skor_warna" value="merah" readonly>Merah
                     </div>
                   </div>
                   <hr>
@@ -39,3 +107,39 @@
       </div>
     </div>
     <!-- /dashboard content -->
+
+<script type="text/javascript">
+  // Radio Button 
+  var val_status = <?php echo json_encode($pelaksanaan_anggaran['status_verifikasi']); ?>;
+  $('input:radio[name=status_verifikasi]').val([val_status]);
+
+  var val_skor = <?php echo json_encode($pelaksanaan_anggaran['skor_warna']); ?>;
+  $('input:radio[name=skor_warna]').val([val_skor]);
+
+  $(':radio:not(:checked)').attr('disabled', true);
+  
+
+  // Dynamic Form 
+  var addButton = $('.add-more'); //Add button selector
+  var wrapper = $('.field_wrapper'); //Input field wrapper
+
+  var fieldHTML = '<div class="form-group input-dinamis"><div class="col-input-dinamis col-lg-3"><input type="text" name="kode_akun[]" class="form-control" value="" placeholder="Kode Akun" required></div><div class="col-input-dinamis col-lg-5"><input type="text" name="uraian_detil[]" class="form-control" value="" placeholder="Uraian" required></div><div class="col-input-dinamis col-lg-3"><input type="text" name="jumlah_realisasi[]" class="form-control" value="" placeholder="Jumlah Realisasi" onkeypress="return hanyaAngka(event)" required></div><div class="col-input-dinamis col-lg-1"><button class="btn btn-danger remove" type="button"><i class="fa fa-minus-circle"></i></button></div></div>'; //New input field html 
+
+  // var x = 1; //Initial field counter is 1
+
+  //Once add button is clicked
+  $(addButton).click(function(){
+      //Check maximum number of input fields
+      // x++; //Increment field counter
+      $(wrapper).append(fieldHTML); //Add field html
+  });
+  
+  //Once remove button is clicked
+  $(wrapper).on('click', '.remove', function(e){
+      e.preventDefault();
+      $(this).parents('.input-dinamis').remove(); //Remove field html
+      // x--; //Decrement field counter
+  });
+  
+
+</script>

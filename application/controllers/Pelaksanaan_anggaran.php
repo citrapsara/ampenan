@@ -46,15 +46,27 @@ class Pelaksanaan_anggaran extends CI_Controller {
 		if ($aksi == 't') {
 			$p = "tambah";
 			$data['judul_web'] 	  = "Input Pelaksanaan Anggaran";
+		} elseif ($aksi == 'd') {
+			$p = "detail";
+			$data['judul_web'] 	  = "Detil Pelaksanaan Anggaran";
+			$data['pelaksanaan_anggaran'] = $this->Guzzle_model->getPelaksanaanAnggaranById($id);
+			$data['pelaksanaan_anggaran_akun_detil'] = $this->Guzzle_model->getPelaksanaanAnggaranAkunDetilByPelaksanaanAnggaran($id);
+			if ($data['pelaksanaan_anggaran']['id']=='') {redirect('404');} 
 		} elseif ($aksi == 'e') {
 			$p = "edit";
 			$data['judul_web'] 	  = "Edit Pelaksanaan Anggaran";
 			$data['pelaksanaan_anggaran'] = $this->Guzzle_model->getPelaksanaanAnggaranById($id);
-			// var_dump($data['pelaksanaan_anggaran']); exit;
+			$data['pelaksanaan_anggaran_akun_detil'] = $this->Guzzle_model->getPelaksanaanAnggaranAkunDetilByPelaksanaanAnggaran($id);
+			if ($data['pelaksanaan_anggaran']['id']=='' OR $data['pelaksanaan_anggaran']['status_verifikasi']=='sudah') {redirect('404');}
+		} elseif ($aksi == 'c') {
+			$p = "verifikasi";
+			$data['judul_web'] 	  = "Verifikasi Pelaksanaan Anggaran";
+			$data['pelaksanaan_anggaran'] = $this->Guzzle_model->getPelaksanaanAnggaranById($id);
+			$data['pelaksanaan_anggaran_akun_detil'] = $this->Guzzle_model->getPelaksanaanAnggaranAkunDetilByPelaksanaanAnggaran($id);
 			if ($data['pelaksanaan_anggaran']['id']=='') {redirect('404');}
 		} elseif ($aksi == 'h') {
 			$cek_data = $this->Guzzle_model->getPelaksanaanAnggaranById($id);
-			if (count($cek_data) != 0) {
+			if (count($cek_data) != 0 AND $cek_data['status_verifikasi'] != 'sudah') {
 				$this->Guzzle_model->deletePelaksanaanAnggaran($id);
 				$this->session->set_flashdata('msg',
 					'
@@ -161,42 +173,57 @@ class Pelaksanaan_anggaran extends CI_Controller {
 		}
 
 		if (isset($_POST['btnupdate'])) {
-			// $id_pelaksanaan_anggaran = htmlentities(strip_tags($this->input->post('id_pelaksanaan_anggaran')));
-			$name_folder = htmlentities(strip_tags($this->input->post('name_folder')));
+			// $id_laporan = htmlentities(strip_tags($this->input->post('id_laporan')));
+			$data_lama = $data['pelaksanaan_anggaran'];
 			$simpan = 'y';
+			$pesan = '';
+
+			$catatan_verifikator = htmlentities(strip_tags($this->input->post('catatan')));
+			$status_verifikasi = htmlentities(strip_tags($this->input->post('status_verifikasi')));
+			$skor_warna = htmlentities(strip_tags($this->input->post('skor_warna')));
+
+			// $data_lama['catatan_verifikator'] = $catatan_verifikator;
+			// $data_lama['status_verifikasi'] = $status_verifikasi;
+			// $data_lama['skor_warna'] = $skor_warna;
+
+			// echo '<pre>'; print_r($data_lama); echo '</pre>';
+
+			$data = array(
+				'uraian' => $data_lama['uraian'],
+				'url_file' => $data_lama['url_file'],
+				'tanggal_pelaksanaan' => $data_lama['tanggal_pelaksanaan'],
+				'id_dipa' => $data_lama['id_dipa'],
+				'catatan_verifikator' => $catatan_verifikator,
+				'status_verifikasi'				=> $status_verifikasi,
+				'skor_warna'  => $skor_warna
+			);
 
 			if ($simpan=='y') {
-				$data = array(
-					'uraian' => $name_folder
-				);
-				// var_dump($id); exit;
-				$this->Guzzle_model->updateFolderDataDukung($id, $data);
-
+				$this->Guzzle_model->updatePelaksanaanAnggaran($id, $data);
 				$this->session->set_flashdata('msg',
 					'
 					<div class="alert alert-success alert-dismissible" role="alert">
-						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-						<strong>Sukses!</strong> Berhasil disimpan.
+						 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							 <span aria-hidden="true">&times;</span>
+						 </button>
+						 <strong>Sukses!</strong> '.$pesan.'.
 					</div>
-				<br>'
+				 <br>'
 				);
-				
-				redirect("pelaksanaan_anggaran/v/$id_dipa");
-			 }else {
+			}else {
 				$this->session->set_flashdata('msg',
-					 '
-					 <div class="alert alert-warning alert-dismissible" role="alert">
-						  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							  <span aria-hidden="true">&times;</span>
-						  </button>
-						  <strong>Gagal!</strong>
-					 </div>
-				  <br>'
-				 );
-				 redirect("pelaksanaan_anggaran/v/$id_dipa/e/".hashids_encrypt($id));
+					'
+					<div class="alert alert-warning alert-dismissible" role="alert">
+						 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							 <span aria-hidden="true">&times;</span>
+						 </button>
+						 <strong>Gagal!</strong> '.$pesan.'.
+					</div>
+				 <br>'
+				);
 			}
+			redirect("pelaksanaan_anggaran/v/$id_dipa");
 		}
+
 	}
 }

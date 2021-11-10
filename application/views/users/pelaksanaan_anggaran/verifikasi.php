@@ -32,43 +32,49 @@
                   <div class="form-group" methode="post">
                     <label class="col-lg-3">Nama Pelaksanaan Anggaran<b id='wajib_isi'>*</b></label>
                     <div class="col-lg-9">
-                      <input type="text" name="nama_pelaksanaan_anggaran" class="form-control" value="" placeholder="Nama Pelaksanaan Anggaran" required autofocus onfocus="this.value = this.value;">
+                      <input type="text" name="nama_pelaksanaan_anggaran" class="form-control" value="<?php echo $pelaksanaan_anggaran['uraian']; ?>" placeholder="Nama Pelaksanaan Anggaran" required autofocus onfocus="this.value = this.value;" readonly>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-lg-3">Upload File Pertanggungjawaban<b id='wajib_isi'>*</b></label>
                     <div class="col-lg-9">
-                      <input type="file" name="file_pertanggungjawaban" class="form-control" value="" placeholder="File" required>
+                      <!-- <input type="file" name="file_pertanggungjawaban" class="form-control" value="" placeholder="File" required> -->
+                      <a href="<?php echo $pelaksanaan_anggaran['uraian']; ?>" target="_blank"><?php echo $pelaksanaan_anggaran['url_file']; ?></a>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-lg-3">Tanggal Pelaksanaan<b id='wajib_isi'>*</b></label>
                     <div class="col-lg-9">
                       <div class="input-group">
-                        <input type="date" name="tanggal_pelaksanaan" class="form-control daterange-single" value="" maxlength="10" required>
+                        <input type="date" name="tanggal_pelaksanaan" class="form-control daterange-single" value="<?php echo $pelaksanaan_anggaran['tanggal_pelaksanaan']; ?>" maxlength="10" required readonly>
                       </div>
                     </div>
                   </div>
                   <hr>
+                  <?php foreach ($pelaksanaan_anggaran_akun_detil as $key => $value):?>
                   <!-- <div class="control-group after-add-more"> -->
-                  <div class="field_wrapper">
+                  <!-- <div class="field_wrapper"> -->
                     <div class="form-group input-dinamis">
                       <div class="col-input-dinamis col-lg-3">
-                        <input type="text" name="kode_akun[]" class="form-control" value="" placeholder="Kode Akun" required>
+                        <label>Kode Akun</label>
+                        <input type="text" name="kode_akun[]" class="form-control" value="<?php echo $value['kode_akun']; ?>" placeholder="Kode Akun" required readonly>
                       </div>
                       <div class="col-input-dinamis col-lg-5">
-                        <input type="text" name="uraian_detil[]" class="form-control" value="" placeholder="Uraian" required>
+                        <label>Uraian</label>
+                        <input type="text" name="uraian_detil[]" class="form-control" value="<?php echo $value['uraian_detil']; ?>" placeholder="Uraian" required readonly>
                       </div>
                       <div class="col-input-dinamis col-lg-3">
-                        <input type="text" name="jumlah_realisasi[]" class="form-control" value="" placeholder="Jumlah Realisasi" onkeypress="return hanyaAngka(event)" required>
+                        <label>Realisasi</label>
+                        <input type="text" name="jumlah_realisasi[]" class="form-control" value="<?php echo $value['jumlah_realisasi']; ?>" placeholder="Jumlah Realisasi" onkeypress="return hanyaAngka(event)" required readonly>
                       </div>
-                      <div class="col-input-dinamis col-lg-1">
+                      <!-- <div class="col-input-dinamis col-lg-1">
                         <button class="btn btn-success add-more" type="button">
                           <i class="fa fa-plus-circle" aria-hidden="true"></i>
                         </button>
-                      </div>
+                      </div> -->
                     </div>
-                  </div>
+                  <!-- </div> -->
+                  <?php endforeach; ?>
                   <hr>
                   <div class="form-group">
                     <label class="col-lg-3">Verifikasi</label>
@@ -80,7 +86,7 @@
                   <div class="form-group">
                     <label class="col-lg-3">Catatan</label>
                     <div class="col-lg-9">
-                      <textarea name="catatan" class="form-control" placeholder="Catatan Perbaikan" rows="4" cols="100"></textarea>
+                      <textarea name="catatan" class="form-control" placeholder="Catatan Perbaikan" rows="4" cols="100"><?php echo $pelaksanaan_anggaran['catatan_verifikator']; ?></textarea>
                     </div>
                   </div>
                   <div class="form-group">
@@ -93,7 +99,7 @@
                   </div>
                   <hr>
                   <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>.html" class="btn btn-default"><< Kembali</a>
-                  <button type="submit" name="btnsimpan" class="btn btn-primary" style="float:right;">Simpan</button>
+                  <button type="submit" name="btnupdate" class="btn btn-primary" style="float:right;">Simpan</button>
                 </form>
             </div>
 
@@ -103,18 +109,14 @@
     <!-- /dashboard content -->
 
 <script type="text/javascript">
-    // $(document).ready(function() {
-    //   $(".add-more").click(function(){ 
-    //       var html = $(".copy").html();
-    //       $(".after-add-more").after(html);
-    //   });
+  // Radio Button 
+  var val_status = <?php echo json_encode($pelaksanaan_anggaran['status_verifikasi']); ?>;
+  $('input:radio[name=status_verifikasi]').val([val_status]);
 
-    //   // saat tombol remove dklik control group akan dihapus 
-    //   $("body").on("click",".remove",function(){ 
-    //       $(this).parents(".control-group").remove();
-    //   });
-    // });
+  var val_skor = <?php echo json_encode($pelaksanaan_anggaran['skor_warna']); ?>;
+  $('input:radio[name=skor_warna]').val([val_skor]);
 
+  // Dynamic Form 
   var addButton = $('.add-more'); //Add button selector
   var wrapper = $('.field_wrapper'); //Input field wrapper
 
@@ -125,7 +127,6 @@
   //Once add button is clicked
   $(addButton).click(function(){
       //Check maximum number of input fields
-      // x++; //Increment field counter
       $(wrapper).append(fieldHTML); //Add field html
   });
   
@@ -133,7 +134,6 @@
   $(wrapper).on('click', '.remove', function(e){
       e.preventDefault();
       $(this).parents('.input-dinamis').remove(); //Remove field html
-      // x--; //Decrement field counter
   });
   
 

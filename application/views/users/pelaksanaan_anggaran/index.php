@@ -19,6 +19,7 @@
               <?php
                 echo $this->session->flashdata('msg');
                 $id_dipa = $this->session->userdata('id_dipa');
+                $level = $this->session->userdata('level');
               ?>
                     <div class="panel panel-inverse">
                         <div class="panel-heading">
@@ -84,9 +85,15 @@
                                           <?php } ?>
                                         </td>
 																				<td align="center">
-                                          <a href="data_dukung/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-info btn-xs" title="Detail"><i class="fa fa-search"></i></a>
-																					<a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo $this->uri->segment(3); ?>/e/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-success btn-xs" title="Edit"><i class="fa fa-edit"></i></a>
-                                          <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo $this->uri->segment(3); ?>/h/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-danger btn-xs" title="Hapus" onclick="return confirm('Anda yakin? Seluruh dokumen akan ikut terhapus.');"><i class="fa fa-trash-o"></i></a>
+                                          <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo strtolower($this->uri->segment(3)); ?>/d/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-info btn-xs" title="Detail"><i class="fa fa-search"></i></a>
+                                          <?php if($level == 'keuangan'){ ?>
+                                            <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo $this->uri->segment(3); ?>/c/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-success btn-xs" title="Edit"><i class="fa fa-edit"></i> Verifikasi</a>
+                                          <?php } else { ?>
+																					  <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo $this->uri->segment(3); ?>/e/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-success btn-xs <?php if ($value['status_verifikasi'] == 'sudah') { echo 'disabled'; }; ?>" title="Edit"><i class="fa fa-edit"></i></a>
+                                          <?php } ?>
+                                          <?php if($level == 'pelaksana'){ ?>
+                                            <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo $this->uri->segment(3); ?>/h/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-danger btn-xs <?php if ($value['status_verifikasi'] == 'sudah') { echo 'disabled'; }; ?>" title="Hapus" onclick="return confirm('Anda yakin? Seluruh dokumen akan ikut terhapus.');"><i class="fa fa-trash-o"></i></a>
+                                          <?php } ?>
                                         </td>
                                     </tr>
                                   <?php endforeach; ?>
