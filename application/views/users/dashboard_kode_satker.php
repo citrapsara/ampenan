@@ -99,12 +99,38 @@ $id_dipa = $this->session->userdata('id_dipa');
 		</div>
 <!-- end #content -->
 
-<script src="assets/panel/plugins/chart-js/Chart.min.js"></script>
+<!-- <script src="assets/panel/plugins/chart-js/Chart.min.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.3/dist/Chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
 <script>
 const total_realisasi = <?php echo $total_realisasi; ?>;
 const sisa_anggaran = <?php echo $sisa_anggaran; ?>;
 
 const ctx = document.getElementById('chart_penyerapan').getContext('2d');
+
+var options = {
+           tooltips: {
+         enabled: true
+    },
+             plugins: {
+            datalabels: {
+                formatter: (value, ctx) => {
+                
+                  let sum = 0;
+                  let dataArr = ctx.chart.data.datasets[0].data;
+                  dataArr.map(data => {
+                      sum += data;
+                  });
+                  let percentage = (value*100 / sum).toFixed(2)+"%";
+				  if(percentage == "0.00%"){ percentage = "";}
+                  return percentage;
+
+              
+                },
+                color: '#fff',
+                     }
+        }
+    };
 
 const chart_penyerapan = new Chart(ctx, {
     type: 'pie',
@@ -124,13 +150,14 @@ const chart_penyerapan = new Chart(ctx, {
             borderWidth: 5
         }]
     },
-    options: {
-		plugins: {
-  labels: {
-    render: 'label'
-  }
-}
-    }
+//     options: {
+// 		plugins: {
+// 			labels: {
+// 				render: 'label'
+// 			}
+// }
+//     }
+	options: options
 });
 
 
