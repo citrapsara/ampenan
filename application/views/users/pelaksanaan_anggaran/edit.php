@@ -38,8 +38,8 @@
                   <div class="form-group">
                     <label class="col-lg-3">Upload File Pertanggungjawaban<b id='wajib_isi'>*</b></label>
                     <div class="col-lg-9">
-                      <input type="file" name="file_pertanggungjawaban" class="form-control" value="" placeholder="File" required>
-                      <a href="<?php echo $pelaksanaan_anggaran['uraian']; ?>" target="_blank"><?php echo $pelaksanaan_anggaran['url_file']; ?></a>
+                      <input type="file" name="file_pertanggungjawaban" class="form-control" value="" placeholder="File">
+                      <a href="<?php echo $pelaksanaan_anggaran['url_file']; ?>" target="_blank"><?php echo $pelaksanaan_anggaran['url_file']; ?></a>
                     </div>
                   </div>
                   <div class="form-group">
@@ -56,6 +56,7 @@
                     <div class="field_wrapper">
                     <?php foreach ($pelaksanaan_anggaran_akun_detil as $key => $value):?>
                     <div class="form-group input-dinamis">
+                      <input type="hidden" name="id_pelaksanaan_anggaran_akun_detil[]" value="<?php echo $value['id']; ?>">
                       <div class="col-input-dinamis col-lg-3">
                         <input type="text" name="kode_akun[]" class="form-control" value="<?php echo $value['kode_akun']; ?>" placeholder="Kode Akun" required>
                       </div>
@@ -66,39 +67,37 @@
                         <input type="text" name="jumlah_realisasi[]" class="form-control" value="<?php echo $value['jumlah_realisasi']; ?>" placeholder="Jumlah Realisasi" onkeypress="return hanyaAngka(event)" required>
                       </div>
                       <div class="col-input-dinamis col-lg-1">
-                        <button class="btn btn-success add-more" type="button">
-                          <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                        <button class="btn btn-danger remove" type="button" onclick="return confirm('Anda yakin akan menghapus detil ini?');">
+                          <i class="fa fa-minus-circle" aria-hidden="true"></i>
                         </button>
                       </div>
                     </div>
                     <?php endforeach; ?>
+                    <div class="text-right">
+                      <button class="btn btn-success add-more" type="button">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Akun Detil
+                      </button>
+                    </div>
                   </div>
                   <?php else: ?>
-                    <div class="text-center">- Detil realisasi belum diinput -</div>
-                  <?php endif; ?>
-                  <?php if($level == 'keuangan'): ?>
-                  <hr>
-                  <div class="form-group">
-                    <label class="col-lg-3">Verifikasi</label>
-                    <div class="col-lg-9">
-                      <input class="radio-btn-verifikasi" type="radio" name="status_verifikasi" value="tolak" readonly><span class="radio-text">Tolak</span>
-                      <input class="radio-btn-verifikasi" type="radio" name="status_verifikasi" value="sudah" readonly><span class="radio-text">Setuju</span>
+                    <div class="field_wrapper">
+                      <div class="form-group input-dinamis">
+                        <div class="col-input-dinamis col-lg-3">
+                          <input type="text" name="kode_akun[]" class="form-control" value="" placeholder="Kode Akun" required>
+                        </div>
+                        <div class="col-input-dinamis col-lg-5">
+                          <input type="text" name="uraian_detil[]" class="form-control" value="" placeholder="Uraian" required>
+                        </div>
+                        <div class="col-input-dinamis col-lg-3">
+                          <input type="text" name="jumlah_realisasi[]" class="form-control" value="" placeholder="Jumlah Realisasi" onkeypress="return hanyaAngka(event)" required>
+                        </div>
+                        <div class="col-input-dinamis col-lg-1">
+                          <button class="btn btn-success add-more" type="button">
+                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                          </button>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-lg-3">Catatan</label>
-                    <div class="col-lg-9">
-                      <textarea name="catatan" class="form-control" placeholder="Catatan Perbaikan" rows="4" cols="100" readonly><?php echo $pelaksanaan_anggaran['catatan_verifikator']; ?></textarea>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-lg-3">Skor</label>
-                    <div class="col-lg-9">
-                      <input class="radio-btn-verifikasi" type="radio" name="skor_warna" value="merah"><span class="label skor-warna label-danger radio-text">warna</span>
-                      <input class="radio-btn-verifikasi" type="radio" name="skor_warna" value="kuning"><span class="label skor-warna label-warning radio-text">warna</span>
-                      <input class="radio-btn-verifikasi" type="radio" name="skor_warna" value="hijau"><span class="label skor-warna label-success radio-text">warna</span>
-                    </div>
-                  </div>
                   <?php endif; ?>
                   <hr>
                   <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo strtolower($this->uri->segment(3)); ?>.html" class="btn btn-default"><< Kembali</a>
@@ -126,7 +125,7 @@
   var addButton = $('.add-more'); //Add button selector
   var wrapper = $('.field_wrapper'); //Input field wrapper
 
-  var fieldHTML = '<div class="form-group input-dinamis"><div class="col-input-dinamis col-lg-3"><input type="text" name="kode_akun[]" class="form-control" value="" placeholder="Kode Akun" required></div><div class="col-input-dinamis col-lg-5"><input type="text" name="uraian_detil[]" class="form-control" value="" placeholder="Uraian" required></div><div class="col-input-dinamis col-lg-3"><input type="text" name="jumlah_realisasi[]" class="form-control" value="" placeholder="Jumlah Realisasi" onkeypress="return hanyaAngka(event)" required></div><div class="col-input-dinamis col-lg-1"><button class="btn btn-danger remove" type="button"><i class="fa fa-minus-circle"></i></button></div></div>'; //New input field html 
+  var fieldHTML = '<div class="form-group input-dinamis"><div class="col-input-dinamis col-lg-3"><input type="text" name="kode_akun[]" class="form-control" value="" placeholder="Kode Akun" required></div><div class="col-input-dinamis col-lg-5"><input type="text" name="uraian_detil[]" class="form-control" value="" placeholder="Uraian" required></div><div class="col-input-dinamis col-lg-3"><input type="text" name="jumlah_realisasi[]" class="form-control" value="" placeholder="Jumlah Realisasi" onkeypress="return hanyaAngka(event)" required></div><div class="col-input-dinamis col-lg-1"><button class="btn btn-danger remove" type="button" onclick="return confirm("Anda yakin akan menghapus detil ini?");"><i class="fa fa-minus-circle"></i></button></div></div>'; //New input field html 
 
   // var x = 1; //Initial field counter is 1
 

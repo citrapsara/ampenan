@@ -146,24 +146,19 @@ class Pelaksanaan_anggaran extends CI_Controller {
 				);
 				$data_pelaksanaan_result = $this->Guzzle_model->createPelaksanaanAnggaran($data_pelaksanaan);
 
-				// $id_pelaksanaan_anggaran = $data_pelaksanaan_result['id'];
-
-				// echo $id_pelaksanaan_anggaran; exit;
-				$id_pelaksanaan_anggaran = 20;
-				
+				$id_pelaksanaan_anggaran = $data_pelaksanaan_result['id'];				
 				
 				$kode_akun = $_POST['kode_akun'];
 				$uraian_detil = $_POST['uraian_detil'];
 				$jumlah_realisasi = $_POST['jumlah_realisasi'];
 				
-				for ($i=0; $i < count($kode_akun)-1; $i++) { 
+				for ($i=0; $i < count($kode_akun); $i++) { 
 					$data_detil_akun = array(
 						'kode_akun'				=> $kode_akun[$i],
 						'uraian_detil'			=> $uraian_detil[$i],
 						'jumlah_realisasi'		=> $jumlah_realisasi[$i],
 						'id_pelaksanaan_anggaran'	=> $id_pelaksanaan_anggaran
 					);
-					// echo '<pre>'; print_r($data_detil_akun); echo '</pre>'; exit;
 
 					$this->Guzzle_model->createPelaksanaanAnggaranAkunDetil($data_detil_akun);
 				}
@@ -194,7 +189,82 @@ class Pelaksanaan_anggaran extends CI_Controller {
 		}
 
 		if (isset($_POST['btnupdate'])) {
-			// $id_laporan = htmlentities(strip_tags($this->input->post('id_laporan')));
+			$nama_pelaksanaan_anggaran = htmlentities(strip_tags($this->input->post('nama_pelaksanaan_anggaran')));
+			$tanggal_pelaksanaan = htmlentities(strip_tags($this->input->post('tanggal_pelaksanaan')));
+			$cek_file = $data['pelaksanaan_anggaran']['url_file'];
+			if ($_FILES['file_pertanggungjawaban']['error'] <> 4) {
+				if ( ! $this->upload->do_upload('file_pertanggungjawaban'))
+				{
+					$simpan = 'n';
+					$pesan  = htmlentities(strip_tags($this->upload->display_errors('<p>', '</p>')));
+				} else {
+					if ($cek_file!='') {
+						unlink($cek_file);
+					}
+					$gbr = $this->upload->data();
+					$filename = "$lokasi/".$gbr['file_name'];
+					$file_pertanggungjawaban = preg_replace('/ /', '_', $filename);
+					$simpan = 'y';
+				}
+			} else {
+				$file_pertanggungjawaban = $cek_file;
+				$simpan = 'y';
+			}
+				
+			if ($simpan=='y') {
+				$data_pelaksanaan = array(
+					'uraian' => $nama_pelaksanaan_anggaran,
+					'url_file' => $file_pertanggungjawaban,
+					'tanggal_pelaksanaan' => $tanggal_pelaksanaan,
+					'id_dipa' => $id_dipa
+				);
+				$this->Guzzle_model->updatePelaksanaanAnggaran($id, $data_pelaksanaan);
+
+				$kode_akun = $_POST['kode_akun'];
+				$uraian_detil = $_POST['uraian_detil'];
+				$jumlah_realisasi = $_POST['jumlah_realisasi'];
+				$id_pelaksanaan_anggaran_akun_detil = $_POST['id_pelaksanaan_anggaran_akun_detil'];
+				
+				for ($i=0; $i < count($kode_akun); $i++) { 
+					$data_detil_akun = array(
+						'kode_akun'				=> $kode_akun[$i],
+						'uraian_detil'			=> $uraian_detil[$i],
+						'jumlah_realisasi'		=> $jumlah_realisasi[$i],
+						'id_pelaksanaan_anggaran'	=> $id
+					);
+
+					$this->Guzzle_model->updatePelaksanaanAnggaranAkunDetil($id_pelaksanaan_anggaran_akun_detil[$i], $data_detil_akun);
+				}
+
+				$this->session->set_flashdata('msg',
+					'
+					<div class="alert alert-success alert-dismissible" role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<strong>Sukses!</strong> Berhasil disimpan.
+					</div>
+				<br>'
+				);
+				redirect("pelaksanaan_anggaran/v/$id_dipa");
+			} else {
+				$this->session->set_flashdata('msg',
+					'
+					<div class="alert alert-warning alert-dismissible" role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<strong>Gagal!</strong> '.$pesan.'.
+					</div>
+				<br>'
+				);
+			redirect("pelaksanaan_anggaran/v/$id_dipa/e".hashids_encrypt($id));
+			}
+
+		}
+
+
+		if (isset($_POST['btnkonfirm'])) {
 			$data_lama = $data['pelaksanaan_anggaran'];
 			$simpan = 'y';
 			$pesan = '';
@@ -202,12 +272,6 @@ class Pelaksanaan_anggaran extends CI_Controller {
 			$catatan_verifikator = htmlentities(strip_tags($this->input->post('catatan')));
 			$status_verifikasi = htmlentities(strip_tags($this->input->post('status_verifikasi')));
 			$skor_warna = htmlentities(strip_tags($this->input->post('skor_warna')));
-
-			// $data_lama['catatan_verifikator'] = $catatan_verifikator;
-			// $data_lama['status_verifikasi'] = $status_verifikasi;
-			// $data_lama['skor_warna'] = $skor_warna;
-
-			// echo '<pre>'; print_r($data_lama); echo '</pre>';
 
 			$data = array(
 				'uraian' => $data_lama['uraian'],
