@@ -50,10 +50,11 @@
                                 <div class="col-md-6"></div>
                                 <div class="col-md-2"></div>
                             </div>
-                          <?php else: ?>
-                            <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo $this->uri->segment(3); ?>/t.html" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Input Pelaksanaan Anggaran</a>
-                            <?php endif; ?>
                             <hr>
+                          <?php elseif($level == 'pelaksana'): ?>
+                            <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo $this->uri->segment(3); ?>/t.html" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Input Pelaksanaan Anggaran</a>
+                            <hr>
+                          <?php endif; ?>
 													<div class="table-responsive">
                             <table id="data-table" class="table table-striped table-bordered">
                                 <thead>

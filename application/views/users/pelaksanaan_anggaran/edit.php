@@ -51,20 +51,18 @@
                     </div>
                   </div>
                   <hr>
+                  <?php if($pelaksanaan_anggaran_akun_detil != null): ?>
                   <!-- <div class="control-group after-add-more"> -->
                     <div class="field_wrapper">
                     <?php foreach ($pelaksanaan_anggaran_akun_detil as $key => $value):?>
                     <div class="form-group input-dinamis">
                       <div class="col-input-dinamis col-lg-3">
-                        <label>Kode Akun</label>
                         <input type="text" name="kode_akun[]" class="form-control" value="<?php echo $value['kode_akun']; ?>" placeholder="Kode Akun" required>
                       </div>
                       <div class="col-input-dinamis col-lg-5">
-                        <label>Uraian</label>
                         <input type="text" name="uraian_detil[]" class="form-control" value="<?php echo $value['uraian_detil']; ?>" placeholder="Uraian" required>
                       </div>
                       <div class="col-input-dinamis col-lg-3">
-                        <label>Realisasi</label>
                         <input type="text" name="jumlah_realisasi[]" class="form-control" value="<?php echo $value['jumlah_realisasi']; ?>" placeholder="Jumlah Realisasi" onkeypress="return hanyaAngka(event)" required>
                       </div>
                       <div class="col-input-dinamis col-lg-1">
@@ -75,6 +73,9 @@
                     </div>
                     <?php endforeach; ?>
                   </div>
+                  <?php else: ?>
+                    <div class="text-center">- Detil realisasi belum diinput -</div>
+                  <?php endif; ?>
                   <?php if($level == 'keuangan'): ?>
                   <hr>
                   <div class="form-group">
@@ -100,7 +101,7 @@
                   </div>
                   <?php endif; ?>
                   <hr>
-                  <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>.html" class="btn btn-default"><< Kembali</a>
+                  <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo strtolower($this->uri->segment(3)); ?>.html" class="btn btn-default"><< Kembali</a>
                   <button type="submit" name="btnupdate" class="btn btn-primary" style="float:right;">Simpan</button>
                 </form>
             </div>

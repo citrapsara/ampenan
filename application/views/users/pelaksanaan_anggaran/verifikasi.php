@@ -52,36 +52,36 @@
                     </div>
                   </div>
                   <hr>
-                  <?php foreach ($pelaksanaan_anggaran_akun_detil as $key => $value):?>
-                  <!-- <div class="control-group after-add-more"> -->
-                  <!-- <div class="field_wrapper"> -->
+                  <?php if($pelaksanaan_anggaran_akun_detil != null): ?>
+                  <label class="col-lg-3">Kode Akun</label>
+                  <label class="col-lg-5">Realisasi</label>
+                  <label class="col-lg-4">Uraian</label>
+                  <?php foreach($pelaksanaan_anggaran_akun_detil as $key => $value):?>
                     <div class="form-group input-dinamis">
                       <div class="col-input-dinamis col-lg-3">
-                        <label>Kode Akun</label>
                         <input type="text" name="kode_akun[]" class="form-control" value="<?php echo $value['kode_akun']; ?>" placeholder="Kode Akun" required readonly>
                       </div>
                       <div class="col-input-dinamis col-lg-5">
-                        <label>Uraian</label>
                         <input type="text" name="uraian_detil[]" class="form-control" value="<?php echo $value['uraian_detil']; ?>" placeholder="Uraian" required readonly>
                       </div>
-                      <div class="col-input-dinamis col-lg-3">
-                        <label>Realisasi</label>
+                      <div class="col-input-dinamis col-lg-4">
                         <input type="text" name="jumlah_realisasi[]" class="form-control" value="<?php echo $value['jumlah_realisasi']; ?>" placeholder="Jumlah Realisasi" onkeypress="return hanyaAngka(event)" required readonly>
                       </div>
-                      <!-- <div class="col-input-dinamis col-lg-1">
-                        <button class="btn btn-success add-more" type="button">
-                          <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                        </button>
-                      </div> -->
                     </div>
-                  <!-- </div> -->
                   <?php endforeach; ?>
+                  <div class="row">
+                    <div class="col-lg-8 text-right"><strong>Total Realisasi</strong>  :</div>
+                    <div class="col-lg-4"><?php echo $total_realisasi; ?></div>
+                  </div>
+                  <?php else: ?>
+                    <div class="text-center">- Detil realisasi belum diinput -</div>
+                  <?php endif; ?>
                   <?php if($level == 'keuangan'): ?>
                   <hr>
                   <div class="form-group">
                     <label class="col-lg-3">Verifikasi</label>
                     <div class="col-lg-9">
-                      <input class="radio-btn-verifikasi" type="radio" name="status_verifikasi" value="belum"><span class="radio-text">Tolak</span>
+                      <input class="radio-btn-verifikasi" type="radio" name="status_verifikasi" value="tolak"><span class="radio-text">Tolak</span>
                       <input class="radio-btn-verifikasi" type="radio" name="status_verifikasi" value="sudah"><span class="radio-text">Setuju</span>
                     </div>
                   </div>
@@ -101,7 +101,7 @@
                   </div>
                   <?php endif; ?>
                   <hr>
-                  <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>.html" class="btn btn-default"><< Kembali</a>
+                  <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo strtolower($this->uri->segment(3)); ?>.html" class="btn btn-default"><< Kembali</a>
                   <button type="submit" name="btnupdate" class="btn btn-primary" style="float:right;">Simpan</button>
                 </form>
             </div>

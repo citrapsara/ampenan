@@ -42,6 +42,8 @@ class Pelaksanaan_anggaran extends CI_Controller {
 			$data['judul_tabel'] = $arraydipa_id_nama[$id_dipa];
 		}
 
+
+
 		
 		if ($aksi == 't') {
 			$p = "tambah";
@@ -49,8 +51,16 @@ class Pelaksanaan_anggaran extends CI_Controller {
 		} elseif ($aksi == 'd') {
 			$p = "detail";
 			$data['judul_web'] 	  = "Detil Pelaksanaan Anggaran";
+
 			$data['pelaksanaan_anggaran'] = $this->Guzzle_model->getPelaksanaanAnggaranById($id);
+
 			$data['pelaksanaan_anggaran_akun_detil'] = $this->Guzzle_model->getPelaksanaanAnggaranAkunDetilByPelaksanaanAnggaran($id);
+
+			foreach ($data['pelaksanaan_anggaran_akun_detil'] as $key => $value) {
+				$jumlah[] = $value['jumlah_realisasi'];
+			}
+			$data['total_realisasi'] = array_sum($jumlah);
+
 			if ($data['pelaksanaan_anggaran']['id']=='') {redirect('404');} 
 		} elseif ($aksi == 'e') {
 			$p = "edit";
@@ -61,8 +71,16 @@ class Pelaksanaan_anggaran extends CI_Controller {
 		} elseif ($aksi == 'c') {
 			$p = "verifikasi";
 			$data['judul_web'] 	  = "Verifikasi Pelaksanaan Anggaran";
+
 			$data['pelaksanaan_anggaran'] = $this->Guzzle_model->getPelaksanaanAnggaranById($id);
+
 			$data['pelaksanaan_anggaran_akun_detil'] = $this->Guzzle_model->getPelaksanaanAnggaranAkunDetilByPelaksanaanAnggaran($id);
+
+			foreach ($data['pelaksanaan_anggaran_akun_detil'] as $key => $value) {
+				$jumlah[] = $value['jumlah_realisasi'];
+			}
+			$data['total_realisasi'] = array_sum($jumlah);
+
 			if ($data['pelaksanaan_anggaran']['id']=='') {redirect('404');}
 		} elseif ($aksi == 'h') {
 			$cek_data = $this->Guzzle_model->getPelaksanaanAnggaranById($id);
@@ -128,7 +146,10 @@ class Pelaksanaan_anggaran extends CI_Controller {
 				);
 				$data_pelaksanaan_result = $this->Guzzle_model->createPelaksanaanAnggaran($data_pelaksanaan);
 
-				$id_pelaksanaan_anggaran = $data_pelaksanaan_result['id'];
+				// $id_pelaksanaan_anggaran = $data_pelaksanaan_result['id'];
+
+				// echo $id_pelaksanaan_anggaran; exit;
+				$id_pelaksanaan_anggaran = 20;
 				
 				
 				$kode_akun = $_POST['kode_akun'];

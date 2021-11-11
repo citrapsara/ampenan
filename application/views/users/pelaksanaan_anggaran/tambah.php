@@ -70,32 +70,8 @@
                       </div>
                     </div>
                   </div>
-                  <?php if($level == 'keuangan'): ?>
                   <hr>
-                  <div class="form-group">
-                    <label class="col-lg-3">Verifikasi</label>
-                    <div class="col-lg-9">
-                      <input class="radio-btn-verifikasi" type="radio" name="status_verifikasi" value="belum"><span class="radio-text">Tolak</span>
-                      <input class="radio-btn-verifikasi" type="radio" name="status_verifikasi" value="sudah"><span class="radio-text">Setuju</span>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-lg-3">Catatan</label>
-                    <div class="col-lg-9">
-                      <textarea name="catatan" class="form-control" placeholder="Catatan Perbaikan" rows="4" cols="100"></textarea>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-lg-3">Skor</label>
-                    <div class="col-lg-9">
-                      <input class="radio-btn-verifikasi" type="radio" name="skor_warna" value="merah"><span class="label skor-warna label-danger radio-text">warna</span>
-                      <input class="radio-btn-verifikasi" type="radio" name="skor_warna" value="kuning"><span class="label skor-warna label-warning radio-text">warna</span>
-                      <input class="radio-btn-verifikasi" type="radio" name="skor_warna" value="hijau"><span class="label skor-warna label-success radio-text">warna</span>
-                    </div>
-                  </div>
-                  <?php endif; ?>
-                  <hr>
-                  <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>.html" class="btn btn-default"><< Kembali</a>
+                  <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo strtolower($this->uri->segment(3)); ?>.html" class="btn btn-default"><< Kembali</a>
                   <button type="submit" name="btnsimpan" class="btn btn-primary" style="float:right;">Simpan</button>
                 </form>
             </div>
