@@ -44,23 +44,60 @@
                   </tbody>
                 </table>
               </div>
+              <hr>
+              <div class="table-responsive">
+			          <table class="table table-bordered table-striped" width="100%">
+                  <tbody>
+                      <tr>
+                        <th>Kode Akun</th>
+                        <th>Uraian</th>
+                        <th>Jumlah Realisasi</th>
+                      </tr>
+                      <?php foreach($pelaksanaan_anggaran_akun_detil as $key => $value): ?>
+                        <tr>
+                          <td><?php echo $value['kode_akun']; ?></td>
+                          <td><?php echo $value['uraian_detil']; ?></td>
+                          <td><?php echo $value['jumlah_realisasi']; ?></td>
+                        </tr>
+                      <?php endforeach; ?>
+                  </tbody>
+                </table>
+              </div>
+              <hr>
               <div class="table-responsive">
 			                  <table class="table table-bordered table-striped" width="100%">
                   <tbody>
                     <tr>
                       <th valign="top" width="160">Status</th>
                       <th valign="top" width="1">:</th>
-                      <td><?php echo $pelaksanaan_anggaran['status_verifikasi']; ?></td>
+                      <td><?php 
+                            if($pelaksanaan_anggaran['status_verifikasi'] == 'sudah') { 
+                              echo '<label class="label label-success">SUDAH DIVERIFIKASI</label>';
+                            } elseif($pelaksanaan_anggaran['status_verifikasi'] == 'tolak') {
+                              echo '<label class="label label-danger">PERLU PERBAIKAN</label>';
+                            } else {
+                              echo '<label class="label label-default">BELUM DIVERIFIKASI</label>';
+                            }?></td>
                     </tr>
                     <tr>
                       <th valign="top">Catatan Administrator</th>
                       <th valign="top">:</th>
-                      <td><?php echo $pelaksanaan_anggaran['catatan_administrator']; ?></td>
+                      <td><?php echo ucfirst($pelaksanaan_anggaran['catatan_verifikator']); ?></td>
                     </tr>
                      <tr>
                       <th valign="top">Skor</th>
                       <th valign="top">:</th>
-                      <td><?php echo $pelaksanaan_anggaran['skor_warna']; ?></td>
+                      <td><?php 
+                            if($pelaksanaan_anggaran['skor_warna'] == 'kuning') {
+                              echo '<span class="label skor-warna label-warning">warna</span>';
+                            } elseif($pelaksanaan_anggaran['skor_warna'] == 'hijau') {
+                              echo '<span class="label skor-warna label-success">warna</span>';
+                            } elseif($pelaksanaan_anggaran['skor_warna'] == 'merah') {
+                              echo '<span class="label skor-warna label-danger">warna</span>';
+                            } else {
+                              echo '<label class="label label-default">BELUM DINILAI</label>';
+                            }
+                       ?></td>
                     </tr>
                   </tbody>
                 </table>

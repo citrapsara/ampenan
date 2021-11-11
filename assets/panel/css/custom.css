@@ -143,3 +143,23 @@
 .pelaksanaan-anggaran hr {
   border-top-color: rgb(153, 153, 153);
 }
+
+/* Pelaksanaan Anggaran */
+.skor-warna.label-warning {
+  color: #ff9500;
+}
+.skor-warna.label-success {
+  color: #4cd964;
+}
+.skor-warna.label-danger {
+  color: #ff3b30;
+}
+
+input[type="radio"] {
+  vertical-align: middle;
+  margin: -1px 4px 0 0;
+}
+
+.radio-text {
+  margin-right: 15px !important;
+}

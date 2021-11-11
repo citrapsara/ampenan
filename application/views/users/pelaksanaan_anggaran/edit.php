@@ -75,12 +75,13 @@
                     </div>
                     <?php endforeach; ?>
                   </div>
+                  <?php if($level == 'keuangan'): ?>
                   <hr>
                   <div class="form-group">
                     <label class="col-lg-3">Verifikasi</label>
                     <div class="col-lg-9">
-                      <input class="radio-btn-verifikasi" type="radio" name="status_verifikasi" value="tolak" readonly>Tolak
-                      <input class="radio-btn-verifikasi" type="radio" name="status_verifikasi" value="sudah" readonly>Setuju
+                      <input class="radio-btn-verifikasi" type="radio" name="status_verifikasi" value="tolak" readonly><span class="radio-text">Tolak</span>
+                      <input class="radio-btn-verifikasi" type="radio" name="status_verifikasi" value="sudah" readonly><span class="radio-text">Setuju</span>
                     </div>
                   </div>
                   <div class="form-group">
@@ -92,11 +93,12 @@
                   <div class="form-group">
                     <label class="col-lg-3">Skor</label>
                     <div class="col-lg-9">
-                      <input class="radio-btn-verifikasi" type="radio" name="skor_warna" value="hijau" readonly>Hijau
-                      <input class="radio-btn-verifikasi" type="radio" name="skor_warna" value="kuning" readonly>Kuning
-                      <input class="radio-btn-verifikasi" type="radio" name="skor_warna" value="merah" readonly>Merah
+                      <input class="radio-btn-verifikasi" type="radio" name="skor_warna" value="merah"><span class="label skor-warna label-danger radio-text">warna</span>
+                      <input class="radio-btn-verifikasi" type="radio" name="skor_warna" value="kuning"><span class="label skor-warna label-warning radio-text">warna</span>
+                      <input class="radio-btn-verifikasi" type="radio" name="skor_warna" value="hijau"><span class="label skor-warna label-success radio-text">warna</span>
                     </div>
                   </div>
+                  <?php endif; ?>
                   <hr>
                   <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>.html" class="btn btn-default"><< Kembali</a>
                   <button type="submit" name="btnupdate" class="btn btn-primary" style="float:right;">Simpan</button>
