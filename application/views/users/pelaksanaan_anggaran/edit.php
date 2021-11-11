@@ -73,26 +73,28 @@
                       </div>
                     </div>
                     <?php endforeach; ?>
+                  </div>
+                  <div class="field_wrapper_new">
                     <div class="text-right">
-                      <button class="btn btn-success add-more" type="button">
+                      <button class="btn btn-success add-new" type="button">
                         <i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Akun Detil
                       </button>
                     </div>
                   </div>
                   <?php else: ?>
-                    <div class="field_wrapper">
+                    <div class="field_wrapper_new">
                       <div class="form-group input-dinamis">
                         <div class="col-input-dinamis col-lg-3">
-                          <input type="text" name="kode_akun[]" class="form-control" value="" placeholder="Kode Akun" required>
+                          <input type="text" name="kode_akun_new[]" class="form-control" value="" placeholder="Kode Akun" required>
                         </div>
                         <div class="col-input-dinamis col-lg-5">
-                          <input type="text" name="uraian_detil[]" class="form-control" value="" placeholder="Uraian" required>
+                          <input type="text" name="uraian_detil_new[]" class="form-control" value="" placeholder="Uraian" required>
                         </div>
                         <div class="col-input-dinamis col-lg-3">
-                          <input type="text" name="jumlah_realisasi[]" class="form-control" value="" placeholder="Jumlah Realisasi" onkeypress="return hanyaAngka(event)" required>
+                          <input type="text" name="jumlah_realisasi_new[]" class="form-control" value="" placeholder="Jumlah Realisasi" onkeypress="return hanyaAngka(event)" required>
                         </div>
                         <div class="col-input-dinamis col-lg-1">
-                          <button class="btn btn-success add-more" type="button">
+                          <button class="btn btn-success add-new" type="button">
                             <i class="fa fa-plus-circle" aria-hidden="true"></i>
                           </button>
                         </div>
@@ -121,18 +123,15 @@
   $(':radio:not(:checked)').attr('disabled', true);
   
 
-  // Dynamic Form 
+  // Dynamic Form Tambah
   var addButton = $('.add-more'); //Add button selector
   var wrapper = $('.field_wrapper'); //Input field wrapper
 
   var fieldHTML = '<div class="form-group input-dinamis"><div class="col-input-dinamis col-lg-3"><input type="text" name="kode_akun[]" class="form-control" value="" placeholder="Kode Akun" required></div><div class="col-input-dinamis col-lg-5"><input type="text" name="uraian_detil[]" class="form-control" value="" placeholder="Uraian" required></div><div class="col-input-dinamis col-lg-3"><input type="text" name="jumlah_realisasi[]" class="form-control" value="" placeholder="Jumlah Realisasi" onkeypress="return hanyaAngka(event)" required></div><div class="col-input-dinamis col-lg-1"><button class="btn btn-danger remove" type="button" onclick="return confirm("Anda yakin akan menghapus detil ini?");"><i class="fa fa-minus-circle"></i></button></div></div>'; //New input field html 
 
-  // var x = 1; //Initial field counter is 1
-
   //Once add button is clicked
   $(addButton).click(function(){
       //Check maximum number of input fields
-      // x++; //Increment field counter
       $(wrapper).append(fieldHTML); //Add field html
   });
   
@@ -140,7 +139,24 @@
   $(wrapper).on('click', '.remove', function(e){
       e.preventDefault();
       $(this).parents('.input-dinamis').remove(); //Remove field html
-      // x--; //Decrement field counter
+  });
+
+  // Dynamic Form Edit
+  var addNew = $('.add-new'); //Add button selector
+  var wrapperNew = $('.field_wrapper_new'); //Input field wrapper
+
+  var fieldHTMLnew = '<div class="form-group input-dinamis"><div class="col-input-dinamis col-lg-3"><input type="text" name="kode_akun_new[]" class="form-control" value="" placeholder="Kode Akun" required></div><div class="col-input-dinamis col-lg-5"><input type="text" name="uraian_detil_new[]" class="form-control" value="" placeholder="Uraian" required></div><div class="col-input-dinamis col-lg-3"><input type="text" name="jumlah_realisasi_new[]" class="form-control" value="" placeholder="Jumlah Realisasi" onkeypress="return hanyaAngka(event)" required></div><div class="col-input-dinamis col-lg-1"><button class="btn btn-danger remove" type="button" onclick="return confirm("Anda yakin akan menghapus detil ini?");"><i class="fa fa-minus-circle"></i></button></div></div>'; //New input field html 
+
+  //Once add button is clicked
+  $(addNew).click(function(){
+      //Check maximum number of input fields
+      $(wrapperNew).append(fieldHTMLnew); //Add field html
+  });
+  
+  //Once remove button is clicked
+  $(wrapperNew).on('click', '.remove', function(e){
+      e.preventDefault();
+      $(this).parents('.input-dinamis').remove(); //Remove field html
   });
   
 

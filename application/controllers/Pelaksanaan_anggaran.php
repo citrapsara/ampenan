@@ -236,6 +236,23 @@ class Pelaksanaan_anggaran extends CI_Controller {
 					$this->Guzzle_model->updatePelaksanaanAnggaranAkunDetil($id_pelaksanaan_anggaran_akun_detil[$i], $data_detil_akun);
 				}
 
+				$kode_akun_new = $_POST['kode_akun_new'];
+				$uraian_detil_new = $_POST['uraian_detil_new'];
+				$jumlah_realisasi_new = $_POST['jumlah_realisasi_new'];
+				
+				for ($i=0; $i < count($kode_akun_new); $i++) { 
+					$data_detil_akun_new = array(
+						'kode_akun'				=> $kode_akun_new[$i],
+						'uraian_detil'			=> $uraian_detil_new[$i],
+						'jumlah_realisasi'		=> $jumlah_realisasi_new[$i],
+						'id_pelaksanaan_anggaran'	=> $id
+					);
+
+					// echo '<pre>'; print_r($data_detil_akun_new); echo '</pre>'; exit;
+
+					$this->Guzzle_model->createPelaksanaanAnggaranAkunDetil($data_detil_akun_new);
+				}
+
 				$this->session->set_flashdata('msg',
 					'
 					<div class="alert alert-success alert-dismissible" role="alert">
