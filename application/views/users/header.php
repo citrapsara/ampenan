@@ -181,7 +181,7 @@ $sub_menu3 = strtolower($this->uri->segment(3));
 								</a>
 							</li>
 							<li <?php if($menu=='rpd' AND $sub_menu=='v'){echo " class='active'";} ?>>
-								<a href="">
+								<a href="rpd">
 									<i class="fa fa-calendar-check-o"></i> <span>RPD</span>
 								</a>
 							</li>

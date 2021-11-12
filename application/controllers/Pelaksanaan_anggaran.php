@@ -41,9 +41,6 @@ class Pelaksanaan_anggaran extends CI_Controller {
 			$data['pelaksanaan_anggaran'] = $this->Guzzle_model->getPelaksanaanAnggaranByDipaId($id_dipa);
 			$data['judul_tabel'] = $arraydipa_id_nama[$id_dipa];
 		}
-
-
-
 		
 		if ($aksi == 't') {
 			$p = "tambah";
@@ -327,5 +324,16 @@ class Pelaksanaan_anggaran extends CI_Controller {
 			redirect("pelaksanaan_anggaran/v/$id_dipa");
 		}
 
+	}
+
+	public function remove_akun_detil()
+	{
+		if (isset($_POST['btnupdate'])) {
+			$id = $this->input->post('id');
+			
+			echo json_encode(array('id_remove'=>$id));
+		}else {
+			redirect('404');
+		}
 	}
 }

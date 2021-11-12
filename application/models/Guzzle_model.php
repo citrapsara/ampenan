@@ -275,6 +275,13 @@ class Guzzle_model extends CI_model {
         return $result;
     }
 
+    public function getTotalPelaksanaanAnggaran()
+    {
+        $response = $this->_client->request('GET', 'PelaksanaanAnggaranAkunDetil/totalPelaksanaanAnggaranByDipaAkunDetil');
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
     public function getPelaksanaanAnggaranAkunDetilById($id)
     {
         $response = $this->_client->request('GET', 'PelaksanaanAnggaranAkunDetil/detail/' . $id);
