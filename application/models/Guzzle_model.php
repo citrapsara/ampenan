@@ -322,4 +322,51 @@ class Guzzle_model extends CI_model {
         return $result;
     }
 
+    // Model RPD
+    public function getAllRPD()
+    {
+        $response = $this->_client->request('GET', 'RPD');
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function getRPDById($id)
+    {
+        $response = $this->_client->request('GET', 'RPD/detail/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function getRPDByDipaId($id)
+    {
+        $response = $this->_client->request('GET', 'RPD/getDetailByDipa/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function createRPD($data)
+    {
+        $response = $this->_client->request('POST', 'RPD/create', [
+            'json' => $data
+        ]);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function updateRPD($id, $data)
+    {
+        // var_dump($data); exit;
+        $response = $this->_client->request('PUT', 'RPD/update/' . $id, [
+            'json' => $data
+        ]);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function deleteRPD($id)
+    {
+        $response = $this->_client->request('DELETE', 'RPD/delete/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
 }

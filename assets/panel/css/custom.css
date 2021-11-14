@@ -160,6 +160,10 @@ input[type="radio"] {
   margin: -1px 4px 0 0;
 }
 
+.add-new {
+  margin-bottom: 15px;
+}
+
 .radio-text {
   margin-right: 15px !important;
 }

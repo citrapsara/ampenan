@@ -326,14 +326,24 @@ class Pelaksanaan_anggaran extends CI_Controller {
 
 	}
 
-	public function remove_akun_detil()
-	{
-		if (isset($_POST['btnupdate'])) {
-			$id = $this->input->post('id');
-			
-			echo json_encode(array('id_remove'=>$id));
-		}else {
-			redirect('404');
-		}
+	public function hapus_akun_detil($id_dipa='', $id_pelaksanaan_anggaran='', $id_akun_detil='') {
+		$id_akun_detil = hashids_decrypt($id_akun_detil);
+		$cek_data = $this->Guzzle_model->getPelaksanaanAnggaranAkunDetilById($id_akun_detil);
+			if (count($cek_data) != 0 AND $cek_data['status_verifikasi'] != 'sudah') {
+				$this->Guzzle_model->deletePelaksanaanAnggaranAkunDetil($id_akun_detil);
+				$this->session->set_flashdata('msg',
+					'
+					<div class="alert alert-success alert-dismissible" role="alert">
+						 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							 <span aria-hidden="true">&times;</span>
+						 </button>
+						 <strong>Sukses!</strong> Data berhasil dihapus.
+					</div>
+					<br>'
+				);
+				redirect("pelaksanaan_anggaran/v/$id_dipa/e/$id_pelaksanaan_anggaran");
+			}else {
+				redirect('404_content');
+			}
 	}
 }

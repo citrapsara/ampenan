@@ -29,32 +29,34 @@ class Rpd extends CI_Controller {
 		foreach($data['dipa_list'] as $key => $val){
 			$arraydipa_id_nama[$val['id']] = $val['nama'];
 		}
-
-		$rpd_bulan = array("januari", "februari", "maret", "april", "mei", "juni", "juli", "agustus", "september", "november", "desember");
 		
-		$data['rpd'] = $this->Guzzle_model->getAllFolderDataDukung();
-		
-		print_r($rpd_bulan); exit;
+		$data['rpd'] = $this->Guzzle_model->getAllRPD();
 
+		
 		if ($id_dipa!='00') {
-			$data['rpd'] = $this->Guzzle_model->getFolderDataDukungByDipaId($id_dipa);
+			$data['rpd'] = $this->Guzzle_model->getRPDByDipaId($id_dipa);
 			$data['judul_tabel'] = $arraydipa_id_nama[$id_dipa];
 		}
 
-		
+		foreach ($data['rpd'] as $key => $value) {
+			if ($aksi == $value['revisi_ke']) {
+				$data['rpd_revisi'][$value['revisi_ke']] = $value;
+			}
+		}
+
 		if ($aksi == 't') {
 			$p = "tambah";
 			$data['judul_web'] 	  = "Buat Folder";
 		} elseif ($aksi == 'e') {
 			$p = "edit";
 			$data['judul_web'] 	  = "Edit Folder";
-			$data['rpd'] = $this->Guzzle_model->getFolderDataDukungById($id);
+			$data['rpd'] = $this->Guzzle_model->getRPDById($id);
 			// var_dump($data['rpd']); exit;
 			if ($data['rpd']['id']=='') {redirect('404');}
 		} elseif ($aksi == 'h') {
-			$cek_data = $this->Guzzle_model->getFolderDataDukungById($id);
+			$cek_data = $this->Guzzle_model->getRPDById($id);
 			if (count($cek_data) != 0) {
-				$this->Guzzle_model->deleteFolderDataDukung($id);
+				$this->Guzzle_model->deleteRPD($id);
 				$this->session->set_flashdata('msg',
 					'
 					<div class="alert alert-success alert-dismissible" role="alert">
@@ -90,7 +92,7 @@ class Rpd extends CI_Controller {
 					'uraian'	=> $name_folder,
 					'id_dipa'	=> $id_dipa
 				);
-				$this->Guzzle_model->createFolderDataDukung($data);
+				$this->Guzzle_model->createRPD($data);
 
 				$this->session->set_flashdata('msg',
 					'
@@ -127,7 +129,7 @@ class Rpd extends CI_Controller {
 					'uraian' => $name_folder
 				);
 				// var_dump($id); exit;
-				$this->Guzzle_model->updateFolderDataDukung($id, $data);
+				$this->Guzzle_model->updateRPD($id, $data);
 
 				$this->session->set_flashdata('msg',
 					'

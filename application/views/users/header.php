@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <?php
-$cek    = $user->row();
-$nama   = $cek->nama_lengkap;
-$username   = $cek->username;
+// $cek    = $user->row();
+$username   = $this->session->userdata('username');
+$level   = $this->session->userdata('level');
 
 $level  = $cek->level;
 $foto = "img/user/user-default.jpg";
@@ -142,8 +142,8 @@ $sub_menu3 = strtolower($this->uri->segment(3));
 							<a href="profile"><img src="<?php echo $foto;?>" alt="" /></a>
 						</div>
 						<div class="info">
-							<?php echo ucwords($nama); ?>
 							<small>@<?php echo strtolower($username); ?></small>
+							<?php echo ucwords($level); ?>
 						</div>
 					</li>
 				</ul>

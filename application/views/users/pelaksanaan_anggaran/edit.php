@@ -20,6 +20,9 @@
             <div class="panel-body pelaksanaan-anggaran">
                 <?php
                 echo $this->session->flashdata('msg');
+                $link3 = $this->uri->segment(3);
+                $link5 = $this->uri->segment(5);
+                
                 ?>
                 <form class="form-horizontal" action="" data-parsley-validate="true" method="post" enctype="multipart/form-data">
                   <style>
@@ -53,6 +56,11 @@
                   <hr>
                   <?php if($pelaksanaan_anggaran_akun_detil != null): ?>
                   <!-- <div class="control-group after-add-more"> -->
+                    <div class="field_wrapper_new">
+                        <button class="btn btn-success add-new" type="button">
+                          <i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Akun Detil
+                        </button>
+                    </div>
                     <div class="field_wrapper">
                     <?php foreach ($pelaksanaan_anggaran_akun_detil as $key => $value):?>
                     <div class="form-group input-dinamis">
@@ -61,25 +69,18 @@
                         <input type="text" name="kode_akun[]" class="form-control" value="<?php echo $value['kode_akun']; ?>" placeholder="Kode Akun" required>
                       </div>
                       <div class="col-input-dinamis col-lg-5">
-                        <input type="text" name="uraian_detil[]" class="form-control" value="<?php echo $value['uraian_detil']; ?>" placeholder="Uraian" required>
+                        <input type="text" name="uraian_detil[]" class="form-control" value="<?php echo $value['uraian_detil']; ?>" placeholder="Uraian Detil" required>
                       </div>
                       <div class="col-input-dinamis col-lg-3">
                         <input type="text" name="jumlah_realisasi[]" class="form-control" value="<?php echo $value['jumlah_realisasi']; ?>" placeholder="Jumlah Realisasi" onkeypress="return hanyaAngka(event)" required>
                       </div>
                       <div class="col-input-dinamis col-lg-1">
-                        <button class="btn btn-danger remove" type="button" name="btnremove[]" id="<?php echo $value['id']; ?>">
+                        <a class="btn btn-danger remove" type="button" name="btnremove[]" id="<?php echo $value['id']; ?>" href="pelaksanaan_anggaran/hapus_akun_detil/<?php echo $link3; ?>/<?php echo $link5; ?>/<?php echo hashids_encrypt($value['id']) ?>"  onclick="return confirm('Apakah Anda yakin? Akun detil ini akan dihapus dalam database.');">
                           <i class="fa fa-minus-circle" aria-hidden="true"></i>
-                        </button>
+                        </a>
                       </div>
                     </div>
                     <?php endforeach; ?>
-                  </div>
-                  <div class="field_wrapper_new">
-                    <div class="text-right">
-                      <button class="btn btn-success add-new" type="button">
-                        <i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Akun Detil
-                      </button>
-                    </div>
                   </div>
                   <?php else: ?>
                     <div class="field_wrapper_new">
@@ -88,7 +89,7 @@
                           <input type="text" name="kode_akun_new[]" class="form-control" value="" placeholder="Kode Akun" required>
                         </div>
                         <div class="col-input-dinamis col-lg-5">
-                          <input type="text" name="uraian_detil_new[]" class="form-control" value="" placeholder="Uraian" required>
+                          <input type="text" name="uraian_detil_new[]" class="form-control" value="" placeholder="Uraian Detil" required>
                         </div>
                         <div class="col-input-dinamis col-lg-3">
                           <input type="text" name="jumlah_realisasi_new[]" class="form-control" value="" placeholder="Jumlah Realisasi" onkeypress="return hanyaAngka(event)" required>
@@ -136,26 +137,26 @@
   });
   
   //Once remove button is clicked
-  $(wrapper).on('click', '.remove', function(e){
-      e.preventDefault();
-      $(this).parents('.input-dinamis').remove(); //Remove field html
+//   $(wrapper).on('click', '.remove', function(e){
+//       e.preventDefault();
+//       $(this).parents('.input-dinamis').remove(); //Remove field html
 
-      var id_remove = $(this).attr("id");
-      if(confirm("Are you sure want to remove this data?"))
-      {
-        $.ajax({
-          url:"pelaksanaan_anggaran/remove_akun_detil",
-          method:"POST",
-          data:"id="+id_remove,
-          success:function(data)
-          {
-            //  load_data();
-            alert("Data removed");
-          }
-        })
-        // console.log(data);
-    }
- });
+//       var id_remove = $(this).attr("id");
+//       if(confirm("Are you sure want to remove this data?"))
+//       {
+//         $.ajax({
+//           url:"pelaksanaan_anggaran/remove_akun_detil",
+//           method:"POST",
+//           data:"id="+id_remove,
+//           success:function(data)
+//           {
+//             //  load_data();
+//             alert("Data removed");
+//           }
+//         })
+//         // console.log(data);
+//     }
+//  });
 
 
   // Dynamic Form Edit

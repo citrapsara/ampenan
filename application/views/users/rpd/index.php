@@ -28,7 +28,7 @@
                                 <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
                                 <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
                             </div>
-                            <h4 class="panel-title">RENCANA PENARIKAN DANA DIPA <?php echo strtoupper($judul_tabel); ?></h4>
+                            <h4 class="panel-title">RPD DIPA <?php echo strtoupper($judul_tabel); ?></h4>
                         </div>
                         <div class="panel-body">
                           <?php if ($id_dipa == '00'): ?>
@@ -58,15 +58,15 @@
                             <table id="data-table" class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>BULAN</th>
-                                        <th>BELANJA PEGAWAI</th>
-                                        <th>BELANJA BARANG</th>
-                                        <th>BELANJA MODAL</th>
-                                        <th>TOTAL</th>
+                                        <th width="1%">NO.</th>
+                                        <th>NAMA FOLDER</th>
+                                        <th width="15%">JUMLAH DOKUMEN</th>
+                                        <th width="15%">Opsi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                   <?php
+                                    $no=1;
                                    foreach ($rpd as $value): ?>
                                     <tr>
                                         <td><?php echo $no++; ?>.</td>
