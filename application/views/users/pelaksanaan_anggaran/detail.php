@@ -57,7 +57,7 @@
                         <tr>
                           <td><?php echo $value['kode_akun']; ?></td>
                           <td><?php echo $value['uraian_detil']; ?></td>
-                          <td><?php echo $value['jumlah_realisasi']; ?></td>
+                          <td><?php echo $value['jumlah_realisasi_rupiah']; ?></td>
                         </tr>
                       <?php endforeach; ?>
                         <tr>

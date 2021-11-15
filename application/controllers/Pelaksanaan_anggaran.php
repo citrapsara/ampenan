@@ -19,28 +19,36 @@ class Pelaksanaan_anggaran extends CI_Controller {
 			redirect('web/login');
 		}
 
+		function rupiah($angka) {
+			$hasil_rupiah = "Rp " . number_format($angka,0,"",".");
+			return $hasil_rupiah;
+ 		}
+
 		$data['user']  			  = $this->Mcrud->get_users_by_un($ceks);
 
-		// if ($level!='superadmin') {
-		// 	redirect('404');
-		// }
 		$data['dipa_list'] = $this->Guzzle_model->getDipaList();
 		$arraydipa_id_nama = [];
 		foreach($data['dipa_list'] as $key => $val){
 			$arraydipa_id_nama[$val['id']] = $val['nama'];
 		}
-
-
-		// if ($id_dipa_user!='00') {
-		// 	redirect("pelaksanaan_anggaran/v/".$id_dipa_user);
-		// }
 		
 		$data['pelaksanaan_anggaran'] = $this->Guzzle_model->getAllPelaksanaanAnggaran();
+		$data['total_realisasi'] = $this->Guzzle_model->getTotalPelaksanaanAnggaran();
 		
 		if ($id_dipa!='00') {
 			$data['pelaksanaan_anggaran'] = $this->Guzzle_model->getPelaksanaanAnggaranByDipaId($id_dipa);
+			$data['total_realisasi'] = $this->Guzzle_model->getTotalPelaksanaanAnggaranByDipa($id_dipa);
 			$data['judul_tabel'] = $arraydipa_id_nama[$id_dipa];
 		}
+
+		foreach ($data['pelaksanaan_anggaran'] as $key => $value) {
+			foreach ($data['total_realisasi'] as $subkey => $subvalue) {
+				if($subvalue['id_pelaksanaan_anggaran'] == $value['id']) {
+					$data['pelaksanaan_anggaran'][$key]['total_realisasi'] = rupiah($subvalue['total_realisasi']);
+				}
+			}
+		}
+		// echo '<pre>'; print_r($data['pelaksanaan_anggaran']); echo '</pre>'; exit;
 		
 		if ($aksi == 't') {
 			$p = "tambah";
@@ -55,8 +63,9 @@ class Pelaksanaan_anggaran extends CI_Controller {
 
 			foreach ($data['pelaksanaan_anggaran_akun_detil'] as $key => $value) {
 				$jumlah[] = $value['jumlah_realisasi'];
+				$data['pelaksanaan_anggaran_akun_detil'][$key]['jumlah_realisasi_rupiah'] = rupiah($value['jumlah_realisasi']);
 			}
-			$data['total_realisasi'] = array_sum($jumlah);
+			$data['total_realisasi'] = rupiah(array_sum($jumlah));
 
 			if ($data['pelaksanaan_anggaran']['id']=='') {redirect('404');} 
 		} elseif ($aksi == 'e') {
@@ -76,7 +85,7 @@ class Pelaksanaan_anggaran extends CI_Controller {
 			foreach ($data['pelaksanaan_anggaran_akun_detil'] as $key => $value) {
 				$jumlah[] = $value['jumlah_realisasi'];
 			}
-			$data['total_realisasi'] = array_sum($jumlah);
+			$data['total_realisasi'] = rupiah(array_sum($jumlah));
 
 			if ($data['pelaksanaan_anggaran']['id']=='') {redirect('404');}
 		} elseif ($aksi == 'h') {

@@ -61,7 +61,7 @@
                                     <tr>
                                         <th width="1%">NO.</th>
                                         <th>KETERANGAN</th>
-                                        <th>DOKUMEN PERTANGGUNGJAWABAN</th>
+                                        <th>DOKUMEN PERTANGGUNG-JAWABAN</th>
                                         <th>REALISASI</th>
                                         <th>TANGGAL KEGIATAN</th>
                                         <th>TANGGAL INPUT</th>
@@ -77,7 +77,13 @@
                                         <td><?php echo $no++; ?>.</td>
 																				<td><?php echo ucwords($value['uraian']); ?></td>
 																				<td class="text-center"><a class="btn btn-info" href="<?php echo $value['url_file']; ?>" target="_blank"><i class="fa fa-download"></i> Download</a></td>
-																				<td>100000</td>
+																				<td><?php 
+                                          if ($value['total_realisasi'] != null) {
+                                            echo $value['total_realisasi'];
+                                          } else {
+                                            echo 'Rp 0';
+                                          }
+                                        ?></td>
 																				<td><?php echo $this->Mcrud->tgl_id(date('d-m-Y', strtotime($value['tanggal_pelaksanaan'])),'full'); ?></td>
 																				<td><?php echo $this->Mcrud->tgl_id(date('d-m-Y', strtotime($value['created_at'])),'full'); ?></td>
                                         <td class="text-center verifikasi-icon">
