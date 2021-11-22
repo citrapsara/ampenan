@@ -56,13 +56,13 @@
   background-color: #ea4272;
 }
 .dashboard-progress .progress-bar-bp {
-  background-color: #14afff;
-}
-.dashboard-progress .progress-bar-bb {
   background-color: #ffd11c;
 }
-.dashboard-progress .progress-bar-bm {
+.dashboard-progress .progress-bar-bb {
   background-color: #8753de;
+}
+.dashboard-progress .progress-bar-bm {
+  background-color: #9f7159;
 }
 
 /* Dipa Collapse Accordion */
@@ -166,4 +166,9 @@ input[type="radio"] {
 
 .radio-text {
   margin-right: 15px !important;
+}
+
+.grey-line {
+  border-color: #bbb;
+  margin: 10px 0;
 }

@@ -19,12 +19,18 @@ class Pelaksanaan_anggaran extends CI_Controller {
 			redirect('web/login');
 		}
 
+		if ($id_dipa_user!='00') {
+			if ($id_dipa!=$id_dipa_user) {
+				redirect('404');
+			}
+		}
+
 		function rupiah($angka) {
 			$hasil_rupiah = "Rp " . number_format($angka,0,"",".");
 			return $hasil_rupiah;
  		}
 
-		$data['user']  			  = $this->Mcrud->get_users_by_un($ceks);
+		// $data['user']  			  = $this->Mcrud->get_users_by_un($ceks);
 
 		$data['dipa_list'] = $this->Guzzle_model->getDipaList();
 		$arraydipa_id_nama = [];
@@ -51,6 +57,7 @@ class Pelaksanaan_anggaran extends CI_Controller {
 		// echo '<pre>'; print_r($data['pelaksanaan_anggaran']); echo '</pre>'; exit;
 		
 		if ($aksi == 't') {
+			if ($level!='pelaksana') {redirect('404');}
 			$p = "tambah";
 			$data['judul_web'] 	  = "Input Pelaksanaan Anggaran";
 		} elseif ($aksi == 'd') {

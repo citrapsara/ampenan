@@ -19,11 +19,14 @@ class Folder_data_dukung extends CI_Controller {
 			redirect('web/login');
 		}
 
-		$data['user']  			  = $this->Mcrud->get_users_by_un($ceks);
+		// $data['user']  			  = $this->Mcrud->get_users_by_un($ceks);
 
-		// if ($level!='superadmin') {
-		// 	redirect('404');
-		// }
+		if ($id_dipa_user!='00') {
+			if ($id_dipa!=$id_dipa_user) {
+				redirect('404');
+			}
+		}
+
 		$data['dipa_list'] = $this->Guzzle_model->getDipaList();
 		$arraydipa_id_nama = [];
 		foreach($data['dipa_list'] as $key => $val){

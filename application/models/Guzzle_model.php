@@ -351,6 +351,13 @@ class Guzzle_model extends CI_model {
         return $result;
     }
 
+    public function getRPDByDipaIdRevisi($id, $revisi)
+    {
+        $response = $this->_client->request('GET', 'RPD/getDetailByDipaByRevisi/' . $id . '/' . $revisi);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
     public function createRPD($data)
     {
         $response = $this->_client->request('POST', 'RPD/create', [
@@ -362,7 +369,6 @@ class Guzzle_model extends CI_model {
 
     public function updateRPD($id, $data)
     {
-        // var_dump($data); exit;
         $response = $this->_client->request('PUT', 'RPD/update/' . $id, [
             'json' => $data
         ]);
@@ -373,6 +379,100 @@ class Guzzle_model extends CI_model {
     public function deleteRPD($id)
     {
         $response = $this->_client->request('DELETE', 'RPD/delete/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    // Model Usulan Revisi DIPA
+    public function getAllRevisiDipa()
+    {
+        $response = $this->_client->request('GET', 'UsulanRevisiDipa');
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function getRevisiDipaByDipaId($id)
+    {
+        $response = $this->_client->request('GET', 'UsulanRevisiDipa/getDetailByDipa/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function getRevisiDipaById($id)
+    {
+        $response = $this->_client->request('GET', 'UsulanRevisiDipa/detail/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function createRevisiDipa($data)
+    {
+        $response = $this->_client->request('POST', 'UsulanRevisiDipa/create', [
+            'json' => $data
+        ]);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function deleteRevisiDipa($id)
+    {
+        $response = $this->_client->request('DELETE', 'UsulanRevisiDipa/delete/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function updateRevisiDipa($id, $data)
+    {
+        $response = $this->_client->request('PUT', 'UsulanRevisiDipa/update/' . $id, [
+            'json' => $data
+        ]);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    // Model Verifikasi Usulan Revisi DIPA
+    public function getAllVerifikasiRevisiDipa()
+    {
+        $response = $this->_client->request('GET', 'VerifikasiUsulanRevisiDipa');
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function getVerifikasiByUsulanRevisiId($id)
+    {
+        $response = $this->_client->request('GET', 'VerifikasiUsulanRevisiDipa/getDetailByUsulanRevisiDipa/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function getVerifikasiDipaById($id)
+    {
+        $response = $this->_client->request('GET', 'VerifikasiUsulanRevisiDipa/detail/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function createVerifikasiRevisiDipa($data)
+    {
+        $response = $this->_client->request('POST', 'VerifikasiUsulanRevisiDipa/create', [
+            'json' => $data
+        ]);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function deleteVerifikasiRevisiDipa($id)
+    {
+        $response = $this->_client->request('DELETE', 'VerifikasiUsulanRevisiDipa/delete/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function updateVerifikasiRevisiDipa($id, $data)
+    {
+        $response = $this->_client->request('PUT', 'VerifikasiUsulanRevisiDipa/update/' . $id, [
+            'json' => $data
+        ]);
         $result = json_decode($response->getBody()->getContents(), true);
         return $result;
     }

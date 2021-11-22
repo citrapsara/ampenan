@@ -19,7 +19,7 @@ class Dipa extends CI_Controller {
 			redirect('web/login');
 		}
 
-		$data['user']  			  = $this->Mcrud->get_users_by_un($ceks);
+		// $data['user']  			  = $this->Mcrud->get_users_by_un($ceks);
 
 		if ($id_dipa=='00') {
 			$data['dipa_list'] = $this->Guzzle_model->getDipaList();
@@ -28,6 +28,7 @@ class Dipa extends CI_Controller {
 		}
 
 		if ($aksi == 't') {
+			if ($level!='perencana') {redirect('404');}
 			$p = "tambah";
 			$data['judul_web'] 	  = "Tambah Dokumen DIPA";
 		} elseif ($aksi == 'e') {

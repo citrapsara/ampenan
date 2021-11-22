@@ -95,8 +95,10 @@
                                   <h4 class="panel-title">DIPA</h4>
                               </div>
                               <div class="panel-body">
+                              <?php if ($level == 'perencana'): ?>
                                 <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/t.html" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Tambah Dokumen DIPA</a>
-                            <hr>
+                                <hr>
+                              <?php endif; ?>
                             <!-- Table  -->
                             <div class="table-responsive">
                               <table id="data-table" class="table table-striped table-bordered">

@@ -1,5 +1,4 @@
 <?php
-$cek    = $user->row();
 $level  = $this->session->userdata('level');
 $id_dipa = $this->session->userdata('id_dipa');
 ?>
@@ -11,10 +10,20 @@ $id_dipa = $this->session->userdata('id_dipa');
 	</ol>
 	<!-- end breadcrumb -->
 	<!-- begin page-header -->
-	<!-- Dashboard Superadmin dan Koordinator Wilayah -->
+	<!-- Dashboard Satker -->
 	
 		<h1 class="page-header">Dashboard <?php echo ucwords($nama_dipa);?></h1>
 
+		<!-- Chart deviasi RPD dan realisasi anggaran  -->
+		<!-- <div class="row">
+			<div class="col-md-12">
+				<div class="realisasi-card card">
+					<div class="card-body">
+						<canvas id="line_chart_rpd" ></canvas>
+					</div>
+				</div>
+			</div>
+		</div> -->
 		<div class="row">
 			<div class="col-md-12">
 				<div class="realisasi-card card">
@@ -161,5 +170,131 @@ const chart_penyerapan = new Chart(ctx, {
 });
 
 
+
+</script>
+
+<script>
+let data_realisasi_pegawai = [4200000,7200000,6500000,6900000,2100000,6000000,2700000,110000,7400000,3100000,6600000,13000000];
+let data_rpd_pegawai = [3100000,10200000,5300000,11400000,1500000,8600000,2700000,10800000,3900000,10100000,5200000,11300000];
+let data_deviasi_pegawai = [];
+data_realisasi_pegawai.forEach((val, key)=>{
+	data_deviasi_pegawai[key] = data_realisasi_pegawai[key] - data_rpd_pegawai[key];
+});
+
+const data = {
+  labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+  datasets: [
+    {
+      label: 'Data Realisasi',
+      fill: false,
+      backgroundColor: 'cyan',
+      borderColor: 'cyan',
+      data: data_realisasi_pegawai
+	//   ,fill: '+1'
+    }, {
+      label: 'Data RPD',
+      fill: false,
+      backgroundColor: 'cyan',
+      borderColor: 'cyan',
+      borderDash: [5, 7],
+      data: data_rpd_pegawai
+	//   fill: '0'
+    }
+    , {
+      label: 'Deviasi',
+      fill: false,
+      backgroundColor: 'lime',
+      borderColor: 'lime',
+    //   borderDash: [5, 7],
+      data: data_deviasi_pegawai,
+	  datalabels:{
+		  display: true
+	  }
+    }
+	// , {
+    //   label: 'Filled',
+    //   backgroundColor: 'red',
+    //   borderColor: 'red',
+    //   data: [9,1,7,2,5,10,3,11],
+    //   fill: true,
+    // }
+  ]
+};
+
+
+
+  var ctxrpd = document.getElementById('line_chart_rpd').getContext('2d');
+  var line_chart_penyerapan = new Chart(ctxrpd, {
+	type: 'line',
+	data: data,
+	options: {
+		legend: {
+            display: true,
+            labels: {
+                fontColor: 'white'
+				// ,padding: 100
+            }
+			// ,position: 'bottom'
+        },
+		layout: {
+            padding: {
+                left: 0,
+                right: 100,
+                top: 0,
+                bottom: 0
+            }
+        },
+			
+		responsive: true,
+		plugins: {
+			title: {
+				display: false,
+				text: 'Chart.js Line Chart'
+			},
+		},
+		// interaction: {
+		// mode: 'index',
+		// intersect: false
+		// },
+		scales: {
+			yAxes: [{
+				display: true,
+				ticks: {
+					// beginAtZero: true,
+					// max: 100,
+					// min: 0
+					fontColor: 'white',
+					padding: 100
+				}
+			}],
+			xAxes: [{
+                  ticks: {
+                      autoSkip: false,
+                    //   maxRotation: 90,
+                    //   minRotation: 90,
+					//   padding: 20,
+					  fontColor: 'white'
+                  }
+              }
+			  ]
+		}
+		// ,plugins: {
+		// 	datalabels: {
+		// 		display: false
+		// 	}
+		// }
+		,plugins: {
+			datalabels: {
+				anchor: 'end',
+				align: 'bottom',
+				formatter: (value, ctx) => {
+					return 'Rp ' +  (value).toLocaleString().replace(/,/g,".");//toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+				},
+				color: 'white',
+				display: false
+			}
+		}
+	}
+  });
 
 </script>

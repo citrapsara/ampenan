@@ -77,7 +77,7 @@ class Web extends CI_Controller {
 						$this->session->set_userdata('level', "$user_role");
 						$this->session->set_userdata('token', "$user_token");
 						$this->session->set_userdata('id_dipa', "$user_dipa");
-						$this->session->set_userdata('jml_notif_bell', "0");
+						// $this->session->set_userdata('jml_notif_bell', "0");
 
 						redirect('dashboard');
 					}
@@ -150,8 +150,8 @@ class Web extends CI_Controller {
 		if(!isset($ceks)) {
 			redirect('web/login');
 		} else {
-			$data['user']   	 = $this->Mcrud->get_users_by_un($ceks);
-			$data['users']  	 = $this->Mcrud->get_users();
+			// $data['user']   	 = $this->Mcrud->get_users_by_un($ceks);
+			// $data['users']  	 = $this->Mcrud->get_users();
 			$data['judul_web'] = "Notifikasi";
 
 			$this->db->order_by('id_notif','DESC');

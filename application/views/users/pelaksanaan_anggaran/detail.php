@@ -88,7 +88,7 @@
                             }?></td>
                     </tr>
                     <tr>
-                      <th valign="top">Catatan Administrator</th>
+                      <th valign="top">Catatan</th>
                       <th valign="top">:</th>
                       <td><?php echo ucfirst($pelaksanaan_anggaran['catatan_verifikator']); ?></td>
                     </tr>

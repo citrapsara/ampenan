@@ -5,7 +5,13 @@ class Rpd extends CI_Controller {
 	public function index()
 	{
 		$id_dipa_user = $this->session->userdata('id_dipa');
-		redirect("rpd/v/".$id_dipa_user);
+		if ($id_dipa_user == '00') {
+			redirect("rpd/v");
+		} else {
+			$data['rpd'] = $this->Guzzle_model->getRPDByDipaId($id_dipa_user);
+			$revisi = count($data['rpd']) - 1;
+			redirect("rpd/v/".$id_dipa_user."/".$revisi);
+		}
 	}
 
 	public function v($id_dipa='',$aksi='',$id='')
@@ -18,61 +24,49 @@ class Rpd extends CI_Controller {
 		if(!isset($ceks)) {
 			redirect('web/login');
 		}
-
-		$data['user']  			  = $this->Mcrud->get_users_by_un($ceks);
-
-		// if ($level!='superadmin') {
-		// 	redirect('404');
-		// }
+		
 		$data['dipa_list'] = $this->Guzzle_model->getDipaList();
 		$arraydipa_id_nama = [];
 		foreach($data['dipa_list'] as $key => $val){
 			$arraydipa_id_nama[$val['id']] = $val['nama'];
 		}
-		
-		$data['rpd'] = $this->Guzzle_model->getAllRPD();
-
-		
-		if ($id_dipa!='00') {
-			$data['rpd'] = $this->Guzzle_model->getRPDByDipaId($id_dipa);
-			$data['judul_tabel'] = $arraydipa_id_nama[$id_dipa];
-		}
-
-		foreach ($data['rpd'] as $key => $value) {
-			if ($aksi == $value['revisi_ke']) {
-				$data['rpd_revisi'][$value['revisi_ke']] = $value;
+				
+		if ($id_dipa_user!='00') {
+			if ($id_dipa!=$id_dipa_user) {
+				redirect('404');
 			}
+			$data['rpd_dipa'] = $this->Guzzle_model->getRPDByDipaId($id_dipa_user);
+			$revisi_redirect = count($data['rpd_dipa']);
 		}
 
 		if ($aksi == 't') {
-			$p = "tambah";
-			$data['judul_web'] 	  = "Buat Folder";
-		} elseif ($aksi == 'e') {
-			$p = "edit";
-			$data['judul_web'] 	  = "Edit Folder";
-			$data['rpd'] = $this->Guzzle_model->getRPDById($id);
-			// var_dump($data['rpd']); exit;
-			if ($data['rpd']['id']=='') {redirect('404');}
-		} elseif ($aksi == 'h') {
-			$cek_data = $this->Guzzle_model->getRPDById($id);
-			if (count($cek_data) != 0) {
-				$this->Guzzle_model->deleteRPD($id);
-				$this->session->set_flashdata('msg',
-					'
-					<div class="alert alert-success alert-dismissible" role="alert">
-						 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							 <span aria-hidden="true">&times;</span>
-						 </button>
-						 <strong>Sukses!</strong> Berhasil dihapus.
-					</div>
-					<br>'
-				);
-				redirect("rpd/v/$id_dipa");
-			}else {
+			if ($level!='perencana' AND $level!='pelaksana') {redirect('404');}
+			$p = "revisi";
+			$data['judul_web'] 	  = "Input Disbursement Plan";
+			if (count($data['rpd_dipa']) != 0) {
 				redirect('404_content');
 			}
-		}else{
-			$p = "index";
+		} elseif ($aksi == 'r') {
+			if ($level!='perencana' AND $level!='pelaksana') {redirect('404');}
+			$p = "revisi";
+			$data['judul_web'] 	  = "Revisi Rencana Penarikan Dana";
+			
+		} else {
+			if ($id_dipa_user=='00') {
+				$p = "index_all";
+				$data['judul_tabel'] = $arraydipa_id_nama[$id_dipa];
+
+				if ($id_dipa != '') {
+					$data['rpd_dipa'] = $this->Guzzle_model->getRPDByDipaId($id_dipa);
+				}
+				if ($id_dipa != '' AND $aksi != '') {
+					$data['rpd'] = $this->Guzzle_model->getRPDByDipaIdRevisi($id_dipa, $aksi);
+				}
+			} else {
+				$p = "index_satker";
+				$data['rpd'] = $this->Guzzle_model->getRPDByDipaIdRevisi($id_dipa_user, $aksi);
+				$data['judul_tabel'] = $arraydipa_id_nama[$id_dipa_user];
+			}
 			$data['judul_web'] 	  = "Rencana Penarikan Dana (RPD)";
 		}
 
@@ -84,13 +78,88 @@ class Rpd extends CI_Controller {
 		$tgl = date('Y-m-d H:i:s');
 
 		if (isset($_POST['btnsimpan'])) {
-			$name_folder = htmlentities(strip_tags($this->input->post('name_folder')));
+			$januari_pegawai = htmlentities(strip_tags($this->input->post('januari_pegawai')));
+			$januari_barang = htmlentities(strip_tags($this->input->post('januari_barang')));
+			$januari_modal = htmlentities(strip_tags($this->input->post('januari_modal')));
+			$februari_pegawai = htmlentities(strip_tags($this->input->post('februari_pegawai')));
+			$februari_barang = htmlentities(strip_tags($this->input->post('februari_barang')));
+			$februari_modal = htmlentities(strip_tags($this->input->post('februari_modal')));
+			$maret_pegawai = htmlentities(strip_tags($this->input->post('maret_pegawai')));
+			$maret_barang = htmlentities(strip_tags($this->input->post('maret_barang')));
+			$maret_modal = htmlentities(strip_tags($this->input->post('maret_modal')));
+			$april_pegawai = htmlentities(strip_tags($this->input->post('april_pegawai')));
+			$april_barang = htmlentities(strip_tags($this->input->post('april_barang')));
+			$april_modal = htmlentities(strip_tags($this->input->post('april_modal')));
+			$mei_pegawai = htmlentities(strip_tags($this->input->post('mei_pegawai')));
+			$mei_barang = htmlentities(strip_tags($this->input->post('mei_barang')));
+			$mei_modal = htmlentities(strip_tags($this->input->post('mei_modal')));
+			$juni_pegawai = htmlentities(strip_tags($this->input->post('juni_pegawai')));
+			$juni_barang = htmlentities(strip_tags($this->input->post('juni_barang')));
+			$juni_modal = htmlentities(strip_tags($this->input->post('juni_modal')));
+			$juli_pegawai = htmlentities(strip_tags($this->input->post('juli_pegawai')));
+			$juli_barang = htmlentities(strip_tags($this->input->post('juli_barang')));
+			$juli_modal = htmlentities(strip_tags($this->input->post('juli_modal')));
+			$agustus_pegawai = htmlentities(strip_tags($this->input->post('agustus_pegawai')));
+			$agustus_barang = htmlentities(strip_tags($this->input->post('agustus_barang')));
+			$agustus_modal = htmlentities(strip_tags($this->input->post('agustus_modal')));
+			$september_pegawai = htmlentities(strip_tags($this->input->post('september_pegawai')));
+			$september_barang = htmlentities(strip_tags($this->input->post('september_barang')));
+			$september_modal = htmlentities(strip_tags($this->input->post('september_modal')));
+			$oktober_pegawai = htmlentities(strip_tags($this->input->post('oktober_pegawai')));
+			$oktober_barang = htmlentities(strip_tags($this->input->post('oktober_barang')));
+			$oktober_modal = htmlentities(strip_tags($this->input->post('oktober_modal')));
+			$november_pegawai = htmlentities(strip_tags($this->input->post('november_pegawai')));
+			$november_barang = htmlentities(strip_tags($this->input->post('november_barang')));
+			$november_modal = htmlentities(strip_tags($this->input->post('november_modal')));
+			$desember_pegawai = htmlentities(strip_tags($this->input->post('desember_pegawai')));
+			$desember_barang = htmlentities(strip_tags($this->input->post('desember_barang')));
+			$desember_modal = htmlentities(strip_tags($this->input->post('desember_modal')));
+
+			$revisi_ke = count($data['rpd_dipa']);
+			// echo $revisi_ke; exit;
+
 			$simpan = 'y';
 
 			if ($simpan=='y') {
 				$data = array(
-					'uraian'	=> $name_folder,
-					'id_dipa'	=> $id_dipa
+					'revisi_ke'			=> $revisi_ke,
+					'id_dipa'			=> $id_dipa,
+					'januari_pegawai'	=> $januari_pegawai,
+					'januari_barang'	=> $januari_barang,
+					'januari_modal'		=> $januari_modal,
+					'februari_pegawai'	=> $februari_pegawai,
+					'februari_barang'	=> $februari_barang,
+					'februari_modal'	=> $februari_modal,
+					'maret_pegawai'		=> $maret_pegawai,
+					'maret_barang'		=> $maret_barang,
+					'maret_modal'		=> $maret_modal,
+					'april_pegawai'		=> $april_pegawai,
+					'april_barang'		=> $april_barang,
+					'april_modal'		=> $april_modal,
+					'mei_pegawai'		=> $mei_pegawai,
+					'mei_barang'		=> $mei_barang,
+					'mei_modal'			=> $mei_modal,
+					'juni_pegawai'		=> $juni_pegawai,
+					'juni_barang'		=> $juni_barang,
+					'juni_modal'		=> $juni_modal,
+					'juli_pegawai'		=> $juli_pegawai,
+					'juli_barang'		=> $juli_barang,
+					'juli_modal'		=> $juli_modal,
+					'agustus_pegawai'	=> $agustus_pegawai,
+					'agustus_barang'	=> $agustus_barang,
+					'agustus_modal' 	=> $agustus_modal,
+					'september_pegawai'	=> $september_pegawai,
+					'september_barang'	=> $september_barang,
+					'september_modal'	=> $september_modal,
+					'oktober_pegawai'	=> $oktober_pegawai,
+					'oktober_barang'	=> $oktober_barang,
+					'oktober_modal'		=> $oktober_modal,
+					'november_pegawai'	=> $november_pegawai,
+					'november_barang'	=> $november_barang,
+					'november_modal'	=> $november_modal,
+					'desember_pegawai'	=> $desember_pegawai,
+					'desember_barang'	=> $desember_barang,
+					'desember_modal'	=> $desember_modal
 				);
 				$this->Guzzle_model->createRPD($data);
 
@@ -116,46 +185,46 @@ class Rpd extends CI_Controller {
 				 <br>'
 				);
 			}
-			redirect("rpd/v/$id_dipa");
+			redirect("rpd/v/$id_dipa/$revisi_redirect");
 		}
 
-		if (isset($_POST['btnupdate'])) {
-			// $id_rpd = htmlentities(strip_tags($this->input->post('id_rpd')));
-			$name_folder = htmlentities(strip_tags($this->input->post('name_folder')));
-			$simpan = 'y';
+		// if (isset($_POST['btnupdate'])) {
+		// 	// $id_rpd = htmlentities(strip_tags($this->input->post('id_rpd')));
+		// 	$name_folder = htmlentities(strip_tags($this->input->post('name_folder')));
+		// 	$simpan = 'y';
 
-			if ($simpan=='y') {
-				$data = array(
-					'uraian' => $name_folder
-				);
-				// var_dump($id); exit;
-				$this->Guzzle_model->updateRPD($id, $data);
+		// 	if ($simpan=='y') {
+		// 		$data = array(
+		// 			'uraian' => $name_folder
+		// 		);
+		// 		// var_dump($id); exit;
+		// 		$this->Guzzle_model->updateRPD($id, $data);
 
-				$this->session->set_flashdata('msg',
-					'
-					<div class="alert alert-success alert-dismissible" role="alert">
-						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-						<strong>Sukses!</strong> Berhasil disimpan.
-					</div>
-				<br>'
-				);
+		// 		$this->session->set_flashdata('msg',
+		// 			'
+		// 			<div class="alert alert-success alert-dismissible" role="alert">
+		// 				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		// 					<span aria-hidden="true">&times;</span>
+		// 				</button>
+		// 				<strong>Sukses!</strong> Berhasil disimpan.
+		// 			</div>
+		// 		<br>'
+		// 		);
 				
-				redirect("rpd/v/$id_dipa");
-			 }else {
-				$this->session->set_flashdata('msg',
-					 '
-					 <div class="alert alert-warning alert-dismissible" role="alert">
-						  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							  <span aria-hidden="true">&times;</span>
-						  </button>
-						  <strong>Gagal!</strong>
-					 </div>
-				  <br>'
-				 );
-				 redirect("rpd/v/$id_dipa/e/".hashids_encrypt($id));
-			}
-		}
+		// 		redirect("rpd/v/$id_dipa");
+		// 	 }else {
+		// 		$this->session->set_flashdata('msg',
+		// 			 '
+		// 			 <div class="alert alert-warning alert-dismissible" role="alert">
+		// 				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		// 					  <span aria-hidden="true">&times;</span>
+		// 				  </button>
+		// 				  <strong>Gagal!</strong>
+		// 			 </div>
+		// 		  <br>'
+		// 		 );
+		// 		 redirect("rpd/v/$id_dipa/e/".hashids_encrypt($id));
+		// 	}
+		// }
 	}
 }

@@ -18,7 +18,7 @@ class Data_dukung extends CI_Controller {
 			redirect('web/login');
 		}
 
-		$data['user']  			  = $this->Mcrud->get_users_by_un($ceks);
+		// $data['user']  			  = $this->Mcrud->get_users_by_un($ceks);
 
 		// if ($level!='superadmin') {
 		// 	redirect('404');

@@ -3,59 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Mcrud extends CI_Model {
 
-	var $tbl_users				 = 'tbl_user';
-
-	//Sent mail
-		public function sent_mail($nama, $email, $aksi)
-		{
-			$email_saya = "cariprojecthalal@gmail.com";
-			$pass_saya  = "#";
-
-			//konfigurasi email
-			$config = array();
-			$config['charset'] = 'utf-8';
-			$config['useragent'] = 'Codeinteger';
-			$config['protocol']= "smtp";
-			$config['mailtype']= "html";
-			$config['smtp_host']= "ssl://google.com";
-			$config['smtp_port']= "587";
-			$config['smtp_timeout']= "10";
-			$config['smtp_user']= "$email_saya";
-			$config['smtp_pass']= "$pass_saya";
-			$config['crlf']="\r\n";
-			$config['newline']="\r\n";
-
-			$config['wordwrap'] = TRUE;
-			//memanggil library email dan set konfigurasi untuk pengiriman email
-
-			$this->email->initialize($config);
-			//$ipaddress = get_real_ip(); //untuk mendeteksi alamat IP
-
-			date_default_timezone_set('Asia/Jakarta');
-			$waktu 	  = date('Y-m-d H:i:s');
-			$tgl 			= date('Y-m-d');
-
-			$id = md5("$email * $tgl");
-
-					$link			= base_url().'web/verify';
-					$pesan    = "Hello $nama,
-												<br /><br />
-												Selamat datang di LINK Net!<br/>
-												Untuk melengkapi registrasi Anda, silahkan klik link berikut<br/>
-												<br /><br />
-												<b><a href='$link/$id/$email'>Klik Aktivasi disini :)</a></b>
-												<br /><br />
-												Terimakasih ^_^,
-												";
-					$subject = "Aktivasi Akun $nama";
-
-			$this->email->from("$email_saya");
-			$this->email->to("$email");
-			$this->email->subject($subject);
-			$this->email->message($pesan);
-		}
-	//End Sent mail
-
  public static function tgl_id($date, $bln='')
  {
 	 date_default_timezone_set('Asia/Jakarta');
@@ -99,54 +46,54 @@ class Mcrud extends CI_Model {
 		return $dayList[$day];
 	}
 
-	public function get_users()
-	{
-			return $this->db->get_where($this->tbl_users, "dihapus='tidak'");
-	}
+	// public function get_users()
+	// {
+	// 		return $this->db->get_where($this->tbl_users, "dihapus='tidak'");
+	// }
 
-	public function get_id_user($id)
-	{
-			return $this->db->get_where($this->tbl_users, array('id_user'=>$id,'dihapus'=>'tidak'));
-	}
+	// public function get_id_user($id)
+	// {
+	// 		return $this->db->get_where($this->tbl_users, array('id_user'=>$id,'dihapus'=>'tidak'));
+	// }
 
-	public function get_level_users()
-	{
-			// $this->db->where('tbl_user.level', 'user');
-			return $this->db->get_where($this->tbl_users, "dihapus='tidak'");
-	}
+	// public function get_level_users()
+	// {
+	// 		// $this->db->where('tbl_user.level', 'user');
+	// 		return $this->db->get_where($this->tbl_users, "dihapus='tidak'");
+	// }
 
-	public function get_users_by_un($id)
-	{
-				return $this->db->get_where($this->tbl_users, array('username'=>"$id", "dihapus"=>'tidak'));
-	}
+	// public function get_users_by_un($id)
+	// {
+	// 			return $this->db->get_where($this->tbl_users, array('username'=>"$id", "dihapus"=>'tidak'));
+	// }
 
-	public function get_level_users_by_id($id)
-	{
-			$this->db->from($this->tbl_users);
-			$this->db->where('tbl_user.dihapus', 'tidak');
-			$this->db->where('tbl_user.level', 'obh');
-			$this->db->where('tbl_user.id_user', $id);
-			$query = $this->db->get();
-			return $query->row();
-	}
+	// public function get_level_users_by_id($id)
+	// {
+	// 		$this->db->from($this->tbl_users);
+	// 		$this->db->where('tbl_user.dihapus', 'tidak');
+	// 		$this->db->where('tbl_user.level', 'obh');
+	// 		$this->db->where('tbl_user.id_user', $id);
+	// 		$query = $this->db->get();
+	// 		return $query->row();
+	// }
 
-	public function save_user($data)
-	{
-		$this->db->insert($this->tbl_users, $data);
-		return $this->db->insert_id();
-	}
+	// public function save_user($data)
+	// {
+	// 	$this->db->insert($this->tbl_users, $data);
+	// 	return $this->db->insert_id();
+	// }
 
-	public function update_user($where, $data)
-	{
-		$this->db->update($this->tbl_users, $data, $where);
-		return $this->db->affected_rows();
-	}
+	// public function update_user($where, $data)
+	// {
+	// 	$this->db->update($this->tbl_users, $data, $where);
+	// 	return $this->db->affected_rows();
+	// }
 
-	public function delete_user_by_id($id)
-	{
-		$this->db->where('id_user', $id);
-		$this->db->delete($this->tbl_users);
-	}
+	// public function delete_user_by_id($id)
+	// {
+	// 	$this->db->where('id_user', $id);
+	// 	$this->db->delete($this->tbl_users);
+	// }
 
 	public function waktu($data, $aksi='')
 	{
@@ -162,22 +109,23 @@ class Mcrud extends CI_Model {
 
 	function judul_web($id='')
 	{
-		$nama_web = $this->db->get_where('tbl_web',"id_web='1'")->row()->nama_web;
-		$ket_web  = $this->db->get_where('tbl_web',"id_web='1'")->row()->ket_web;
-		if ($id==1) {
-			$data = "$nama_web";
-		}elseif ($id==2) {
-			$data = "$ket_web";
-		}else {
-			$data = "$nama_web $ket_web";
-		}
+		// $nama_web = $this->db->get_where('tbl_web',"id_web='1'")->row()->nama_web;
+		// $ket_web  = $this->db->get_where('tbl_web',"id_web='1'")->row()->ket_web;
+		// if ($id==1) {
+		// 	$data = "$nama_web";
+		// }elseif ($id==2) {
+		// 	$data = "$ket_web";
+		// }else {
+		// 	$data = "$nama_web $ket_web";
+		// }
+		$data = '';
 		return $data;
 	}
 
-	function footer()
-	{
-			return "Copyright &copy; 2019 | Developer by <a href='#' target='_blank'>CV. LINK NET</a>";
-	}
+	// function footer()
+	// {
+	// 		return "Copyright &copy; 2019 | Developer by <a href='#' target='_blank'>CV. LINK NET</a>";
+	// }
 
 	public function cek_filename($file='')
 	{
@@ -190,97 +138,39 @@ class Mcrud extends CI_Model {
 		return $data;
 	}
 
-	public function sosmed($aksi='')
-	{
-		$data = "javascript:;";
-		if ($aksi=='fb') {
-			$data = "#";
-		}elseif ($aksi=='twit') {
-			$data = "https://twitter.com/";
-		}elseif ($aksi=='gplus') {
-			$data = "https://plus.google.com/";
-		}elseif ($aksi=='ig') {
-			$data = "https://instagram.com/";
-		}elseif ($aksi=='rss') {
-			$data = "https://rss.com/";
-		}
-		return $data;
-	}
+	// public function sosmed($aksi='')
+	// {
+	// 	$data = "javascript:;";
+	// 	if ($aksi=='fb') {
+	// 		$data = "#";
+	// 	}elseif ($aksi=='twit') {
+	// 		$data = "https://twitter.com/";
+	// 	}elseif ($aksi=='gplus') {
+	// 		$data = "https://plus.google.com/";
+	// 	}elseif ($aksi=='ig') {
+	// 		$data = "https://instagram.com/";
+	// 	}elseif ($aksi=='rss') {
+	// 		$data = "https://rss.com/";
+	// 	}
+	// 	return $data;
+	// }
 
-	public function kontak($aksi='')
-	{
-		$data = "";
-		if ($aksi=='nama') {
-			$data = "CV. LINK NET";
-		}elseif ($aksi=='alamat') {
-			$data = "Jl. Raya Anjani LOTIM-NTB";
-		}elseif ($aksi=='email') {
-			$data = "admin@email.com";
-		}elseif ($aksi=='no_hp') {
-			$data = "08xxx";
-		}elseif ($aksi=='peta') {
-			$data = "#";
-		}
-		return $data;
-	}
-
-	//d_pelapor notaris
-	function d_notaris($id='',$aksi='')
-	{
-		if ($aksi=='nama_pelapor_notaris') {
-			$data = $this->db->get_where('tbl_data_obh', array('id_user'=>$id))->row()->nama;
-		}elseif ($aksi=='kategori_lap') {
-			$data = $this->db->get_where('tbl_kategori_lap', array('id_kategori_lap'=>$id))->row()->nama_kategori_lap;
-		}elseif ($aksi=='sub_kategori_lap') {
-			$data = $this->db->get_where('tbl_sub_kategori_lap', array('id_sub_kategori_lap'=>$id))->row()->nama_sub_kategori_lap;
-		}else {
-			$data = '-';
-		}
-		return $data;
-	}
-
-	//cek status permohonan bankum
-	function cek_status_permohonan($data)
-	{
-		if ($data=='proses') {
-			$data = '<label class="label label-danger">BELUM TERKONFIRMASI</label>';
-		}elseif ($data=='selesai') {
-			$data = '<label class="label label-success">SELESAI</label>';
-		}else {
-			$data = '';
-		}
-		return $data;
-	}
-
-	//cek status pengaduan
-		function cek_status_pengaduan($data)
-	{
-		if ($data=='proses') {
-			$v_data = '<label class="label label-danger">BELUM DIVERIFIKASI</label>';
-		}elseif ($data=='konfirmasi') {
-			$v_data = '<label class="label label-primary">SEDANG DITANGANI</label>';
-		}elseif ($data=='selesai') {
-			$v_data = '<label class="label label-success">SELESAI</label>';
-		}else {
-			$v_data = '';
-		}
-		return $v_data;
-	}
-
-	//cek status laporan
-		function cek_status_laporan($data)
-	{
-		if ($data=='proses') {
-			$v_data = '<label class="label label-danger">BELUM DIVERIFIKASI</label>';
-		}elseif ($data=='konfirmasi') {
-			$v_data = '<label class="label label-primary">PERBAIKAN</label>';
-		}elseif ($data=='selesai') {
-			$v_data = '<label class="label label-success">SELESAI</label>';
-		}else {
-			$v_data = '';
-		}
-		return $v_data;
-	}
+	// public function kontak($aksi='')
+	// {
+	// 	$data = "";
+	// 	if ($aksi=='nama') {
+	// 		$data = "CV. LINK NET";
+	// 	}elseif ($aksi=='alamat') {
+	// 		$data = "Jl. Raya Anjani LOTIM-NTB";
+	// 	}elseif ($aksi=='email') {
+	// 		$data = "admin@email.com";
+	// 	}elseif ($aksi=='no_hp') {
+	// 		$data = "08xxx";
+	// 	}elseif ($aksi=='peta') {
+	// 		$data = "#";
+	// 	}
+	// 	return $data;
+	// }
 
 	function kirim_notif($pengirim,$penerima,$id_for_link,$notif_type,$pesan,$nama_client)
 	{
@@ -359,5 +249,11 @@ class Mcrud extends CI_Model {
 		
 		
 	}
+
+	public function rupiah($angka) {
+		$hasil_rupiah = "Rp " . number_format($angka,0,"",".");
+		return $hasil_rupiah;
+	 }
+		
 
 }

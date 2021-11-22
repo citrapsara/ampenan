@@ -1,5 +1,4 @@
 <?php
-$cek    = $user->row();
 $level  = $this->session->userdata('level');
 $id_dipa = $this->session->userdata('id_dipa');
 ?>
@@ -13,7 +12,8 @@ $id_dipa = $this->session->userdata('id_dipa');
 	<!-- begin page-header -->
 	<!-- Dashboard Superadmin dan Koordinator Wilayah -->
 		<h1 class="page-header">Dashboard</h1>
-		<div class="row">
+		<!-- Chart deviasi rpd dan realisasi anggaran -->
+		<!-- <div class="row">
 			<div class="col-md-12">
 				<div class="realisasi-card card">
 					<div class="card-body">
@@ -21,8 +21,7 @@ $id_dipa = $this->session->userdata('id_dipa');
 					</div>
 				</div>
 			</div>
-		</div>
-		<h1 class="page-header">Dashboard</h1>
+		</div> -->
 		<div class="row">
 			<div class="col-md-12">
 				<div class="realisasi-card card">
@@ -172,7 +171,6 @@ const sisa_satker = <?php echo json_encode($sisa_satker_pie_chart); ?>;
 dipa_id.forEach(myFunction);
 
 function myFunction(value, key) {
-//   text += index + ": " + item + "<br>"; 
 var options = {
            tooltips: {
          enabled: true
@@ -204,7 +202,6 @@ var options = {
 	  data: {
 		  labels: ['Penyerapan Anggaran', 'Sisa Anggaran'],
 		  datasets: [{
-			  // label: '# of Votes',
 			  data: [realisasi_satker_total[value], sisa_satker[value]],
 			  backgroundColor: [
 				  'rgba(0, 172, 172, 1)',
@@ -218,49 +215,8 @@ var options = {
 		  }]
 	  },
 	  options: options
-// 	  options: {
-// 		  plugins: {
-// 	labels: {
-// 	  render: 'label'
-// 	}
-//   }
-// 	  }
   });
 }
-</script>
-
-<script>
-
-// const labels = [
-//   'January',
-//   'February',
-//   'March',
-//   'April',
-//   'May',
-//   'June',
-//   'juli',
-//   'agustus'
-// ];
-// console.log(labels);
-// const data = {
-//   labels: labels,
-//   datasets: [{
-//     label: 'Realisasi',
-//     backgroundColor: 'rgb(255, 99, 132)',
-//     borderColor: 'rgb(255, 99, 132)',
-//     data: [55, 10, 5, 2, 20, 30, 45,1,2,3,4,5],
-//   }]
-// };
-// const config = {
-//   type: 'bar',
-//   data: data,
-//   options: {}
-// };
-
-// const myChart = new Chart(
-//     document.getElementById('bar_chart_realisasi_satker').getContext('2d')	,
-//     config
-//   );
 </script>
 
 <script>
@@ -279,9 +235,6 @@ function fungsi(val, key){
 	}
 	
 }
-// console.log(realisasi_satker_total);
-// console.log(sisa_satker);
-// console.log(persen_realisasi);
 const labels = nama_dipa;
 const ctx = document.getElementById('bar_chart_realisasi_satker');
 const myChart = new Chart(ctx, {
@@ -306,15 +259,10 @@ const myChart = new Chart(ctx, {
 			yAxes: [{
 				display: true,
 				ticks: {
-					// beginAtZero: true,
 					max: 100,
-					// min: 0
 					fontColor: 'white'
 				}
 			}],
-            // y: {
-            //     beginAtZero: true
-            // },
 			xAxes: [{
                   ticks: {
                       autoSkip: false,
@@ -330,47 +278,19 @@ const myChart = new Chart(ctx, {
 				anchor: 'end',
         		align: 'top',
                 formatter: (value, ctx) => {
-                return value;
-                //   let sum = 0;
-                //   let dataArr = ctx.chart.data.datasets[0].data;
-                //   dataArr.map(data => {
-                //       sum += data;
-                //   });
-				  
-                //   let percentage = (value*100 / sum).toFixed(2)+"%";
-				//   if(percentage == "0.00%"){ percentage = "";}
-                //   return percentage;
-
-              
+                return value;              
                 },
                 color: 'cyan',
                      }
         }
-    },
-	// onAnimationComplete: function () {
-	// 	var ctx = this.chart.ctx;
-	// 	ctx.font = this.scale.font;
-	// 	ctx.fillStyle = this.scale.textColor
-	// 	ctx.textAlign = "center";
-	// 	ctx.textBaseline = "bottom";
-
-	// 	this.datasets.forEach(function (dataset) {
-	// 		dataset.bars.forEach(function (bar) {
-	// 			ctx.fillText(bar.value, bar.x, bar.y );
-	// 		});
-	// 	})
-	// }
+    }
 });
 
 </script>
 
 
-<script>
-// var dipa_id = <?php echo json_encode($dipa_id);  ?>;
-// const realisasi_satker_total = <?php echo json_encode($realisasi_satker_total); ?>;
-// const sisa_satker = <?php echo json_encode($sisa_satker_pie_chart); ?>;
-
-// const labelsrpd = Utils.months({count: DATA_COUNT});
+<!-- <script>
+//---- Chart deviasi rpd ----
 
 let data_realisasi_pegawai = [4200000,7200000,6500000,6900000,2100000,6000000,2700000,110000,7400000,3100000,6600000,13000000];
 let data_rpd_pegawai = [3100000,10200000,5300000,11400000,1500000,8600000,2700000,10800000,3900000,10100000,5200000,11300000];
@@ -418,8 +338,6 @@ const data = {
     // }
   ]
 };
-
-
 
   var ctxrpd = document.getElementById('line_chart_rpd').getContext('2d');
   var chart_penyerapan = new Chart(ctxrpd, {
@@ -495,4 +413,4 @@ const data = {
 	}
   });
 
-</script>
+</script> -->

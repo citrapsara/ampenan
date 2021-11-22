@@ -11,11 +11,13 @@ class Users extends CI_Controller {
 			redirect('web/login');
 		}else{
 			
-			$data['user']   	 = $this->Mcrud->get_users_by_un($ceks);
-			$data['users']  	 = $this->Mcrud->get_users();
+			// $data['user']   	 = $this->Mcrud->get_users_by_un($ceks);
+			// $data['users']  	 = $this->Mcrud->get_users();
 			$data['judul_web'] = "Dashboard";
 			
 			$id_dipa = $this->session->userdata('id_dipa');
+
+			// echo $id_dipa; exit;
 
 			function persen($realisasi, $total) {
 				$persen = ($realisasi / $total) * 100;
@@ -159,8 +161,8 @@ class Users extends CI_Controller {
 		if(!isset($ceks)) {
 			redirect('web/login');
 		}else{
-			$data['user']  			  = $this->Mcrud->get_users_by_un($ceks);
-			$data['level_users']  = $this->Mcrud->get_level_users();
+			$data['user']  			  = $ceks;
+			$data['level_users']  = $level;
 			$data['judul_web'] 		= "Profile";
 
 			$this->load->view('users/header', $data);

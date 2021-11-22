@@ -158,7 +158,7 @@ $sub_menu3 = strtolower($this->uri->segment(3));
 						    <span>Dashboard</span>
 					   </a>
 					</li>
-					<li class="has-sub <?php if($menu=='perencanaan' OR ($menu=='dipa' AND $sub_menu=='v') OR ($menu=='folder_data_dukung' AND $sub_menu=='v') OR ($menu=='data_dukung' AND $sub_menu=='v') OR ($menu=='rpd' AND $sub_menu=='v')){echo " active";} ?>">
+					<li class="has-sub <?php if($menu=='perencanaan' OR ($menu=='dipa' AND $sub_menu=='v') OR ($menu=='revisi_dipa' AND $sub_menu=='v') OR ($menu=='folder_data_dukung' AND $sub_menu=='v') OR ($menu=='data_dukung' AND $sub_menu=='v') OR ($menu=='rpd' AND $sub_menu=='v')){echo " active";} ?>">
 						<a href="javascript:;">
 							<b class="caret pull-right"></b>
 							<i class="fa fa-calculator bg-gray"></i>
@@ -171,7 +171,7 @@ $sub_menu3 = strtolower($this->uri->segment(3));
 								</a>
 							</li>
 							<li <?php if($menu=='revisi_dipa'){echo " class='active'";} ?>>
-								<a href="">
+								<a href="revisi_dipa">
 									<i class="fa fa-pencil-square"></i> <span>Usulan Revisi DIPA</span>
 								</a>
 							</li>
