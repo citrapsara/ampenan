@@ -63,7 +63,7 @@ $id_dipa = $this->session->userdata('id_dipa');
 												<div class="dashboard-progress">
 													<div class="progress-title">TOTAL PAGU</div>
 													<div class="text-white progress-angka"><?php 
-														echo $pagu_satker_rp[$key['id']]; 
+														echo $this->Mcrud->rupiah($pagu_satker[$key['id']]); 
 													?></div>
 													<div class="progress">
 														<div class="progress-bar progress-bar-striped" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
@@ -72,7 +72,7 @@ $id_dipa = $this->session->userdata('id_dipa');
 												<div class="dashboard-progress">
 													<div class="progress-title">REALISASI ANGGARAN</div>
 													<div class="text-white progress-angka"><?php 
-														echo $realisasi_satker_total_rp[$key['id']];
+														echo $this->Mcrud->rupiah($realisasi_satker_total[$key['id']]);
 													?></div>
 													<div class="progress">
 														<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<?php echo $realisasi_satker_persen[$key['id']] ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $realisasi_satker_persen[$key['id']] ?>%">
@@ -82,7 +82,7 @@ $id_dipa = $this->session->userdata('id_dipa');
 												</div>
 												<div class="dashboard-progress">
 													<div class="progress-title">SISA ANGGARAN</div>
-													<div class="text-white progress-angka"><?php echo $sisa_satker_rp[$key['id']]; ?></div>
+													<div class="text-white progress-angka"><?php echo $this->Mcrud->rupiah($sisa_satker[$key['id']]); ?></div>
 													<div class="progress">
 														<div class="progress-bar progress-bar-danger" role="progressbar" style="width: <?php echo $sisa_satker_persen[$key['id']]; ?>%;" aria-valuenow="<?php echo $sisa_satker_persen[$key['id']]; ?>" aria-valuemin="0" aria-valuemax="100"></div>
 													</div>
@@ -96,8 +96,8 @@ $id_dipa = $this->session->userdata('id_dipa');
 												<div class="dashboard-progress">
 													<div class="progress-title">TOTAL BELANJA PEGAWAI</div>
 													<div class="text-white progress-angka"><?php 
-													if ($realisasi_satker_bp_rp[$key['id']] != null) {
-														echo $realisasi_satker_bp_rp[$key['id']];
+													if ($realisasi_satker_bp[$key['id']] != null) {
+														echo $this->Mcrud->rupiah($realisasi_satker_bp[$key['id']]);
 													} else {
 														echo 'Rp 0';
 													}
@@ -111,8 +111,8 @@ $id_dipa = $this->session->userdata('id_dipa');
 												<div class="dashboard-progress">
 													<div class="progress-title">TOTAL BELANJA BARANG</div>
 													<div class="text-white progress-angka"><?php 
-													if ($realisasi_satker_bb_rp[$key['id']] != null) {
-														echo $realisasi_satker_bb_rp[$key['id']];
+													if ($realisasi_satker_bb[$key['id']] != null) {
+														echo $this->Mcrud->rupiah($realisasi_satker_bb[$key['id']]);
 													} else {
 														echo 'Rp 0';
 													}
@@ -128,8 +128,8 @@ $id_dipa = $this->session->userdata('id_dipa');
 												<div class="dashboard-progress">
 													<div class="progress-title">TOTAL BELANJA MODAL</div>
 													<div class="text-white progress-angka"><?php 
-														if ($realisasi_satker_bm_rp[$key['id']] != null) {
-															echo $realisasi_satker_bm_rp[$key['id']]; 
+														if ($realisasi_satker_bm[$key['id']] != null) {
+															echo $this->Mcrud->rupiah($realisasi_satker_bm[$key['id']]); 
 														} else {
 															echo 'Rp 0';
 														}

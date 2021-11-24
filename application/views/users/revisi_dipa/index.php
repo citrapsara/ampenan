@@ -131,8 +131,12 @@
                                           </td>
                                           <td align="center">
                                             <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/d/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-info btn-xs" title="Detail"><i class="fa fa-search"></i></a>
-                                            <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/e/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-success btn-xs <?php if ($level != 'pelaksana' AND $level != 'perencana') { echo "hidden"; } ?>" title="Edit"><i class="fa fa-edit"></i></a>
-                                            <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/h/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-danger btn-xs" title="Hapus" onclick="return confirm('Anda yakin? Seluruh dokumen akan ikut terhapus.');"><i class="fa fa-trash-o"></i></a>
+
+                                            <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/e/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-success btn-xs <?php if ($level != 'pelaksana') { echo "hidden"; } ?>" title="Edit"><i class="fa fa-edit"></i></a>
+
+                                            <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/h/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-danger btn-xs <?php if ($level != 'pelaksana') { echo "hidden"; } ?>" title="Hapus" onclick="return confirm('Anda yakin? Seluruh dokumen akan ikut terhapus.');"><i class="fa fa-trash-o"></i></a>
+                                            
+                                            <!-- <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/v/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-success btn-xs <?php if ($id_user != 'pelaksana') { echo "hidden"; } ?>" title="Edit"><i class="fa fa-edit"></i> Verifikasi</a> -->
                                           </td>
                                       </tr>
                                     <?php endforeach; ?>

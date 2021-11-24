@@ -23,6 +23,21 @@ class Revisi_dipa extends CI_Controller {
 			$data['dipa_list'] = $this->Guzzle_model->getDipaList();
 		} else {
 			$data['revisi_dipa'] = $this->Guzzle_model->getRevisiDipaByDipaId($id_dipa);
+
+			$users_00 = $this->Guzzle_model->getUserByDipaId('00');
+			$data['users'] = $this->Guzzle_model->getUserByDipaId($id_dipa);
+			$jml_user_dipa = count($data['users']);
+			$jml_user_00 = count($users_00);
+			for ($i=$jml_user_dipa; $i < $jml_user_dipa+$jml_user_00; $i++) {
+				if ($users_00[$i - $jml_user_dipa]['role'] != 'superadmin') {
+					$data['users'][$i] = $users_00[$i - $jml_user_dipa];
+				}
+			}
+
+			foreach ($data['revisi_dipa'] as $key => $value) {
+				$data['verifikasi_revisi_dipa'] = $this->Guzzle_model->getVerifikasiByUsulanRevisiId($value['id']);
+			}
+
 		}
 
 		if ($aksi == 't') {
@@ -78,7 +93,8 @@ class Revisi_dipa extends CI_Controller {
 			$jenis_revisi 		 = htmlentities(strip_tags($this->input->post('jenis_revisi')));
 			$keterangan 		 = htmlentities(strip_tags($this->input->post('keterangan')));
 			$id_dipa  = htmlentities(strip_tags($this->input->post('id_dipa')));
-			$id_verifikator  = htmlentities(strip_tags($this->input->post('id_verifikator')));
+			$id_verifikator_terakhir  = htmlentities(strip_tags($this->input->post('id_user_verifikator_terakhir')));
+			$id_verifikator  = htmlentities(strip_tags($this->input->post('id_user_verifikator')));
 
 			if ( ! $this->upload->do_upload('url_file'))
 			{
@@ -94,14 +110,25 @@ class Revisi_dipa extends CI_Controller {
 			}
 
 			if ($simpan=='y') {
-				$data = array(
+				$data1 = array(
 					'id_dipa'						=> $id_dipa,
 					'keterangan' 					=> $keterangan,
 					'jenis_revisi'					=> $jenis_revisi,
-					'id_user_verifikator_terakhir'	=> $id_verifikator,
+					'id_user_verifikator_terakhir'	=> $id_verifikator_terakhir,
 					'url_file'						=> $file
 				);
-				$this->Guzzle_model->createRevisiDipa($data);
+				$revisi_dipa_result = $this->Guzzle_model->createRevisiDipa($data1);
+
+				$id_usulan_revisi_dipa = $revisi_dipa_result['id'];
+
+				$data2 = array(
+					'id_usulan_revisi_dipa'	=> $id_usulan_revisi_dipa,
+					'status_verifikasi' 	=> "belum",
+					'komentar'				=> "",
+					'id_user_verifikator'	=> $id_verifikator
+				);
+				// echo '<pre>'; print_r($data2); echo '</pre>'; exit;
+				$this->Guzzle_model->createVerifikasiRevisiDipa($data2);
 				
 				$this->session->set_flashdata('msg',
 					'

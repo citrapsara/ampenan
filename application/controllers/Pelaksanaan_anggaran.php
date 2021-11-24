@@ -25,10 +25,10 @@ class Pelaksanaan_anggaran extends CI_Controller {
 			}
 		}
 
-		function rupiah($angka) {
-			$hasil_rupiah = "Rp " . number_format($angka,0,"",".");
-			return $hasil_rupiah;
- 		}
+		// function rupiah($angka) {
+		// 	$hasil_rupiah = "Rp " . number_format($angka,0,"",".");
+		// 	return $hasil_rupiah;
+ 		// }
 
 		// $data['user']  			  = $this->Mcrud->get_users_by_un($ceks);
 
@@ -50,7 +50,7 @@ class Pelaksanaan_anggaran extends CI_Controller {
 		foreach ($data['pelaksanaan_anggaran'] as $key => $value) {
 			foreach ($data['total_realisasi'] as $subkey => $subvalue) {
 				if($subvalue['id_pelaksanaan_anggaran'] == $value['id']) {
-					$data['pelaksanaan_anggaran'][$key]['total_realisasi'] = rupiah($subvalue['total_realisasi']);
+					$data['pelaksanaan_anggaran'][$key]['total_realisasi'] = $this->Mcrud->rupiah($subvalue['total_realisasi']);
 				}
 			}
 		}
@@ -70,9 +70,9 @@ class Pelaksanaan_anggaran extends CI_Controller {
 
 			foreach ($data['pelaksanaan_anggaran_akun_detil'] as $key => $value) {
 				$jumlah[] = $value['jumlah_realisasi'];
-				$data['pelaksanaan_anggaran_akun_detil'][$key]['jumlah_realisasi_rupiah'] = rupiah($value['jumlah_realisasi']);
+				$data['pelaksanaan_anggaran_akun_detil'][$key]['jumlah_realisasi_rupiah'] = $this->Mcrud->rupiah($value['jumlah_realisasi']);
 			}
-			$data['total_realisasi'] = rupiah(array_sum($jumlah));
+			$data['total_realisasi'] = $this->Mcrud->rupiah(array_sum($jumlah));
 
 			if ($data['pelaksanaan_anggaran']['id']=='') {redirect('404');} 
 		} elseif ($aksi == 'e') {
@@ -92,7 +92,7 @@ class Pelaksanaan_anggaran extends CI_Controller {
 			foreach ($data['pelaksanaan_anggaran_akun_detil'] as $key => $value) {
 				$jumlah[] = $value['jumlah_realisasi'];
 			}
-			$data['total_realisasi'] = rupiah(array_sum($jumlah));
+			$data['total_realisasi'] = $this->Mcrud->rupiah(array_sum($jumlah));
 
 			if ($data['pelaksanaan_anggaran']['id']=='') {redirect('404');}
 		} elseif ($aksi == 'h') {
@@ -175,6 +175,8 @@ class Pelaksanaan_anggaran extends CI_Controller {
 
 					$this->Guzzle_model->createPelaksanaanAnggaranAkunDetil($data_detil_akun);
 				}
+
+				
 
 				$this->session->set_flashdata('msg',
 					'

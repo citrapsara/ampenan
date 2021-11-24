@@ -22,6 +22,28 @@ class Guzzle_model extends CI_model {
         ]);
     }
 
+    // Model User
+    public function getAllUser()
+    {
+        $response = $this->_client->request('GET', 'User');
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function getUserById($id)
+    {
+        $response = $this->_client->request('GET', 'User/detail/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function getUserByDipaId($id)
+    {
+        $response = $this->_client->request('GET', 'User/getDetailByDipa/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
     // Model Folder Data Dukung
     public function getAllFolderDataDukung()
     {
@@ -212,9 +234,21 @@ class Guzzle_model extends CI_model {
         $result = json_decode($response->getBody()->getContents(), true);
         return $result;
     }
+    public function getTotalRealisasiJenisBelanjaPerbulan()
+    {
+        $response = $this->_client->request('GET', 'ApiRealisasiMonsakti/TotalRealisasiJenisBelanjaPerbulan');
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
     public function getTotalRealisasiJenisBelanjabyKodeSatker($id)
     {
         $response = $this->_client->request('GET', 'ApiRealisasiMonsakti/TotalRealisasiJenisBelanjaByKodeSatker/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+    public function getTotalRealisasiJenisBelanjaPerbulanbyKodeSatker($id)
+    {
+        $response = $this->_client->request('GET', 'ApiRealisasiMonsakti/TotalRealisasiJenisBelanjaPerbulanByKodeSatker/' . $id);
         $result = json_decode($response->getBody()->getContents(), true);
         return $result;
     }
@@ -445,7 +479,7 @@ class Guzzle_model extends CI_model {
         return $result;
     }
 
-    public function getVerifikasiDipaById($id)
+    public function getVerifikasiById($id)
     {
         $response = $this->_client->request('GET', 'VerifikasiUsulanRevisiDipa/detail/' . $id);
         $result = json_decode($response->getBody()->getContents(), true);
@@ -476,4 +510,60 @@ class Guzzle_model extends CI_model {
         $result = json_decode($response->getBody()->getContents(), true);
         return $result;
     }
+
+    // Model Notifikasi
+    public function getAllNotifikasi()
+    {
+        $response = $this->_client->request('GET', 'Notifikasi');
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function getNotifikasiById($id)
+    {
+        $response = $this->_client->request('GET', 'Notifikasi/detail/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function getNotifikasiByIdPengirim($id)
+    {
+        $response = $this->_client->request('GET', 'Notifikasi/getDetailByPengirim/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function getNotifikasiByIdPenerima($id)
+    {
+        $response = $this->_client->request('GET', 'Notifikasi/getDetailByPenerima/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function createNotifikasi($data)
+    {
+        $response = $this->_client->request('POST', 'Notifikasi/create', [
+            'json' => $data
+        ]);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function deleteNotifikasi($id)
+    {
+        $response = $this->_client->request('DELETE', 'Notifikasi/delete/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function updateNotifikasi($id, $data)
+    {
+        $response = $this->_client->request('PUT', 'Notifikasi/update/' . $id, [
+            'json' => $data
+        ]);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+
 }

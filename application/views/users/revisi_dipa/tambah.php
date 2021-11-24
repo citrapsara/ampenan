@@ -20,6 +20,7 @@
             <div class="panel-body">
                 <?php
                 echo $this->session->flashdata('msg');
+                $id_user = $this->session->userdata('id_user');
                 ?>
                 <form class="form-horizontal" action="" data-parsley-validate="true" method="post" enctype="multipart/form-data">
                   <input type="hidden" name="id_dipa" id="id_dipa" value="<?php echo $this->session->userdata('id_dipa'); ?>">
@@ -41,7 +42,32 @@
                       <input type="file" name="url_file" class="form-control" value="" placeholder="File Usulan Revisi" required>
                     </div>
                   </div>
-                  <input type="hidden" name="id_verifikator" id="id_verifikator" value="5">
+                  <div class="form-group">
+                    <label class="control-label col-lg-3">Yang Mengesahkan</label>
+                    <div class="col-lg-9">
+                      <select class="form-control default-select2" name="id_user_verifikator_terakhir" required>
+                        <option value="">- Pilih -</option>
+                        <?php foreach ($users as $value):
+                              if ($value['id'] == $id_user) continue;
+                          ?>
+                            <option value="<?php echo $value['id']; ?>"><?php echo ucwords($value['nama']); ?></option>
+                        <?php endforeach; ?>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-lg-3">Verifikator</label>
+                    <div class="col-lg-9">
+                      <select class="form-control default-select2" name="id_user_verifikator" required>
+                        <option value="">- Pilih -</option>
+                        <?php foreach ($users as $value):
+                              if ($value['id'] == $id_user) continue;
+                          ?>
+                            <option value="<?php echo $value['id']; ?>"><?php echo ucwords($value['nama']); ?></option>
+                        <?php endforeach; ?>
+                      </select>
+                    </div>
+                  </div>
                   <hr>
                   <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>.html" class="btn btn-default"><< Kembali</a>
                   <button type="submit" name="btnsimpan" class="btn btn-primary" style="float:right;">Simpan</button>

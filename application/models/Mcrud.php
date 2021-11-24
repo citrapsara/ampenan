@@ -46,54 +46,11 @@ class Mcrud extends CI_Model {
 		return $dayList[$day];
 	}
 
-	// public function get_users()
-	// {
-	// 		return $this->db->get_where($this->tbl_users, "dihapus='tidak'");
-	// }
-
-	// public function get_id_user($id)
-	// {
-	// 		return $this->db->get_where($this->tbl_users, array('id_user'=>$id,'dihapus'=>'tidak'));
-	// }
-
-	// public function get_level_users()
-	// {
-	// 		// $this->db->where('tbl_user.level', 'user');
-	// 		return $this->db->get_where($this->tbl_users, "dihapus='tidak'");
-	// }
-
-	// public function get_users_by_un($id)
-	// {
-	// 			return $this->db->get_where($this->tbl_users, array('username'=>"$id", "dihapus"=>'tidak'));
-	// }
-
-	// public function get_level_users_by_id($id)
-	// {
-	// 		$this->db->from($this->tbl_users);
-	// 		$this->db->where('tbl_user.dihapus', 'tidak');
-	// 		$this->db->where('tbl_user.level', 'obh');
-	// 		$this->db->where('tbl_user.id_user', $id);
-	// 		$query = $this->db->get();
-	// 		return $query->row();
-	// }
-
-	// public function save_user($data)
-	// {
-	// 	$this->db->insert($this->tbl_users, $data);
-	// 	return $this->db->insert_id();
-	// }
-
-	// public function update_user($where, $data)
-	// {
-	// 	$this->db->update($this->tbl_users, $data, $where);
-	// 	return $this->db->affected_rows();
-	// }
-
-	// public function delete_user_by_id($id)
-	// {
-	// 	$this->db->where('id_user', $id);
-	// 	$this->db->delete($this->tbl_users);
-	// }
+	public function get_user_name_by_id($id)
+	{
+		$user = $this->Guzzle_model->getUserById($id);
+		return $user['nama'];
+	}
 
 	public function waktu($data, $aksi='')
 	{
@@ -137,40 +94,6 @@ class Mcrud extends CI_Model {
 		}
 		return $data;
 	}
-
-	// public function sosmed($aksi='')
-	// {
-	// 	$data = "javascript:;";
-	// 	if ($aksi=='fb') {
-	// 		$data = "#";
-	// 	}elseif ($aksi=='twit') {
-	// 		$data = "https://twitter.com/";
-	// 	}elseif ($aksi=='gplus') {
-	// 		$data = "https://plus.google.com/";
-	// 	}elseif ($aksi=='ig') {
-	// 		$data = "https://instagram.com/";
-	// 	}elseif ($aksi=='rss') {
-	// 		$data = "https://rss.com/";
-	// 	}
-	// 	return $data;
-	// }
-
-	// public function kontak($aksi='')
-	// {
-	// 	$data = "";
-	// 	if ($aksi=='nama') {
-	// 		$data = "CV. LINK NET";
-	// 	}elseif ($aksi=='alamat') {
-	// 		$data = "Jl. Raya Anjani LOTIM-NTB";
-	// 	}elseif ($aksi=='email') {
-	// 		$data = "admin@email.com";
-	// 	}elseif ($aksi=='no_hp') {
-	// 		$data = "08xxx";
-	// 	}elseif ($aksi=='peta') {
-	// 		$data = "#";
-	// 	}
-	// 	return $data;
-	// }
 
 	function kirim_notif($pengirim,$penerima,$id_for_link,$notif_type,$pesan,$nama_client)
 	{
@@ -253,7 +176,10 @@ class Mcrud extends CI_Model {
 	public function rupiah($angka) {
 		$hasil_rupiah = "Rp " . number_format($angka,0,"",".");
 		return $hasil_rupiah;
-	 }
-		
+	}
 
+	public function persen($realisasi, $total) {
+		 $persen = ($realisasi / $total) * 100;
+		 return $persen;
+	 }
 }

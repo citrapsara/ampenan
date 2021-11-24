@@ -10,23 +10,9 @@ class Users extends CI_Controller {
 		if(!isset($ceks)) {
 			redirect('web/login');
 		}else{
-			
-			// $data['user']   	 = $this->Mcrud->get_users_by_un($ceks);
-			// $data['users']  	 = $this->Mcrud->get_users();
 			$data['judul_web'] = "Dashboard";
 			
 			$id_dipa = $this->session->userdata('id_dipa');
-
-			// echo $id_dipa; exit;
-
-			function persen($realisasi, $total) {
-				$persen = ($realisasi / $total) * 100;
-				return $persen;
-			}
-			function rupiah($angka) {
-				$hasil_rupiah = "Rp " . number_format($angka,0,"",".");
-				return $hasil_rupiah;
- 			}
 
 			if ($id_dipa == '00') {
 				$data['dipa_list'] = $this->Guzzle_model->getDipaList();
@@ -44,29 +30,22 @@ class Users extends CI_Controller {
 				
 				foreach ($data['pagu_all'] as $key => $val) {
 					$pagu_satker[$val['kode_satker']] = $val['jumlah'];
-					$pagu_satker_rp[$val['kode_satker']] = rupiah($pagu_satker[$val['kode_satker']]);
 				}
 				$data['pagu_satker'] = $pagu_satker;
-				$data['pagu_satker_rp'] = $pagu_satker_rp;
 
 				foreach ($data['realisasi_jenis_belanja'] as $subkey => $subval) {
 					if ($subval['jenis_belanja'] == '51') {
 						$realisasi_bp[$subval['kode_satker']] = $subval['total_realisasi'];
-						$realisasi_bp_rp[$subval['kode_satker']] = rupiah($subval['total_realisasi']);
 					}
 					if ($subval['jenis_belanja'] == '52') {
-						$realisasi_bb[$subval['kode_satker']] = $subval['total_realisasi']; 
-						$realisasi_bb_rp[$subval['kode_satker']] = rupiah($subval['total_realisasi']); 
+						$realisasi_bb[$subval['kode_satker']] = $subval['total_realisasi'];
 					}
 					if ($subval['jenis_belanja'] == '53') {
 						$realisasi_bm[$subval['kode_satker']] = $subval['total_realisasi'];
-						$realisasi_bm_rp[$subval['kode_satker']] = rupiah($subval['total_realisasi']); 
 					}
 					$realisasi_total[$subval['kode_satker']] = $realisasi_bp[$subval['kode_satker']] + $realisasi_bb[$subval['kode_satker']] + $realisasi_bm[$subval['kode_satker']];
 
-					$realisasi_total_rp[$subval['kode_satker']] = rupiah($realisasi_total[$subval['kode_satker']]); 
-
-					$realisasi_total_persen[$subval['kode_satker']] = persen($realisasi_total[$subval['kode_satker']], $data['pagu_satker'][$subval['kode_satker']]);
+					$realisasi_total_persen[$subval['kode_satker']] = $this->Mcrud->persen($realisasi_total[$subval['kode_satker']], $data['pagu_satker'][$subval['kode_satker']]);
 
 					$sisa_satker[$subval['kode_satker']] = $data['pagu_satker'][$subval['kode_satker']] - $realisasi_total[$subval['kode_satker']];
 
@@ -76,9 +55,7 @@ class Users extends CI_Controller {
 						$sisa_satker_pie_chart[$subval['kode_satker']] = 0;
 					}
 
-					$sisa_satker_rp[$subval['kode_satker']] = rupiah($sisa_satker[$subval['kode_satker']]);
-
-					$sisa_satker_persen[$subval['kode_satker']] = persen($sisa_satker[$subval['kode_satker']], $data['pagu_satker'][$subval['kode_satker']]);
+					$sisa_satker_persen[$subval['kode_satker']] = $this->Mcrud->persen($sisa_satker[$subval['kode_satker']], $data['pagu_satker'][$subval['kode_satker']]);
 				}
 					
 				$data['realisasi_satker_bp'] = $realisasi_bp;
@@ -88,30 +65,20 @@ class Users extends CI_Controller {
 				$data['sisa_satker'] = $sisa_satker;
 				$data['sisa_satker_pie_chart'] = $sisa_satker_pie_chart;
 
-
-				$data['realisasi_satker_bp_rp'] = $realisasi_bp_rp;
-				$data['realisasi_satker_bb_rp'] = $realisasi_bb_rp;
-				$data['realisasi_satker_bm_rp'] = $realisasi_bm_rp;
-				$data['realisasi_satker_total_rp'] = $realisasi_total_rp;
-				$data['sisa_satker_rp'] = $sisa_satker_rp;
-
 				$data['realisasi_satker_persen'] = $realisasi_total_persen;
 				$data['sisa_satker_persen'] = $sisa_satker_persen;
 			} else {
 				$dipa = $this->Guzzle_model->getDetailDipa($id_dipa);
 				$data['nama_dipa'] = $dipa['nama'];
 
-
 				// Data Pagu dan Realisasi Anggaran 
 				$data['total_pagu'] = $this->Guzzle_model->getTotalPagubyKodeSatker($id_dipa);
-				// $data['total_realisasi'] = $this->Guzzle_model->getTotalRealisasibyKodeSatker($id_dipa);
 
 				$total_realisasi_jenis_belanja = $this->Guzzle_model->getTotalRealisasiJenisBelanjabyKodeSatker($id_dipa);
 
 				foreach ($total_realisasi_jenis_belanja as $key => $value) {
 					if ($value['jenis_belanja'] == '51') {
 						$data['realisasi_bp'] = $value['total_realisasi'];
-						var_dump($data['realisasi_bp']); exit;
 					}
 					if ($value['jenis_belanja'] == '52') {
 						$data['realisasi_bb'] = $value['total_realisasi'];
@@ -121,27 +88,47 @@ class Users extends CI_Controller {
 					}
 				}
 
-
 				$data['total_realisasi'] = $data['realisasi_bp'] + $data['realisasi_bb'] + $data['realisasi_bm'];				
 
 				$data['sisa_anggaran'] = $data['total_pagu'] - $data['total_realisasi'];
 
-				// Data Pagu dan Realisasi Anggaran dalam Rupiah
-				$data['total_pagu_rp'] = rupiah($data['total_pagu']);
-				$data['total_realisasi_rp'] = rupiah($data['total_realisasi']);
-				$data['sisa_anggaran_rp'] = rupiah($data['sisa_anggaran']);
-				$data['realisasi_bp_rp'] = rupiah($data['realisasi_bp']);
-				$data['realisasi_bb_rp'] = rupiah($data['realisasi_bb']);
-				$data['realisasi_bm_rp'] = rupiah($data['realisasi_bm']);
-
 				// Data Pagu dan Realisasi Anggaran dalam Persen
-				
+				$data['persen_realisasi'] = $this->Mcrud->persen($data['total_realisasi'], $data['total_pagu']);
+				$data['persen_sisa'] = $this->Mcrud->persen($data['sisa_anggaran'], $data['total_pagu']);
 
-				$data['persen_realisasi'] = persen($data['total_realisasi'], $data['total_pagu']);
-				$data['persen_sisa'] = persen($data['sisa_anggaran'], $data['total_pagu']);
+				// Data for Chart Deviasi RPD 
+				$rpd = $this->Guzzle_model->getRPDByDipaId($id_dipa);
+				$revisi_count = count($rpd)-1;
+				foreach ($rpd as $key => $value) {
+					if ($key == $revisi_count) {
+						$data['rpd'] = $value;
+					}
+				}
+
+				// RPD Belanja Pegawai
+				$pegawai_key  = ['januari_pegawai', 'februari_pegawai', 'maret_pegawai', 'april_pegawai', 'mei_pegawai', 'juni_pegawai', 'juli_pegawai', 'agustus_pegawai', 'september_pegawai', 'oktober_pegawai', 'november_pegawai', 'desember_pegawai',];
+				$data['rpd_pegawai'] = array_filter(
+					$data['rpd'],
+					fn ($key) => in_array($key, $pegawai_key),
+					ARRAY_FILTER_USE_KEY
+				);
+
+				// RPD Belanja Barang
+				$barang_key  = ['januari_barang', 'februari_barang', 'maret_barang', 'april_barang', 'mei_barang', 'juni_barang', 'juli_barang', 'agustus_barang', 'september_barang', 'oktober_barang', 'november_barang', 'desember_barang',];
+				$data['rpd_barang'] = array_filter(
+					$data['rpd'],
+					fn ($key) => in_array($key, $barang_key),
+					ARRAY_FILTER_USE_KEY
+				);
+
+				// RPD Belanja Modal
+				$modal_key  = ['januari_modal', 'februari_modal', 'maret_modal', 'april_modal', 'mei_modal', 'juni_modal', 'juli_modal', 'agustus_modal', 'september_modal', 'oktober_modal', 'november_modal', 'desember_modal',];
+				$data['rpd_modal'] = array_filter(
+					$data['rpd'],
+					fn ($key) => in_array($key, $modal_key),
+					ARRAY_FILTER_USE_KEY
+				);
 			}
-
-			
 
 			$this->load->view('users/header', $data);
 			if ($id_dipa == '00') {

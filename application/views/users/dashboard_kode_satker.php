@@ -13,17 +13,6 @@ $id_dipa = $this->session->userdata('id_dipa');
 	<!-- Dashboard Satker -->
 	
 		<h1 class="page-header">Dashboard <?php echo ucwords($nama_dipa);?></h1>
-
-		<!-- Chart deviasi RPD dan realisasi anggaran  -->
-		<!-- <div class="row">
-			<div class="col-md-12">
-				<div class="realisasi-card card">
-					<div class="card-body">
-						<canvas id="line_chart_rpd" ></canvas>
-					</div>
-				</div>
-			</div>
-		</div> -->
 		<div class="row">
 			<div class="col-md-12">
 				<div class="realisasi-card card">
@@ -36,14 +25,14 @@ $id_dipa = $this->session->userdata('id_dipa');
 							<div class="col-md-4">
 								<div class="dashboard-progress">
 									<div class="progress-title">TOTAL PAGU</div>
-									<div class="text-white progress-angka"><?php echo $total_pagu_rp; ?></div>
+									<div class="text-white progress-angka"><?php echo $this->Mcrud->rupiah($total_pagu); ?></div>
 									<div class="progress">
 										<div class="progress-bar progress-bar-striped" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
 									</div>
 								</div>
 								<div class="dashboard-progress">
 									<div class="progress-title">REALISASI ANGGARAN</div>
-									<div class="text-white progress-angka"><?php echo $total_realisasi_rp; ?></div>
+									<div class="text-white progress-angka"><?php echo $this->Mcrud->rupiah($total_realisasi); ?></div>
 									<div class="progress">
 										<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<?php echo $persen_realisasi ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $persen_realisasi ?>%">
 											<span class="sr-only"></span>
@@ -52,7 +41,7 @@ $id_dipa = $this->session->userdata('id_dipa');
 								</div>
 								<div class="dashboard-progress">
 									<div class="progress-title">SISA ANGGARAN</div>
-									<div class="text-white progress-angka"><?php echo $sisa_anggaran_rp; ?></div>
+									<div class="text-white progress-angka"><?php echo $this->Mcrud->rupiah($sisa_anggaran); ?></div>
 									<div class="progress">
 										<div class="progress-bar progress-bar-danger" role="progressbar" style="width: <?php echo $persen_sisa ?>%;" aria-valuenow="<?php echo $persen_sisa ?>" aria-valuemin="0" aria-valuemax="100"></div>
 									</div>
@@ -67,7 +56,7 @@ $id_dipa = $this->session->userdata('id_dipa');
 							<div class="col-md-4">
 								<div class="dashboard-progress">
 									<div class="progress-title">TOTAL BELANJA PEGAWAI</div>
-									<div class="text-white progress-angka"><?php echo $realisasi_bp_rp; ?></div>
+									<div class="text-white progress-angka"><?php echo $this->Mcrud->rupiah($realisasi_bp); ?></div>
 									<div class="progress">
 										<div class="progress-bar progress-bar-bp" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
 									</div>
@@ -76,7 +65,7 @@ $id_dipa = $this->session->userdata('id_dipa');
 							<div class="col-md-4">
 								<div class="dashboard-progress">
 									<div class="progress-title">TOTAL BELANJA BARANG</div>
-									<div class="text-white progress-angka"><?php echo $realisasi_bb_rp; ?></div>
+									<div class="text-white progress-angka"><?php echo $this->Mcrud->rupiah($realisasi_bb); ?></div>
 									<div class="progress">
 										<div class="progress-bar progress-bar-bb" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
 											<span class="sr-only"></span>
@@ -87,7 +76,7 @@ $id_dipa = $this->session->userdata('id_dipa');
 							<div class="col-md-4">
 								<div class="dashboard-progress">
 									<div class="progress-title">TOTAL BELANJA MODAL</div>
-									<div class="text-white progress-angka"><?php echo $realisasi_bm_rp; ?></div>
+									<div class="text-white progress-angka"><?php echo $this->Mcrud->rupiah($realisasi_bm); ?></div>
 									<div class="progress">
 										<div class="progress-bar progress-bar-bm" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
 									</div>
@@ -105,6 +94,16 @@ $id_dipa = $this->session->userdata('id_dipa');
 					</div>
 				</div>
 			</div> -->
+		</div>
+		<!-- Chart deviasi RPD dan realisasi anggaran  -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="realisasi-card card">
+					<div class="card-body">
+						<canvas id="line_chart_rpd" ></canvas>
+					</div>
+				</div>
+			</div>
 		</div>
 <!-- end #content -->
 

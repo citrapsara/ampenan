@@ -21,7 +21,6 @@
                 <?php
                 echo $this->session->flashdata('msg');
                 $level 	= $this->session->userdata('level');
-                $id_user = $this->session->userdata('id_user')
                 ?>
 
               <div class="table-responsive">
@@ -87,8 +86,10 @@
               </div>
 
               <hr style="margin-top:0px;">
-              <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>.html" class="btn btn-default"><< Kembali</a>
-              <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/e/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-success btn-xs <?php if ($level != 'pelaksana') { echo "hidden"; } ?>" title="Edit"><i class="fa fa-edit"></i></a>
+              <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo strtolower($this->uri->segment(3)); ?>.html" class="btn btn-default"><< Kembali</a>
+              <?php if ($level=='superadmin'){ ?>
+                <a class="btn btn-success" title="Edit" data-toggle="modal" onclick="modal_show(<?php echo $query->id_laporan; ?>);" style="float:right;"><i class="fa fa-pencil"></i> Edit</a>
+              <?php } ?>
             </div>
 
         </div>
