@@ -21,12 +21,21 @@
                 <?php
                 echo $this->session->flashdata('msg');
                 $level 	= $this->session->userdata('level');
-                $id_user = $this->session->userdata('id_user')
+                $id_user = $this->session->userdata('id_user');
+                $id_dipa = $this->session->userdata('id_dipa');
+                $link3 = $this->uri->segment(3);
                 ?>
 
               <div class="table-responsive">
 			                  <table class="table table-bordered table-striped" width="100%">
                   <tbody>
+                    <?php if ($id_dipa == '00'): ?>
+                    <tr>
+                      <th valign="top" width="160">Satuan Kerja</th>
+                      <th valign="top" width="1">:</th>
+                      <td><?php echo $this->Guzzle_model->getDetailDipa($link3)['nama']; ?></td>
+                    </tr>
+                    <?php endif; ?>
                     <tr>
                       <th valign="top" width="160">Jenis Revisi</th>
                       <th valign="top" width="1">:</th>

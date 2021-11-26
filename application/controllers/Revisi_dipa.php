@@ -36,15 +36,17 @@ class Revisi_dipa extends CI_Controller {
 			$data['revisi_dipa'] = $this->Guzzle_model->getRevisiDipaByDipaIdUserId($id_dipa, $id_user);
 		}
 
-		$users_00 = $this->Guzzle_model->getUserByDipaId('00');
-		$data['users'] = $this->Guzzle_model->getUserByDipaId($id_dipa_user);
-		// $jml_user_dipa = count($data['users']);
-		// $jml_user_00 = count($users_00);
-		// for ($i=$jml_user_dipa; $i < $jml_user_dipa+$jml_user_00; $i++) {
-		// 	if ($users_00[$i - $jml_user_dipa]['role'] != 'superadmin') {
-		// 		$data['users'][$i] = $users_00[$i - $jml_user_dipa];
-		// 	}
-		// }
+		if ($id_dipa!='') {
+			$users_00 = $this->Guzzle_model->getUserByDipaId('00');
+			$data['users'] = $this->Guzzle_model->getUserByDipaId($id_dipa);
+			$jml_user_dipa = count($data['users']);
+			$jml_user_00 = count($users_00);
+			for ($i=$jml_user_dipa; $i < $jml_user_dipa+$jml_user_00; $i++) {
+				if ($users_00[$i - $jml_user_dipa]['role'] != 'superadmin' AND $users_00[$i - $jml_user_dipa]['role'] != 'koordinator_wilayah') {
+					$data['users'][$i] = $users_00[$i - $jml_user_dipa];
+				}
+			}
+		}
 
 		if ($aksi == 't') {
 			if ($level!='perencana' AND $level!='pelaksana') {redirect('404');}

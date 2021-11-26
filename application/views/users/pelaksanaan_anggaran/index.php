@@ -20,6 +20,8 @@
                 echo $this->session->flashdata('msg');
                 $id_dipa = $this->session->userdata('id_dipa');
                 $level = $this->session->userdata('level');
+                $lokasi = $this->session->userdata('lokasi');
+                $link3 = $this->uri->segment(3);
               ?>
                     <div class="panel panel-inverse">
                         <div class="panel-heading">
@@ -36,16 +38,12 @@
                             <div class="row">
                               <div class="col-md-12"><b>Filter</b></div>
                                 <div class="col-md-3">
-                                  <select class="form-control default-select2" id="stt">
+                                  <select class="form-control default-select2" id="stt" onchange="window.location.href='pelaksanaan_anggaran/v/'+this.value;">
                                     <option value="">- Pilih -</option>
-                                    <?php foreach($dipa_list as $baris): ?>
-
-                                    <option value="<?php echo $baris['id'] ?>" <?php if($baris['id']==$link3){echo "selected";} ?>><?php echo ucwords($baris['nama']); ?></option>
+                                    <?php foreach($dipa_list as $baris):?>
+                                      <option value="<?php echo $baris['id'] ?>" <?php if($baris['id']==$link3){echo "selected";} ?>><?php echo ucwords($baris['nama']); ?></option>
                                     <?php endforeach; ?>
                                   </select>
-                                </div>
-                                <div class="col-md-1">
-                                  <button class="btn btn-default" onclick="window.location.href='pelaksanaan_anggaran/v/'+$('#stt').val();"><i class="fa fa-search"></i> Filter</button>
                                 </div>
                                 <div class="col-md-6"></div>
                                 <div class="col-md-2"></div>
@@ -91,9 +89,13 @@
                                         </td>
 																				<td align="center">
                                           <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo strtolower($this->uri->segment(3)); ?>/d/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-info btn-xs" title="Detail"><i class="fa fa-search"></i></a>
-                                          <?php if($level == 'keuangan'){ ?>
-                                            <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo $this->uri->segment(3); ?>/c/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-success btn-xs" title="Edit"><i class="fa fa-edit"></i> Verifikasi</a>
-                                          <?php } else { ?>
+                                          <?php if($level == 'keuangan'){
+                                              if ($id_dipa == '00') {
+                                                if ($link3 != '00' AND $this->Mcrud->cek_lokasi($link3)) { ?>
+                                                  <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo $this->uri->segment(3); ?>/c/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-success btn-xs" title="Edit"><i class="fa fa-edit"></i> Verifikasi</a>
+                                          <?php } } else { ?>
+                                                  <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo $this->uri->segment(3); ?>/c/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-success btn-xs" title="Edit"><i class="fa fa-edit"></i> Verifikasi</a>
+                                          <?php }  } else { ?>
 																					  <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo $this->uri->segment(3); ?>/e/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-success btn-xs <?php if ($value['status_verifikasi'] == 'sudah') { echo 'disabled'; }; ?>" title="Edit"><i class="fa fa-edit"></i></a>
                                           <?php } ?>
                                           <?php if($level == 'pelaksana'){ ?>

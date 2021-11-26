@@ -1,3 +1,13 @@
+<?php
+  $level 	= $this->session->userdata('level');
+  $id_user 	= $this->session->userdata('id_user');
+  $id_dipa 	= $this->session->userdata('id_dipa');
+  $link3 = $this->uri->segment(3);
+  $link4 = $this->uri->segment(4);
+  $link5 = $this->uri->segment(5);
+  $link6 = $this->uri->segment(6);
+?>
+
 <!-- Main content -->
 <div class="content-wrapper">
   <!-- Content area -->
@@ -20,15 +30,17 @@
             <div class="panel-body">
               <?php
                 echo $this->session->flashdata('msg');
-                $level 	= $this->session->userdata('level');
-                $id_user 	= $this->session->userdata('id_user');
-                $id_dipa 	= $this->session->userdata('id_dipa');
-                $link4 = $this->uri->segment(4);
-                $link5 = $this->uri->segment(5);
               ?>
                 <div class="table-responsive">
 			            <table class="table table-bordered table-striped" width="100%">
                     <tbody>
+                      <?php if ($id_dipa == '00'): ?>
+                      <tr>
+                        <th valign="top" width="160">Satuan Kerja</th>
+                        <th valign="top" width="1">:</th>
+                        <td><?php echo $this->Guzzle_model->getDetailDipa($link3)['nama']; ?></td>
+                      </tr>
+                      <?php endif; ?>
                       <tr>
                         <th valign="top" width="160">Jenis Revisi</th>
                         <th valign="top" width="1">:</th>
@@ -101,11 +113,6 @@
             <div class="panel-body">
               <?php
                 echo $this->session->flashdata('msg');
-                $level 	= $this->session->userdata('level');
-                $id_user 	= $this->session->userdata('id_user');
-                $link4 = $this->uri->segment(4);
-                $link5 = $this->uri->segment(5);
-                $link6 = $this->uri->segment(6);
               ?>
               <form class="form-horizontal" action="" data-parsley-validate="true" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="id_usulan_revisi_dipa" value="<?php echo $value['id_usulan_revisi_dipa']; ?>">
@@ -113,8 +120,8 @@
                     <div class="form-group">
                       <label class="col-lg-3">Verifikasi</label>
                       <div class="col-lg-9">
-                        <input class="radio-btn-verifikasi" type="radio" name="status_verifikasi" value="tolak" onchange="window.location.href='revisi_dipa/v/<?php echo $id_dipa; ?>/v/<?php echo $link5; ?>/'+this.value;"><span class="radio-text">Tolak</span>
-                        <input class="radio-btn-verifikasi" type="radio" name="status_verifikasi" value="sudah" onchange="window.location.href='revisi_dipa/v/<?php echo $id_dipa; ?>/v/<?php echo $link5; ?>/'+this.value;"><span class="radio-text">Setuju</span>
+                        <input class="radio-btn-verifikasi" type="radio" name="status_verifikasi" value="tolak" onchange="window.location.href='revisi_dipa/v/<?php echo $link3; ?>/<?php echo $link4; ?>/<?php echo $link5; ?>/'+this.value;"><span class="radio-text">Tolak</span>
+                        <input class="radio-btn-verifikasi" type="radio" name="status_verifikasi" value="sudah" onchange="window.location.href='revisi_dipa/v/<?php echo $link3; ?>/<?php echo $link4; ?>/<?php echo $link5; ?>/'+this.value;"><span class="radio-text">Setuju</span>
                       </div>
                     </div>
                     <?php if ($link6 == 'sudah' AND $revisi_dipa['id_user_verifikator_terakhir']!=$id_user): ?>

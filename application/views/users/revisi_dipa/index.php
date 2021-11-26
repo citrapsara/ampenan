@@ -20,6 +20,7 @@
           echo $this->session->flashdata('msg');
 					$id_dipa 	= $this->session->userdata('id_dipa');
           $level = $this->session->userdata('level');
+          $link3 = $this->uri->segment(3);
 		    ?>
         <!-- Accordion (only show in Superadmin/Koor Wilayah) -->
         
@@ -63,7 +64,7 @@
                           <th>JENIS REVISI</th>
                           <th>KETERANGAN</th>
                           <th width="15%">FILE USULAN REVISI</th>
-                          <th width="15%">STATUS</th>
+                          <th width="15%">STATUS VERIFIKASI</th>
                           <th width="15%">Opsi</th>
                         </tr>
                       </thead>

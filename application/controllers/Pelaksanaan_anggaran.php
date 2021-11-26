@@ -93,7 +93,13 @@ class Pelaksanaan_anggaran extends CI_Controller {
 			}
 			$data['total_realisasi'] = $this->Mcrud->rupiah(array_sum($jumlah));
 
-			if ($data['pelaksanaan_anggaran']['id']=='') {redirect('404');}
+			if ($data['pelaksanaan_anggaran']['id']=='' OR $level != 'keuangan') {redirect('404');}
+
+			if ($id_dipa_user=='00') {
+				if (!$this->Mcrud->cek_lokasi($id_dipa)) {
+					redirect('404');
+				}
+			}
 		} elseif ($aksi == 'h') {
 			$cek_data = $this->Guzzle_model->getPelaksanaanAnggaranById($id);
 			if (count($cek_data) != 0 AND $cek_data['status_verifikasi'] != 'sudah') {

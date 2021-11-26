@@ -52,6 +52,13 @@ class Mcrud extends CI_Model {
 		return $user['nama'];
 	}
 
+	public function cek_lokasi($id_dipa) {
+		$dipa = $this->Guzzle_model->getDetailDipa($id_dipa);
+		if ($dipa['lokasi'] == 'kanwil') {
+			return true;
+		}
+	}
+
 	public function waktu($data, $aksi='')
 	{
 		if ($aksi=='full') {
