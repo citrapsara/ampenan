@@ -52,8 +52,10 @@
                                 </div>
                                 <div class="col-md-2"></div>
                                 <div class="col-md-6 text-right">
-                                  <?php if ($level == 'pelaksana' OR $level == 'perencana'): ?>
-                                    <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo $this->uri->segment(3); ?>/t.html" class="btn btn-primary <?php if (count($rpd)!=0) { echo 'disabled'; } ?>" data-toggle="tooltip" data-placement="right" id="right" title="" data-original-title="Disbursement Plan hanya dapat diinput pada waktu yang telah ditentukan"><i class="fa fa-plus-circle"></i> Input Disbursement Plan</a>
+                                  <?php if ($level == 'pelaksana'): ?>
+                                    <div id="disabled-button-wrapper" data-title="Disbursement Plan hanya dapat diinput pada waktu yang telah ditentukan">
+                                      <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo $this->uri->segment(3); ?>/t.html" class="btn btn-primary <?php if (count($rpd)!=0) { echo 'disabled'; } ?>"><i class="fa fa-plus-circle"></i> Input Disbursement Plan</a>
+                                    </div>
                                     <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo $this->uri->segment(3); ?>/r.html" class="btn btn-primary <?php if (count($rpd)==0) { echo 'disabled'; } ?>"><i class="fa fa-pencil"></i> Revisi</a>
                                   <?php endif; ?>
                                 </div>
@@ -62,6 +64,19 @@
                             <?php if ($rpd == null):?>
                               <div class="text-center">-- Belum ada data RPD --</div>
                             <?php else:?>
+                            <?php
+                              foreach ($rpd as $value): ?>
+                            <div class="table-responsive">
+                              <table class="table table-bordered table-striped" width="100%">
+                                <tbody>
+                                  <tr>
+                                    <th valign="top" width="25%">File Detail RPD</th>
+                                    <th valign="top" width="1">:</th>
+                                    <td><a class="btn btn-info" href="<?php echo $value['url_file']; ?>" target="_blank"><i class="fa fa-download"></i> Download</a></td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
                             <div class="table-responsive">
                             <table class="table table-striped table-bordered">
                                 <thead>
@@ -73,8 +88,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                  <?php
-                                   foreach ($rpd as $value): ?>
                                     <tr>
                                       <td>Januari</td>
                                       <td><?php echo $this->Mcrud->rupiah($value['januari_pegawai']); ?></td>
@@ -147,11 +160,11 @@
                                     <td><?php echo $this->Mcrud->rupiah($value['desember_barang']); ?></td>
                                     <td><?php echo $this->Mcrud->rupiah($value['desember_modal']); ?></td>
                                     </tr>
-                                  <?php endforeach; ?>
-                                </tbody>
-                                
-                            </table>
-													</div>
+                                  </tbody>
+                                  
+                                </table>
+                              </div>
+                              <?php endforeach; ?>
                           <?php endif; ?>
                         </div>
                     </div>
@@ -166,5 +179,8 @@
 <script>
 $(document).ready(function(){
   $('#right').tooltip();
+});
+$(function() {
+	$('#disabled-button-wrapper').tooltip();
 });
 </script>

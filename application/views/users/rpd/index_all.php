@@ -37,7 +37,7 @@
                             <div class="row">
                               <?php if ($id_dipa == '00'): ?>
                                 <div class="col-md-3">
-                                  <select class="form-control default-select2" id="stt_dipa">
+                                  <select class="form-control default-select2" id="stt_dipa" onchange="window.location.href='rpd/v/'+this.value;">
                                     <option value="">- Pilih DIPA -</option>
                                     <?php foreach($dipa_list as $baris):
                                           if ($baris['id']=='00') continue;
@@ -46,22 +46,16 @@
                                     <?php endforeach; ?>
                                   </select>
                                 </div>
-                                <div class="col-md-2">
-                                  <button class="btn btn-default" onclick="window.location.href='rpd/v/'+$('#stt_dipa').val();"><i class="fa fa-search"></i> Pilih DIPA</button>
-                                </div>
                                 <div class="col-md-3">
-                                  <select class="form-control default-select2" id="stt_revisi">
+                                  <select class="form-control default-select2" id="stt_revisi" onchange="window.location.href='rpd/v/<?php echo $link3;?>/'+this.value;">
                                     <option value="">- Pilih Revisi-</option>
                                     <?php for($i=0; $i < count($rpd_dipa); $i++): ?>
-                                      <option value="<?php echo $i ?>" <?php if ($i == $link4) { echo "selected"; } ?>>
+                                      <option value="<?php echo $i; ?>" <?php if ($link4 != '' AND $i == $link4) { echo "selected"; } ?>>
                                         <?php if ($i == 0):?> Disbursement Plan
                                         <?php else:?>Revisi ke <?php echo $i; endif;?> 
                                       </option>
                                     <?php endfor; ?>
                                   </select>
-                                </div>
-                                <div class="col-md-2">
-                                  <button class="btn btn-default" onclick="window.location.href='rpd/v/<?php echo $link3;?>/'+$('#stt_revisi').val();"><i class="fa fa-search"></i> Pilih Revisi</button>
                                 </div>
                               <?php endif; ?>
                             </div>
@@ -69,6 +63,19 @@
                             <?php if ($rpd == null):?>
                               <div class="text-center">-- Belum ada data RPD --</div>
                             <?php else:?>
+                            <?php
+                              foreach ($rpd as $value): ?>
+                            <div class="table-responsive">
+                              <table class="table table-bordered table-striped" width="100%">
+                                <tbody>
+                                  <tr>
+                                    <th valign="top" width="25%">File Detail RPD</th>
+                                    <th valign="top" width="1">:</th>
+                                    <td><a class="btn btn-info" href="<?php echo $value['url_file']; ?>" target="_blank"><i class="fa fa-download"></i> Download</a></td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
                             <div class="table-responsive">
                             <table class="table table-striped table-bordered">
                                 <thead>
@@ -80,8 +87,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                  <?php
-                                   foreach ($rpd as $value): ?>
                                     <tr>
                                       <td>Januari</td>
                                       <td><?php echo $this->Mcrud->rupiah($value['januari_pegawai']); ?></td>
@@ -154,11 +159,11 @@
                                     <td><?php echo $this->Mcrud->rupiah($value['desember_barang']); ?></td>
                                     <td><?php echo $this->Mcrud->rupiah($value['desember_modal']); ?></td>
                                     </tr>
-                                  <?php endforeach; ?>
-                                </tbody>
-                                
-                            </table>
-													</div>
+                                  </tbody>
+                                  
+                                </table>
+                              </div>
+                              <?php endforeach; ?>
                           <?php endif; ?>
                         </div>
                     </div>

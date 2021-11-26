@@ -86,21 +86,35 @@ $id_dipa = $this->session->userdata('id_dipa');
 						</div>
 					</div>
 				</div>
-			</div>			
-			<!-- <div class="col-md-4">
-				<div class="realisasi-card card">
-					<div class="card-body">
-						<canvas id="chart_belanja"></canvas>
-					</div>
-				</div>
-			</div> -->
+			</div>		
 		</div>
 		<!-- Chart deviasi RPD dan realisasi anggaran  -->
 		<div class="row">
 			<div class="col-md-12">
 				<div class="realisasi-card card">
 					<div class="card-body">
-						<canvas id="line_chart_rpd" ></canvas>
+						<ul class="nav nav-pills text-center chart-deviasi-btn">
+							<li class="active"><a data-toggle="pill" href="#pegawai" class="btn btn-info">Belanja Pegawai</a></li>
+							<li><a data-toggle="pill" href="#barang" class="btn btn-info">Belanja Barang</a></li>
+							<li><a data-toggle="pill" href="#modal" class="btn btn-info">Belanja Modal</a></li>
+						</ul>
+
+						<hr>
+						
+						<div class="tab-content">
+							<div id="pegawai" class="tab-pane fade in active">
+								<h4 class="m-t-0 text-center text-white">Deviasi Belanja Pegawai</h4>
+								<canvas id="line_chart_rpd_pegawai" ></canvas>
+							</div>
+							<div id="barang" class="tab-pane fade">
+								<h4 class="m-t-0 text-center text-white">Deviasi Belanja Barang</h4>
+								<canvas id="line_chart_rpd_barang" ></canvas>
+							</div>
+							<div id="modal" class="tab-pane fade">
+								<h4 class="m-t-0 text-center text-white">Deviasi Belanja Modal</h4>
+								<canvas id="line_chart_rpd_modal" ></canvas>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -158,13 +172,6 @@ const chart_penyerapan = new Chart(ctx, {
             borderWidth: 5
         }]
     },
-//     options: {
-// 		plugins: {
-// 			labels: {
-// 				render: 'label'
-// 			}
-// }
-//     }
 	options: options
 });
 
@@ -173,74 +180,60 @@ const chart_penyerapan = new Chart(ctx, {
 </script>
 
 <script>
-let data_realisasi_pegawai = [4200000,7200000,6500000,6900000,2100000,6000000,2700000,110000,7400000,3100000,6600000,13000000];
-let data_rpd_pegawai = [3100000,10200000,5300000,11400000,1500000,8600000,2700000,10800000,3900000,10100000,5200000,11300000];
+let data_realisasi_pegawai = <?php echo json_encode($realisasi_rpd['pegawai']);  ?>;
+let data_rpd_pegawai = <?php echo json_encode($rpd_pegawai);  ?>;
 let data_deviasi_pegawai = [];
 data_realisasi_pegawai.forEach((val, key)=>{
 	data_deviasi_pegawai[key] = data_realisasi_pegawai[key] - data_rpd_pegawai[key];
 });
 
-const data = {
+const data_chart_pegawai = {
   labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
   datasets: [
     {
-      label: 'Data Realisasi',
+      label: 'Data Realisasi Belanja Pegawai',
       fill: false,
       backgroundColor: 'cyan',
       borderColor: 'cyan',
       data: data_realisasi_pegawai
-	//   ,fill: '+1'
     }, {
-      label: 'Data RPD',
+      label: 'Data RPD Belanja Pegawai',
       fill: false,
       backgroundColor: 'cyan',
       borderColor: 'cyan',
       borderDash: [5, 7],
       data: data_rpd_pegawai
-	//   fill: '0'
     }
     , {
-      label: 'Deviasi',
+      label: 'Deviasi Belanja Pegawai',
       fill: false,
       backgroundColor: 'lime',
       borderColor: 'lime',
-    //   borderDash: [5, 7],
       data: data_deviasi_pegawai,
 	  datalabels:{
 		  display: true
 	  }
     }
-	// , {
-    //   label: 'Filled',
-    //   backgroundColor: 'red',
-    //   borderColor: 'red',
-    //   data: [9,1,7,2,5,10,3,11],
-    //   fill: true,
-    // }
   ]
 };
 
-
-
-  var ctxrpd = document.getElementById('line_chart_rpd').getContext('2d');
-  var line_chart_penyerapan = new Chart(ctxrpd, {
+var ctxrpd = document.getElementById('line_chart_rpd_pegawai').getContext('2d');
+var line_chart_penyerapan_pegawai = new Chart(ctxrpd, {
 	type: 'line',
-	data: data,
+	data: data_chart_pegawai,
 	options: {
 		legend: {
             display: true,
             labels: {
                 fontColor: 'white'
-				// ,padding: 100
             }
-			// ,position: 'bottom'
         },
 		layout: {
             padding: {
                 left: 0,
-                right: 100,
-                top: 0,
-                bottom: 0
+                right: 50,
+                top: 10,
+                bottom: 10
             }
         },
 			
@@ -251,37 +244,210 @@ const data = {
 				text: 'Chart.js Line Chart'
 			},
 		},
-		// interaction: {
-		// mode: 'index',
-		// intersect: false
-		// },
 		scales: {
 			yAxes: [{
 				display: true,
 				ticks: {
-					// beginAtZero: true,
-					// max: 100,
-					// min: 0
 					fontColor: 'white',
-					padding: 100
+					padding: 40
 				}
 			}],
 			xAxes: [{
                   ticks: {
                       autoSkip: false,
-                    //   maxRotation: 90,
-                    //   minRotation: 90,
-					//   padding: 20,
 					  fontColor: 'white'
                   }
               }
 			  ]
 		}
-		// ,plugins: {
-		// 	datalabels: {
-		// 		display: false
-		// 	}
-		// }
+		,plugins: {
+			datalabels: {
+				anchor: 'end',
+				align: 'bottom',
+				formatter: (value, ctx) => {
+					return 'Rp ' +  (value).toLocaleString().replace(/,/g,".");//toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+				},
+				color: 'white',
+				display: false
+			}
+		}
+	}
+  });
+
+let data_realisasi_barang = <?php echo json_encode($realisasi_rpd['barang']);  ?>;
+let data_rpd_barang = <?php echo json_encode($rpd_barang);  ?>;
+let data_deviasi_barang = [];
+data_realisasi_barang.forEach((val, key)=>{
+	data_deviasi_barang[key] = data_realisasi_barang[key] - data_rpd_barang[key];
+});
+
+const data_chart_barang = {
+  labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+  datasets: [
+    {
+      label: 'Data Realisasi Belanja Barang',
+      fill: false,
+      backgroundColor: 'cyan',
+      borderColor: 'cyan',
+      data: data_realisasi_barang
+    }, {
+      label: 'Data RPD Belanja Barang',
+      fill: false,
+      backgroundColor: 'cyan',
+      borderColor: 'cyan',
+      borderDash: [5, 7],
+      data: data_rpd_barang
+    }
+    , {
+      label: 'Deviasi Belanja Barang',
+      fill: false,
+      backgroundColor: 'lime',
+      borderColor: 'lime',
+      data: data_deviasi_barang,
+	  datalabels:{
+		  display: true
+	  }
+    }
+  ]
+};
+
+var ctxrpd = document.getElementById('line_chart_rpd_barang').getContext('2d');
+var line_chart_penyerapan_barang = new Chart(ctxrpd, {
+	type: 'line',
+	data: data_chart_barang,
+	options: {
+		legend: {
+            display: true,
+            labels: {
+                fontColor: 'white'
+            }
+        },
+		layout: {
+            padding: {
+                left: 0,
+                right: 50,
+                top: 10,
+                bottom: 10
+            }
+        },
+			
+		responsive: true,
+		plugins: {
+			title: {
+				display: false,
+				text: 'Chart.js Line Chart'
+			},
+		},
+		scales: {
+			yAxes: [{
+				display: true,
+				ticks: {
+					fontColor: 'white',
+					padding: 40
+				}
+			}],
+			xAxes: [{
+                  ticks: {
+                      autoSkip: false,
+					  fontColor: 'white'
+                  }
+              }
+			  ]
+		}
+		,plugins: {
+			datalabels: {
+				anchor: 'end',
+				align: 'bottom',
+				formatter: (value, ctx) => {
+					return 'Rp ' +  (value).toLocaleString().replace(/,/g,".");//toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+				},
+				color: 'white',
+				display: false
+			}
+		}
+	}
+  });
+
+let data_realisasi_modal = <?php echo json_encode($realisasi_rpd['modal']);  ?>;
+let data_rpd_modal = <?php echo json_encode($rpd_modal);  ?>;
+let data_deviasi_modal = [];
+data_realisasi_modal.forEach((val, key)=>{
+	data_deviasi_modal[key] = data_realisasi_modal[key] - data_rpd_modal[key];
+});
+
+const data_chart_modal = {
+  labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+  datasets: [
+    {
+      label: 'Data Realisasi Belanja Modal',
+      fill: false,
+      backgroundColor: 'cyan',
+      borderColor: 'cyan',
+      data: data_realisasi_modal
+    }, {
+      label: 'Data RPD Belanja Modal',
+      fill: false,
+      backgroundColor: 'cyan',
+      borderColor: 'cyan',
+      borderDash: [5, 7],
+      data: data_rpd_modal
+    }
+    , {
+      label: 'Deviasi Belanja Modal',
+      fill: false,
+      backgroundColor: 'lime',
+      borderColor: 'lime',
+      data: data_deviasi_modal,
+	  datalabels:{
+		  display: true
+	  }
+    }
+  ]
+};
+
+var ctxrpd = document.getElementById('line_chart_rpd_modal').getContext('2d');
+var line_chart_penyerapan_modal = new Chart(ctxrpd, {
+	type: 'line',
+	data: data_chart_modal,
+	options: {
+		legend: {
+            display: true,
+            labels: {
+                fontColor: 'white'
+            }
+        },
+		layout: {
+            padding: {
+                left: 0,
+                right: 50,
+                top: 10,
+                bottom: 10
+            }
+        },
+			
+		responsive: true,
+		plugins: {
+			title: {
+				display: false,
+				text: 'Chart.js Line Chart'
+			},
+		},
+		scales: {
+			yAxes: [{
+				display: true,
+				ticks: {
+					fontColor: 'white',
+					padding: 40
+				}
+			}],
+			xAxes: [{
+                  ticks: {
+                      autoSkip: false,
+					  fontColor: 'white'
+                  }
+              }
+			  ]
+		}
 		,plugins: {
 			datalabels: {
 				anchor: 'end',

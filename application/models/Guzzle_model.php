@@ -258,9 +258,9 @@ class Guzzle_model extends CI_model {
         $result = json_decode($response->getBody()->getContents(), true);
         return $result;
     }
-    public function getDataGrafikDeviasiRpdRealisasiSemuaSatker($id)
+    public function getDataGrafikDeviasiRpdRealisasiSemuaSatker()
     {
-        $response = $this->_client->request('GET', 'ApiRealisasiMonsakti/dataGrafikDeviasiRpdRealisasiSemuaSatker/' . $id);
+        $response = $this->_client->request('GET', 'ApiRealisasiMonsakti/dataGrafikDeviasiRpdRealisasiSemuaSatker');
         $result = json_decode($response->getBody()->getContents(), true);
         return $result;
     }

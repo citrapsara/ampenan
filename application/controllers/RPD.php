@@ -85,6 +85,14 @@ class Rpd extends CI_Controller {
 		date_default_timezone_set('Asia/Singapore');
 		$tgl = date('Y-m-d H:i:s');
 
+		$lokasi = 'file/rpd';
+		$file_size = 1024 * 3; // 3 MB
+		$this->upload->initialize(array(
+			"upload_path"   => "./$lokasi",
+			"allowed_types" => "*",
+			"max_size" => "$file_size"
+		));
+
 		if (isset($_POST['btnsimpan'])) {
 			$januari_pegawai = htmlentities(strip_tags($this->input->post('januari_pegawai')));
 			$januari_barang = htmlentities(strip_tags($this->input->post('januari_barang')));
@@ -124,7 +132,19 @@ class Rpd extends CI_Controller {
 			$desember_modal = htmlentities(strip_tags($this->input->post('desember_modal')));
 
 			$revisi_ke = count($data['rpd_dipa']);
-			// echo $revisi_ke; exit;
+			
+			if ( ! $this->upload->do_upload('url_file'))
+			{
+				$simpan = 'n';
+				$pesan  = htmlentities(strip_tags($this->upload->display_errors('<p>', '</p>')));
+			}
+			 else
+			{
+				$gbr = $this->upload->data();
+				$filename = "$lokasi/".$gbr['file_name'];
+				$file = preg_replace('/ /', '_', $filename);
+				$simpan = 'y';
+			}
 
 			$simpan = 'y';
 
@@ -132,6 +152,7 @@ class Rpd extends CI_Controller {
 				$data = array(
 					'revisi_ke'			=> $revisi_ke,
 					'id_dipa'			=> $id_dipa,
+					'url_file'			=> $file,
 					'januari_pegawai'	=> $januari_pegawai,
 					'januari_barang'	=> $januari_barang,
 					'januari_modal'		=> $januari_modal,
@@ -188,51 +209,12 @@ class Rpd extends CI_Controller {
 						 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 							 <span aria-hidden="true">&times;</span>
 						 </button>
-						 <strong>Gagal!</strong>
+						 <strong>Gagal!</strong>'.$pesan.'.
 					</div>
 				 <br>'
 				);
 			}
 			redirect("rpd/v/$id_dipa/$revisi_redirect");
 		}
-
-		// if (isset($_POST['btnupdate'])) {
-		// 	// $id_rpd = htmlentities(strip_tags($this->input->post('id_rpd')));
-		// 	$name_folder = htmlentities(strip_tags($this->input->post('name_folder')));
-		// 	$simpan = 'y';
-
-		// 	if ($simpan=='y') {
-		// 		$data = array(
-		// 			'uraian' => $name_folder
-		// 		);
-		// 		// var_dump($id); exit;
-		// 		$this->Guzzle_model->updateRPD($id, $data);
-
-		// 		$this->session->set_flashdata('msg',
-		// 			'
-		// 			<div class="alert alert-success alert-dismissible" role="alert">
-		// 				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-		// 					<span aria-hidden="true">&times;</span>
-		// 				</button>
-		// 				<strong>Sukses!</strong> Berhasil disimpan.
-		// 			</div>
-		// 		<br>'
-		// 		);
-				
-		// 		redirect("rpd/v/$id_dipa");
-		// 	 }else {
-		// 		$this->session->set_flashdata('msg',
-		// 			 '
-		// 			 <div class="alert alert-warning alert-dismissible" role="alert">
-		// 				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-		// 					  <span aria-hidden="true">&times;</span>
-		// 				  </button>
-		// 				  <strong>Gagal!</strong>
-		// 			 </div>
-		// 		  <br>'
-		// 		 );
-		// 		 redirect("rpd/v/$id_dipa/e/".hashids_encrypt($id));
-		// 	}
-		// }
 	}
 }

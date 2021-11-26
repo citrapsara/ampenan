@@ -22,12 +22,19 @@
                 echo $this->session->flashdata('msg');
                 ?>
                 <form class="form-horizontal" action="" data-parsley-validate="true" method="post" enctype="multipart/form-data">
+                  <div class="form-group">
+                    <label class="control-label col-lg-3 text-left">File Detail RPD</label>
+                    <div class="col-lg-9">
+                      <input type="file" name="url_file" class="form-control" value="" placeholder="File" required>
+                    </div>
+                  </div>
+                  <hr>
                   <h4>Januari</h4>
                   <hr class="grey-line">
                   <div class="form-group">
                     <label class="control-label col-lg-3 text-left">Belanja Pegawai</label>
                     <div class="col-lg-9">
-                      <input type="text" name="januari_pegawai" class="form-control" value="" placeholder="Belanja Pegawai" required autofocus onfocus="this.value = this.value;">
+                      <input type="text" name="januari_pegawai" class="form-control" value="" placeholder="Belanja Pegawai" required>
                     </div>
                   </div>
                   <div class="form-group">

@@ -136,4 +136,6 @@ class Mcrud extends CI_Model {
             echo '<label class="label label-warning">DALAM PROSES</label>';
         }
 	}
+
+	
 }

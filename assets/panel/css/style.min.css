@@ -1415,7 +1415,7 @@ legend {
 .tab-content {
   padding: 15px;
   margin-bottom: 20px;
-  background: #fff;
+  background: transparent;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
