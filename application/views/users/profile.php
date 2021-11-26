@@ -1,6 +1,8 @@
 <?php
-$user = $user->row();
-$level = $user->level;
+$username   = $this->session->userdata('username');
+$level   = $this->session->userdata('level');
+$nama	= $this->session->userdata('nama');
+$id_dipa	= $this->session->userdata('id_dipa');
 
 $foto_profile = "img/user/user-default.jpg";
 if ($level=='obh') {
@@ -26,14 +28,8 @@ if ($level=='obh') {
       <div class="panel panel-flat">
           <div class="panel-body">
               <center>
-                <img src="<?php echo $foto_profile; ?>" alt="<?php echo $user->nama_lengkap; ?>" class="img-circle" width="176">
+                <img src="<?php echo $foto_profile; ?>" alt="<?php echo $nama; ?>" class="img-circle" width="176">
               </center>
-            <br>
-            <fieldset class="content-group">
-              <hr style="margin-top:0px;">
-              <i class="icon-calendar"></i> <b>Tanggal Terdaftar</b> : <?php echo $this->Mcrud->tgl_id(date('d-m-Y H:i:s', strtotime($user->tgl_daftar))); ?>
-            </fieldset>
-          </form>
           </div>
       </div>
 
@@ -50,19 +46,19 @@ if ($level=='obh') {
                   <div class="form-group">
                     <label class="control-label col-lg-3">Username</label>
                     <div class="col-lg-9">
-                      <input type="text" name="username" class="form-control" value="<?php echo $user->username; ?>" placeholder="Nama Pengguna" readonly>
+                      <input type="text" name="username" class="form-control" value="<?php echo strtolower($username); ?>" placeholder="Nama Pengguna" readonly>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="control-label col-lg-3">Nama</label>
                     <div class="col-lg-9">
-                      <input type="text" name="nama_lengkap" class="form-control" value="<?php echo $user->nama_lengkap; ?>" placeholder="Nama Lengkap" maxlength="100" readonly>
+                      <input type="text" name="nama_lengkap" class="form-control" value="<?php echo ucwords($nama); ?>" placeholder="Nama Lengkap" maxlength="100" readonly>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="control-label col-lg-3">Level</label>
                     <div class="col-lg-9">
-                      <input type="text" name="" class="form-control" value="<?php echo $level; ?>" placeholder="Level User" readonly>
+                      <input type="text" name="" class="form-control" value="<?php echo strtoupper($level); ?>" placeholder="Level User" readonly>
                     </div>
                   </div>
                 

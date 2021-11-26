@@ -95,82 +95,18 @@ class Mcrud extends CI_Model {
 		return $data;
 	}
 
-	function kirim_notif($pengirim,$penerima,$id_for_link,$notif_type,$pesan,$nama_client)
+	function kirim_notif($notif_type, $id_dipa, $id_for_link, $pengirim, $penerima)
 	{
-		date_default_timezone_set('Asia/Jakarta');
-		$tgl = date('Y-m-d H:i:s');
-		if ($pengirim=='superadmin') { $pengirim = '1'; }
-		if ($penerima=='superadmin') { $penerima = '1'; }
-
-		if ($notif_type == 'laporan') {
-			if ($pesan=='notaris_kirim_laporan') {
-				$pesan = "Mengirim Laporan baru";
-				// <--- >//	
-			}elseif ($pesan=='superadmin_konfirmasi_laporan') {
-				$pesan = "Laporan perlu perbaikan";
-			}elseif ($pesan=='superadmin_selesai_laporan') {
-				$pesan = "Laporan telah selesai diverifikasi";	
-			}
-			// id laporan notaris
-			if ($id_for_link=='' OR $id_for_link==0) {
-				$link = '';
-			}else{
-				$link = "laporan/v/d/".hashids_encrypt($id_for_link);
-			}
-			//sampai sini
+		if ($notif_type == 'pelaksanaan_anggaran') {
+			$data_notif = array(
+				'pesan'				=> "mengirim laporan pelaksaanaan anggaran",
+				'link'				=> "pelaksanaan_anggaran/v/$id_dipa/d/".hashids_encrypt($id_for_link),
+				'status'				=> "belum dibaca",
+				'id_user_pengirim'	=> $pengirim,
+				'id_user_penerima'	=> $penerima
+			);
 		}
-		elseif ($notif_type == 'laporan_semester') {
-			if ($pesan=='notaris_kirim_laporan') {
-				$pesan = "Mengirim Laporan Semester baru";
-				// <--- >//	
-			}elseif ($pesan=='superadmin_konfirmasi_laporan') {
-				$pesan = "Laporan perlu perbaikan";
-			}elseif ($pesan=='superadmin_selesai_laporan') {
-				$pesan = "Laporan telah selesai diverifikasi";	
-			}
-			// id laporan notaris
-			if ($id_for_link=='' OR $id_for_link==0) {
-				$link = '';
-			}else{
-				$link = "laporan_semester/v/d/".hashids_encrypt($id_for_link);
-			}
-			//sampai sini
-		}
-		elseif ($notif_type == 'pengaduan') {
-			if ($pesan=='user_kirim_pengaduan') {
-				$pesan = "Pengaduan baru dari masyarakat";
-			}
-			if ($id_for_link=='' OR $id_for_link==0) {
-				$link = '';
-			}else{
-				$link = "pengaduan/v/d/".hashids_encrypt($id_for_link);
-			}
-		}
-		elseif ($notif_type == 'permohonan') {
-			if ($pesan=='user_kirim_permohonan') {
-				$pesan = "Permohonan Bantuan Hukum baru dari masyarakat";
-			}
-			if ($id_for_link=='' OR $id_for_link==0) {
-				$link = '';
-			}else{
-				$link = "permohonan_bankum/v/d/".hashids_encrypt($id_for_link);
-			}
-		}
-
-
-
-		$data2 = array(
-			'pengirim'  => $pengirim,
-			'penerima'  => $penerima,
-			'pesan'  		=> $pesan,
-			'link'			=> $link,
-			'id_for_link' => $id_for_link,
-			'tgl_notif' => $tgl,
-			'nama_client' => $nama_client
-		);
-		$this->db->insert('tbl_notif',$data2);
-		
-		
+		$this->Guzzle_model->createNotifikasi($data_notif);
 	}
 
 	public function rupiah($angka) {
@@ -181,5 +117,23 @@ class Mcrud extends CI_Model {
 	public function persen($realisasi, $total) {
 		 $persen = ($realisasi / $total) * 100;
 		 return $persen;
-	 }
+	}
+
+	public function status_verifikasi($status) {
+		if($status == 'sudah') { 
+            echo '<label class="label label-success">SUDAH DIVERIFIKASI</label>';
+        } elseif($status == 'tolak') {
+            echo '<label class="label label-danger">PERLU PERBAIKAN</label>';
+        } else {
+            echo '<label class="label label-default">BELUM DIVERIFIKASI</label>';
+        }
+	}
+
+	public function status_verifikasi_revisi_dipa($status) {
+		if($status == 'sudah') { 
+            echo '<label class="label label-success">SELESAI</label>';
+        } elseif($status == 'belum') {
+            echo '<label class="label label-warning">DALAM PROSES</label>';
+        }
+	}
 }

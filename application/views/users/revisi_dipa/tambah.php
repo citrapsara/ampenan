@@ -49,6 +49,7 @@
                         <option value="">- Pilih -</option>
                         <?php foreach ($users as $value):
                               if ($value['id'] == $id_user) continue;
+                              if ($value['id'] == $id_user OR $value['role'] == 'pelaksana') continue;
                           ?>
                             <option value="<?php echo $value['id']; ?>"><?php echo ucwords($value['nama']); ?></option>
                         <?php endforeach; ?>
@@ -62,6 +63,7 @@
                         <option value="">- Pilih -</option>
                         <?php foreach ($users as $value):
                               if ($value['id'] == $id_user) continue;
+                              if ($value['id'] == $id_user OR $value['role'] == 'pelaksana') continue;
                           ?>
                             <option value="<?php echo $value['id']; ?>"><?php echo ucwords($value['nama']); ?></option>
                         <?php endforeach; ?>
@@ -69,7 +71,7 @@
                     </div>
                   </div>
                   <hr>
-                  <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>.html" class="btn btn-default"><< Kembali</a>
+                  <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo strtolower($this->uri->segment(3)); ?>.html" class="btn btn-default"><< Kembali</a>
                   <button type="submit" name="btnsimpan" class="btn btn-primary" style="float:right;">Simpan</button>
                 </form>
             </div>

@@ -65,7 +65,7 @@
                                         <th>REALISASI</th>
                                         <th>TANGGAL KEGIATAN</th>
                                         <th>TANGGAL INPUT</th>
-                                        <th>VERIFIKASI</th>
+                                        <th>STATUS</th>
                                         <th width="15%">Opsi</th>
                                     </tr>
                                 </thead>
@@ -87,9 +87,7 @@
 																				<td><?php echo $this->Mcrud->tgl_id(date('d-m-Y', strtotime($value['tanggal_pelaksanaan'])),'full'); ?></td>
 																				<td><?php echo $this->Mcrud->tgl_id(date('d-m-Y', strtotime($value['created_at'])),'full'); ?></td>
                                         <td class="text-center verifikasi-icon">
-                                          <?php if ($value['status_verifikasi'] == 'sudah') {?><i class="fa fa-check-square-o" aria-hidden="true"></i>
-                                          <?php } else {?><i class="fa fa-square-o" aria-hidden="true"></i>
-                                          <?php } ?>
+                                          <?php $this->Mcrud->status_verifikasi($value['status_verifikasi']); ?>
                                         </td>
 																				<td align="center">
                                           <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo strtolower($this->uri->segment(3)); ?>/d/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-info btn-xs" title="Detail"><i class="fa fa-search"></i></a>

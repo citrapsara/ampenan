@@ -4,12 +4,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Revisi_dipa extends CI_Controller {
 	public function index()
 	{
-		redirect('revisi_dipa/v');
+		$id_dipa_user = $this->session->userdata('id_dipa');
+		if ($id_dipa_user=='00') {
+			redirect('revisi_dipa/v');
+		} else {
+			redirect('revisi_dipa/v/'.$id_dipa_user);
+		}
 	}
 
-	public function v($aksi='',$id='')
+	public function v($id_dipa='',$aksi='',$id='')
 	{
-		$id_dipa = $this->session->userdata('id_dipa');
+		$id_dipa_user = $this->session->userdata('id_dipa');
 		$id = hashids_decrypt($id);
 		$ceks 	 = $this->session->userdata('username');
 		$id_user = $this->session->userdata('id_user');
@@ -19,26 +24,27 @@ class Revisi_dipa extends CI_Controller {
 			redirect('web/login');
 		}
 
-		if ($id_dipa=='00') {
+		if ($id_dipa_user=='00') {
 			$data['dipa_list'] = $this->Guzzle_model->getDipaList();
+
+			if ($id_dipa == '') {
+				$data['revisi_dipa'] = '';
+			} else {
+				$data['revisi_dipa'] = $this->Guzzle_model->getRevisiDipaByDipaIdUserId($id_dipa, $id_user);
+			}
 		} else {
-			$data['revisi_dipa'] = $this->Guzzle_model->getRevisiDipaByDipaId($id_dipa);
-
-			$users_00 = $this->Guzzle_model->getUserByDipaId('00');
-			$data['users'] = $this->Guzzle_model->getUserByDipaId($id_dipa);
-			$jml_user_dipa = count($data['users']);
-			$jml_user_00 = count($users_00);
-			for ($i=$jml_user_dipa; $i < $jml_user_dipa+$jml_user_00; $i++) {
-				if ($users_00[$i - $jml_user_dipa]['role'] != 'superadmin') {
-					$data['users'][$i] = $users_00[$i - $jml_user_dipa];
-				}
-			}
-
-			foreach ($data['revisi_dipa'] as $key => $value) {
-				$data['verifikasi_revisi_dipa'] = $this->Guzzle_model->getVerifikasiByUsulanRevisiId($value['id']);
-			}
-
+			$data['revisi_dipa'] = $this->Guzzle_model->getRevisiDipaByDipaIdUserId($id_dipa, $id_user);
 		}
+
+		$users_00 = $this->Guzzle_model->getUserByDipaId('00');
+		$data['users'] = $this->Guzzle_model->getUserByDipaId($id_dipa_user);
+		// $jml_user_dipa = count($data['users']);
+		// $jml_user_00 = count($users_00);
+		// for ($i=$jml_user_dipa; $i < $jml_user_dipa+$jml_user_00; $i++) {
+		// 	if ($users_00[$i - $jml_user_dipa]['role'] != 'superadmin') {
+		// 		$data['users'][$i] = $users_00[$i - $jml_user_dipa];
+		// 	}
+		// }
 
 		if ($aksi == 't') {
 			if ($level!='perencana' AND $level!='pelaksana') {redirect('404');}
@@ -48,13 +54,24 @@ class Revisi_dipa extends CI_Controller {
 			$p = "detail";
 			$data['judul_web'] 	  = "Detail Usulan Revisi DIPA";
 			$data['revisi_dipa'] = $this->Guzzle_model->getRevisiDipaById($id);
+
 			$data['verifikasi_usulan'] = $this->Guzzle_model->getVerifikasiByUsulanRevisiId($id);
+			usort($data['verifikasi_usulan'], function($a, $b) {
+				return $a['id'] <=> $b['id'];
+			});
 		} elseif ($aksi == 'e') {
-			if ($level!='perencana' AND $level!='pelaksana') {redirect('404');}
 			$p = "edit";
 			$data['judul_web'] 	  = "Edit Usulan Revisi DIPA";
 			$data['revisi_dipa'] = $this->Guzzle_model->getRevisiDipaById($id);
 			if ($data['revisi_dipa']['id']=='') {redirect('404');}
+		} elseif ($aksi == 'v') {
+			$p = "verifikasi";
+			$data['judul_web'] 	  = "Usulan Revisi DIPA";
+			$data['revisi_dipa'] = $this->Guzzle_model->getRevisiDipaById($id);
+			$data['verifikasi_usulan'] = $this->Guzzle_model->getVerifikasiByUsulanRevisiId($id);
+			usort($data['verifikasi_usulan'], function($a, $b) {
+				return $a['id'] <=> $b['id'];
+			});
 		} elseif ($aksi == 'h') {
 			if ($level!='perencana' AND $level!='pelaksana') {redirect('404');}
 			$this->Guzzle_model->deleteRevisiDipa($id);
@@ -68,7 +85,7 @@ class Revisi_dipa extends CI_Controller {
 				</div>
 				<br>'
 			);
-			redirect("revisi_dipa/v");
+			redirect('revisi_dipa/v/'.$id_dipa_user);
 		}else{
 			$p = "index";
 			$data['judul_web'] 	  = "USULAN REVISI DIPA";
@@ -151,9 +168,9 @@ class Revisi_dipa extends CI_Controller {
 					</div>
 				 <br>'
 				);
-			  redirect("revisi_dipa/v/$aksi");
+			  redirect('revisi_dipa/v/'.$id_dipa.'/'.$aksi);
 			}
-			redirect("revisi_dipa/v/");
+			redirect('revisi_dipa/v/'.$id_dipa);
 		}
 
 		if (isset($_POST['btnupdate'])) {
@@ -203,7 +220,7 @@ class Revisi_dipa extends CI_Controller {
 					</div>
 				 <br>'
 				);
-				redirect("revisi_dipa/v/");
+				redirect('revisi_dipa/v/'.$id_dipa);
 				
 			 }else {
 					 $this->session->set_flashdata('msg',
@@ -216,9 +233,74 @@ class Revisi_dipa extends CI_Controller {
 						 </div>
 					  <br>'
 					 );
-					redirect("revisi_dipa/v/$aksi/".hashids_encrypt($id));
+					redirect("revisi_dipa/v/$id_dipa/$aksi/".hashids_encrypt($id));
 			 }
 
+		}
+
+		if (isset($_POST['btnkonfirm'])) {
+			$status_verifikasi 		= htmlentities(strip_tags($this->input->post('status_verifikasi')));
+			$id_user_verifikator 	= htmlentities(strip_tags($this->input->post('id_user_verifikator')));
+			$id_usulan_revisi_dipa  = htmlentities(strip_tags($this->input->post('id_usulan_revisi_dipa')));
+			$komentar  = htmlentities(strip_tags($this->input->post('catatan')));
+			$id_verifikasi_usulan = htmlentities(strip_tags($this->input->post('id_verifikasi_usulan')));
+			
+			$simpan = 'y';
+			$id_user_verifikator_terakhir = $data['revisi_dipa']['id_user_verifikator_terakhir'];
+
+			if ($simpan=='y') {
+				if ($status_verifikasi == 'tolak') {
+					$data = array(
+						'status_verifikasi'			=> $status_verifikasi,
+						'id_user_verifikator' 		=> $id_user,
+						'id_usulan_revisi_dipa'		=> $id_usulan_revisi_dipa,
+						'komentar'					=> $komentar
+					);
+					$this->Guzzle_model->updateVerifikasiRevisiDipa($id_verifikasi_usulan, $data);
+				} elseif ($status_verifikasi == 'sudah') {
+					$data1 = array(
+						'status_verifikasi'			=> $status_verifikasi,
+						'id_user_verifikator' 		=> $id_user,
+						'id_usulan_revisi_dipa'		=> $id_usulan_revisi_dipa,
+						'komentar'					=> $komentar
+					);
+					$this->Guzzle_model->updateVerifikasiRevisiDipa($id_verifikasi_usulan, $data1);
+
+					if ($id_user != $id_user_verifikator_terakhir) {
+						$data2 = array(
+							'status_verifikasi'			=> 'belum',
+							'id_user_verifikator' 		=> $id_user_verifikator,
+							'id_usulan_revisi_dipa'		=> $id_usulan_revisi_dipa,
+							'komentar'					=> ""
+						);
+						$this->Guzzle_model->createVerifikasiRevisiDipa($data2);
+					}
+				}
+				
+				$this->session->set_flashdata('msg',
+					'
+					<div class="alert alert-success alert-dismissible" role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<strong>Sukses!</strong> Berhasil disimpan.
+					</div>
+				<br>'
+				);
+			}else {
+				$this->session->set_flashdata('msg',
+					'
+					<div class="alert alert-warning alert-dismissible" role="alert">
+						 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							 <span aria-hidden="true">&times;</span>
+						 </button>
+						 <strong>Gagal!</strong> '.$pesan.'.
+					</div>
+				 <br>'
+				);
+			  redirect("revisi_dipa/v/$id_dipa/$aksi");
+			}
+			redirect('revisi_dipa/v/'.$id_dipa);
 		}
 			
 	}

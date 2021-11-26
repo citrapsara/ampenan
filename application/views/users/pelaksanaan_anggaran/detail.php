@@ -78,34 +78,12 @@
                     <tr>
                       <th valign="top" width="160">Status</th>
                       <th valign="top" width="1">:</th>
-                      <td><?php 
-                            if($pelaksanaan_anggaran['status_verifikasi'] == 'sudah') { 
-                              echo '<label class="label label-success">SUDAH DIVERIFIKASI</label>';
-                            } elseif($pelaksanaan_anggaran['status_verifikasi'] == 'tolak') {
-                              echo '<label class="label label-danger">PERLU PERBAIKAN</label>';
-                            } else {
-                              echo '<label class="label label-default">BELUM DIVERIFIKASI</label>';
-                            }?></td>
+                      <td><?php $this->Mcrud->status_verifikasi($pelaksanaan_anggaran['status_verifikasi']); ?></td>
                     </tr>
                     <tr>
                       <th valign="top">Catatan</th>
                       <th valign="top">:</th>
                       <td><?php echo ucfirst($pelaksanaan_anggaran['catatan_verifikator']); ?></td>
-                    </tr>
-                     <tr>
-                      <th valign="top">Skor</th>
-                      <th valign="top">:</th>
-                      <td><?php 
-                            if($pelaksanaan_anggaran['skor_warna'] == 'kuning') {
-                              echo '<span class="label skor-warna label-warning">warna</span>';
-                            } elseif($pelaksanaan_anggaran['skor_warna'] == 'hijau') {
-                              echo '<span class="label skor-warna label-success">warna</span>';
-                            } elseif($pelaksanaan_anggaran['skor_warna'] == 'merah') {
-                              echo '<span class="label skor-warna label-danger">warna</span>';
-                            } else {
-                              echo '<label class="label label-default">BELUM DINILAI</label>';
-                            }
-                       ?></td>
                     </tr>
                   </tbody>
                 </table>

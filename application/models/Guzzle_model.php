@@ -252,6 +252,18 @@ class Guzzle_model extends CI_model {
         $result = json_decode($response->getBody()->getContents(), true);
         return $result;
     }
+    public function getDataGrafikDeviasiRpdRealisasi($id)
+    {
+        $response = $this->_client->request('GET', 'ApiRealisasiMonsakti/dataGrafikDeviasiRpdRealisasi/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+    public function getDataGrafikDeviasiRpdRealisasiSemuaSatker($id)
+    {
+        $response = $this->_client->request('GET', 'ApiRealisasiMonsakti/dataGrafikDeviasiRpdRealisasiSemuaSatker/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
 
     // Model Pelaksanaan Anggaran
     public function getAllPelaksanaanAnggaran()
@@ -428,6 +440,13 @@ class Guzzle_model extends CI_model {
     public function getRevisiDipaByDipaId($id)
     {
         $response = $this->_client->request('GET', 'UsulanRevisiDipa/getDetailByDipa/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function getRevisiDipaByDipaIdUserId($id_dipa, $id_user)
+    {
+        $response = $this->_client->request('GET', 'UsulanRevisiDipa/getDetailByDipaJoinVerifikasi/' . $id_dipa . '/' . $id_user);
         $result = json_decode($response->getBody()->getContents(), true);
         return $result;
     }

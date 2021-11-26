@@ -55,10 +55,12 @@
                   </tbody>
                 </table>
               </div>
+              <?php 
+              foreach ($verifikasi_usulan as $key => $value):
+                ?>
               <div class="table-responsive">
 			          <table class="table table-bordered table-striped" width="100%">
                   <tbody>
-                    <?php foreach ($verifikasi_usulan as $key => $value): ?>
                     <tr>
                       <th valign="top">Verifikator</th>
                       <th valign="top">:</th>
@@ -67,28 +69,28 @@
                     <tr>
                       <th valign="top" width="160">Status</th>
                       <th valign="top" width="1">:</th>
-                      <td><?php 
-                            if($value['status_verifikasi'] == 'sudah') { 
-                              echo '<label class="label label-success">SUDAH DIVERIFIKASI</label>';
-                            } elseif($value['status_verifikasi'] == 'tolak') {
-                              echo '<label class="label label-danger">PERLU PERBAIKAN</label>';
-                            } else {
-                              echo '<label class="label label-default">BELUM DIVERIFIKASI</label>';
-                            }?></td>
+                      <td><?php $this->Mcrud->status_verifikasi($value['status_verifikasi'])?></td>
                     </tr>
                     <tr>
                       <th valign="top">Catatan Verifikator</th>
                       <th valign="top">:</th>
                       <td><?php echo ucfirst($value['komentar']); ?></td>
                     </tr>
-                    <?php endforeach; ?>
                   </tbody>
                 </table>
               </div>
+              <?php endforeach; ?>
 
               <hr style="margin-top:0px;">
-              <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>.html" class="btn btn-default"><< Kembali</a>
-              <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/e/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-success btn-xs <?php if ($level != 'pelaksana') { echo "hidden"; } ?>" title="Edit"><i class="fa fa-edit"></i></a>
+              <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo strtolower($this->uri->segment(3)); ?>.html" class="btn btn-default"><< Kembali</a>
+              <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo strtolower($this->uri->segment(3)); ?>/e/<?php echo $this->uri->segment(5); ?>" class="btn btn-success" title="Edit" style="float:right;">
+                <i class="fa fa-edit"></i> 
+                <?php if ($level == 'pelaksana') {
+                  echo "Edit";
+                } else {
+                  echo "Revisi";
+                }?>
+              </a>
             </div>
 
         </div>

@@ -5,9 +5,16 @@ class Rpd extends CI_Controller {
 	public function index()
 	{
 		$id_dipa_user = $this->session->userdata('id_dipa');
+		$ceks 		 = $this->session->userdata('username');
+
+		if(!isset($ceks)) {
+			redirect('web/login');
+		}
+
 		if ($id_dipa_user == '00') {
 			redirect("rpd/v");
 		} else {
+
 			$data['rpd'] = $this->Guzzle_model->getRPDByDipaId($id_dipa_user);
 			$revisi = count($data['rpd']) - 1;
 			redirect("rpd/v/".$id_dipa_user."/".$revisi);
@@ -21,6 +28,7 @@ class Rpd extends CI_Controller {
 		$id_user = $this->session->userdata('id_user');
 		$level 	 = $this->session->userdata('level');
 		$id_dipa_user = $this->session->userdata('id_dipa');
+
 		if(!isset($ceks)) {
 			redirect('web/login');
 		}

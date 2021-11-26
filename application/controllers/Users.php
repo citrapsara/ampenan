@@ -128,6 +128,11 @@ class Users extends CI_Controller {
 					fn ($key) => in_array($key, $modal_key),
 					ARRAY_FILTER_USE_KEY
 				);
+
+				$realisasi_rpd = $this->Guzzle_model->getDataGrafikDeviasiRpdRealisasi($id_dipa);
+
+
+				// echo '<pre>'; print_r($realisasi_rpd); exit;
 			}
 
 			$this->load->view('users/header', $data);

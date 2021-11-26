@@ -72,11 +72,15 @@ class Web extends CI_Controller {
 						$user_role = $login_result['role'];
 						$user_token = $login_result['token'];
 						$user_dipa = $login_result['id_dipa'];
+						$user_nama = $login_result['nama'];
+
 						$this->session->set_userdata('username', "$username");
+						$this->session->set_userdata('nama', "$user_nama");
 						$this->session->set_userdata('id_user', "$userID");
 						$this->session->set_userdata('level', "$user_role");
 						$this->session->set_userdata('token', "$user_token");
 						$this->session->set_userdata('id_dipa', "$user_dipa");
+
 						// $this->session->set_userdata('jml_notif_bell', "0");
 
 						redirect('dashboard');

@@ -10,6 +10,11 @@
   right: 0 !important;
 }
 
+.nav-profile .col-md-4,
+.nav-profile .col-md-8 {
+  padding: 0 !important;
+}
+
 .panel-body.panel-stat-lap {
   display: none;
 }

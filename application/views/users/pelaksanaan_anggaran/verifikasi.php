@@ -88,15 +88,7 @@
                   <div class="form-group">
                     <label class="col-lg-3">Catatan</label>
                     <div class="col-lg-9">
-                      <textarea name="catatan" class="form-control" placeholder="Catatan Perbaikan" rows="4" cols="100"><?php echo $pelaksanaan_anggaran['catatan_verifikator']; ?></textarea>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-lg-3">Skor</label>
-                    <div class="col-lg-9">
-                      <input class="radio-btn-verifikasi" type="radio" name="skor_warna" value="merah"><span class="label skor-warna label-danger radio-text">warna</span>
-                      <input class="radio-btn-verifikasi" type="radio" name="skor_warna" value="kuning"><span class="label skor-warna label-warning radio-text">warna</span>
-                      <input class="radio-btn-verifikasi" type="radio" name="skor_warna" value="hijau"><span class="label skor-warna label-success radio-text">warna</span>
+                      <textarea name="catatan" class="form-control" placeholder="Catatan" rows="4" cols="100"><?php echo $pelaksanaan_anggaran['catatan_verifikator']; ?></textarea>
                     </div>
                   </div>
                   <?php endif; ?>
@@ -115,9 +107,6 @@
   // Radio Button 
   var val_status = <?php echo json_encode($pelaksanaan_anggaran['status_verifikasi']); ?>;
   $('input:radio[name=status_verifikasi]').val([val_status]);
-
-  var val_skor = <?php echo json_encode($pelaksanaan_anggaran['skor_warna']); ?>;
-  $('input:radio[name=skor_warna]').val([val_skor]);
 
   // Dynamic Form 
   var addButton = $('.add-more'); //Add button selector

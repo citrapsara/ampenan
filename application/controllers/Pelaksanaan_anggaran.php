@@ -4,6 +4,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Pelaksanaan_anggaran extends CI_Controller {
 	public function index()
 	{
+		$ceks 		 = $this->session->userdata('username');
+
+		if(!isset($ceks)) {
+			redirect('web/login');
+		}
+		
 		$id_dipa_user = $this->session->userdata('id_dipa');
 		redirect("pelaksanaan_anggaran/v/".$id_dipa_user);
 	}
@@ -24,13 +30,6 @@ class Pelaksanaan_anggaran extends CI_Controller {
 				redirect('404');
 			}
 		}
-
-		// function rupiah($angka) {
-		// 	$hasil_rupiah = "Rp " . number_format($angka,0,"",".");
-		// 	return $hasil_rupiah;
- 		// }
-
-		// $data['user']  			  = $this->Mcrud->get_users_by_un($ceks);
 
 		$data['dipa_list'] = $this->Guzzle_model->getDipaList();
 		$arraydipa_id_nama = [];
@@ -142,7 +141,7 @@ class Pelaksanaan_anggaran extends CI_Controller {
 				$simpan = 'n';
 				$pesan  = htmlentities(strip_tags($this->upload->display_errors('<p>', '</p>')));
 			}
-			 else
+			else
 			{
 				$gbr = $this->upload->data();
 				$filename = "$lokasi/".$gbr['file_name'];
@@ -176,7 +175,17 @@ class Pelaksanaan_anggaran extends CI_Controller {
 					$this->Guzzle_model->createPelaksanaanAnggaranAkunDetil($data_detil_akun);
 				}
 
-				
+				$user_dipa = $this->Guzzle_model->getUserByDipaId($id_dipa_user);
+
+				$keuangan = array_filter($user_dipa, function($key) {
+   					return ($key['role'] == 'keuangan');
+				});
+
+				foreach ($keuangan as $key => $value) {
+					$id_keuangan = $value['id'];
+				}
+
+				$this->Mcrud->kirim_notif('pelaksanaan_anggaran', $id_dipa, $id_pelaksanaan_anggaran, $id_user, $id_keuangan);
 
 				$this->session->set_flashdata('msg',
 					'
@@ -303,7 +312,6 @@ class Pelaksanaan_anggaran extends CI_Controller {
 
 			$catatan_verifikator = htmlentities(strip_tags($this->input->post('catatan')));
 			$status_verifikasi = htmlentities(strip_tags($this->input->post('status_verifikasi')));
-			$skor_warna = htmlentities(strip_tags($this->input->post('skor_warna')));
 
 			$data = array(
 				'uraian' => $data_lama['uraian'],
@@ -311,8 +319,7 @@ class Pelaksanaan_anggaran extends CI_Controller {
 				'tanggal_pelaksanaan' => $data_lama['tanggal_pelaksanaan'],
 				'id_dipa' => $data_lama['id_dipa'],
 				'catatan_verifikator' => $catatan_verifikator,
-				'status_verifikasi'				=> $status_verifikasi,
-				'skor_warna'  => $skor_warna
+				'status_verifikasi'				=> $status_verifikasi
 			);
 
 			if ($simpan=='y') {

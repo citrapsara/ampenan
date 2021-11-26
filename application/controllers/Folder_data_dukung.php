@@ -4,6 +4,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Folder_data_dukung extends CI_Controller {
 	public function index()
 	{
+		$ceks 		 = $this->session->userdata('username');
+
+		if(!isset($ceks)) {
+			redirect('web/login');
+		}
+		
 		$id_dipa_user = $this->session->userdata('id_dipa');
 		redirect("folder_data_dukung/v/".$id_dipa_user);
 	}

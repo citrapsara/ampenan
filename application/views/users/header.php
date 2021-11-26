@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <?php
-// $cek    = $user->row();
 $username   = $this->session->userdata('username');
 $level   = $this->session->userdata('level');
+$nama	= $this->session->userdata('nama');
+$id_dipa	= $this->session->userdata('id_dipa');
 
-$level  = $cek->level;
+$dipa_name = '';
+if ($id_dipa != '00') {
+	$dipa_user = $this->Guzzle_model->getDetailDipa($id_dipa);
+	$dipa_name = $dipa_user['nama'];
+}
+
 $foto = "img/user/user-default.jpg";
 
 $menu 		= strtolower($this->uri->segment(1));
@@ -138,12 +144,12 @@ $sub_menu3 = strtolower($this->uri->segment(3));
 				<!-- begin sidebar user -->
 				<ul class="nav">
 					<li class="nav-profile">
-						<div class="image">
+						<div class="image col-md-4">
 							<a href="profile"><img src="<?php echo $foto;?>" alt="" /></a>
 						</div>
-						<div class="info">
-							<small>@<?php echo strtolower($username); ?></small>
-							<?php echo ucwords($level); ?>
+						<div class="info col-md-8">
+							<?php echo ucwords($nama); ?>
+							<small><?php echo ucwords($dipa_name); ?></small>
 						</div>
 					</li>
 				</ul>
@@ -175,14 +181,23 @@ $sub_menu3 = strtolower($this->uri->segment(3));
 									<i class="fa fa-pencil-square"></i> <span>Usulan Revisi DIPA</span>
 								</a>
 							</li>
-							<li <?php if($menu=='data_dukung' or $menu=='folder_data_dukung'){echo " class='active'";} ?>>
-								<a href="folder_data_dukung">
-									<i class="fa fa-folder-open"></i> <span>Data Dukung</span>
+							<li class="has-sub <?php if($menu=='data_dukung' or $menu=='folder_data_dukung'){echo " active";} ?>">
+								<a href="javascript:;">
+									<b class="caret pull-right"></b>
+									<i class="fa fa-calculator bg-gray"></i>
+									<span>Penyusunan Anggaran</span>
 								</a>
+								<ul class="sub-menu">
+									<li <?php if($menu=='data_dukung' or $menu=='folder_data_dukung'){echo " class='active'";} ?>>
+										<a href="folder_data_dukung">
+											<i class="fa fa-folder-open"></i> <span>Data Dukung</span>
+										</a>
+									</li>>
+								</ul>
 							</li>
 							<li <?php if($menu=='rpd' AND $sub_menu=='v'){echo " class='active'";} ?>>
 								<a href="rpd">
-									<i class="fa fa-calendar-check-o"></i> <span>RPD</span>
+									<i class="fa fa-calendar-check-o"></i> <span>Rencana Penarikan Dana</span>
 								</a>
 							</li>
 						</ul>
