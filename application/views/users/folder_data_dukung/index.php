@@ -35,7 +35,7 @@
                             <div class="row">
                               <div class="col-md-12"><b>Filter</b></div>
                                 <div class="col-md-3">
-                                  <select class="form-control default-select2" id="stt">
+                                  <select class="form-control default-select2" id="stt" onchange="window.location.href='folder_data_dukung/v/'+this.value;">
                                     <option value="">- Pilih -</option>
                                     <?php foreach($dipa_list as $baris): ?>
 
@@ -44,7 +44,7 @@
                                   </select>
                                 </div>
                                 <div class="col-md-1">
-                                  <button class="btn btn-default" onclick="window.location.href='folder_data_dukung/v/'+$('#stt').val();"><i class="fa fa-search"></i> Filter</button>
+                                  <!-- <button class="btn btn-default" onchange="window.location.href='folder_data_dukung/v/'+this.value;"><i class="fa fa-search"></i> Filter</button> -->
                                 </div>
                                 <div class="col-md-6"></div>
                                 <div class="col-md-2"></div>

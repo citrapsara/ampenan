@@ -102,11 +102,12 @@ function notif()
 
   jml_data2 = "<?php echo base_url()?>web/notif_bell/jml";
   $("#jml_notif_bell").load(jml_data2);
-
+  
   data2 = "<?php echo base_url()?>web/notif_bell";
+  console.log(data2)
   $("#notif_bell").load(data2);
 }
-setInterval(notif, 2000); //2 detik
+setInterval(notif, 20000); //2 detik
 </script>
 
 </body>

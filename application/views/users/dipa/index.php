@@ -47,11 +47,10 @@
                                           <thead>
                                               <tr>
                                                   <th width="1%">NO.</th>
-                                                  <th width="20%">NAMA DIPA</th>
-                                                  <th width="25%">KETERANGAN</th>
+                                                  <th width="34%">NAMA DIPA</th>
+                                                  <th width="35%">KETERANGAN</th>
                                                   <th width="15%">DIPA</th>
                                                   <th width="15%">LEMBAR KERTAS KERJA</th>
-                                                  <th width="14%">Opsi</th>
                                               </tr>
                                           </thead>
                                           <tbody>
@@ -65,10 +64,6 @@
                                                   <td><?php echo $value['keterangan']; ?></td>
                                                   <td><a class="btn btn-info" href="<?php echo $value['url_file_dipa']; ?>" target="_blank"><i class="fa fa-download"></i> Download</a></td>
                                                   <td><a class="btn btn-info" href="<?php echo $value['url_file_lkk']; ?>" target="_blank"><i class="fa fa-download"></i> Download</a></td>
-                                                  <td align="center">
-                                                    <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/e/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-success btn-xs" title="Edit"><i class="fa fa-edit"></i></a>
-                                                    <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/h/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-danger btn-xs" title="Hapus" onclick="return confirm('Anda yakin? Seluruh dokumen akan ikut terhapus.');"><i class="fa fa-trash-o"></i></a>
-                                                  </td>
                                               </tr>
                                             <?php endforeach; ?>
                                           </tbody>
@@ -95,7 +90,7 @@
                                   <h4 class="panel-title">DIPA</h4>
                               </div>
                               <div class="panel-body">
-                              <?php if ($level == 'perencana'): ?>
+                              <?php if ($level == 'pelaksana'): ?>
                                 <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/t.html" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Tambah Dokumen DIPA</a>
                                 <hr>
                               <?php endif; ?>
@@ -109,7 +104,9 @@
                                           <th>KETERANGAN</th>
                                           <th width="15%">DIPA</th>
                                           <th width="15%">LEMBAR KERTAS KERJA</th>
+                                          <?php if ($level == 'pelaksana'): ?>
                                           <th width="15%">Opsi</th>
+                                          <?php endif; ?>
                                       </tr>
                                   </thead>
                                   <tbody>
@@ -122,10 +119,12 @@
                                           <td><?php echo $value['keterangan']; ?></td>
                                           <td><a class="btn btn-info" href="<?php echo $value['url_file_dipa']; ?>" target="_blank"><i class="fa fa-download"></i> Download</a></td>
                                           <td><a class="btn btn-info" href="<?php echo $value['url_file_lkk']; ?>" target="_blank"><i class="fa fa-download"></i> Download</a></td>
+                                          <?php if ($level == 'pelaksana'): ?>
                                           <td align="center">
                                             <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/e/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-success btn-xs" title="Edit"><i class="fa fa-edit"></i></a>
                                             <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/h/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-danger btn-xs" title="Hapus" onclick="return confirm('Anda yakin? Seluruh dokumen akan ikut terhapus.');"><i class="fa fa-trash-o"></i></a>
                                           </td>
+                                          <?php endif; ?>
                                       </tr>
                                     <?php endforeach; ?>
                                   </tbody>

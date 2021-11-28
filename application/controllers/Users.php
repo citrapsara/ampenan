@@ -70,7 +70,15 @@ class Users extends CI_Controller {
 
 				// Data Chart Deviasi RPD 
 				$data['realisasi_rpd'] = $this->Guzzle_model->getDataGrafikDeviasiRpdRealisasiSemuaSatker();
-				// echo '<pre>'; print_r($data['realisasi_rpd']); exit;
+				$data['grafik_rpd'] = $this->Guzzle_model->getDataGrafikDeviasiSemuaSatker();
+				foreach ($data['dipa_id'] as $key => $value) {
+					for ($i=0; $i < 12; $i++) { 
+						$data['data_deviasi']['pegawai'][$value][$i] = $data['realisasi_rpd']['pegawai'][$value][$i] - $data['grafik_rpd']['pegawai'][$value][$i];
+						$data['data_deviasi']['barang'][$value][$i] = $data['realisasi_rpd']['barang'][$value][$i] - $data['grafik_rpd']['barang'][$value][$i];
+						$data['data_deviasi']['modal'][$value][$i] = $data['realisasi_rpd']['modal'][$value][$i] - $data['grafik_rpd']['modal'][$value][$i];
+					}
+				}
+				// echo '<pre>'; print_r($data['data_deviasi']['pegawai']['407607']); exit;
 
 			} else {
 				$dipa = $this->Guzzle_model->getDetailDipa($id_dipa);
@@ -101,49 +109,9 @@ class Users extends CI_Controller {
 				$data['persen_realisasi'] = $this->Mcrud->persen($data['total_realisasi'], $data['total_pagu']);
 				$data['persen_sisa'] = $this->Mcrud->persen($data['sisa_anggaran'], $data['total_pagu']);
 
-				// Data for Chart Deviasi RPD 
-				$rpd = $this->Guzzle_model->getRPDByDipaId($id_dipa);
-				// $revisi_count = count($rpd)-1;
-				// foreach ($rpd as $key => $value) {
-				// 	if ($key == $revisi_count) {
-				// 		$data['rpd'] = $value;
-				// 	}
-				// }
-				$data['rpd'] = $rpd[0];
-
-
-				// RPD Belanja Pegawai
-				$pegawai_key  = ['januari_pegawai', 'februari_pegawai', 'maret_pegawai', 'april_pegawai', 'mei_pegawai', 'juni_pegawai', 'juli_pegawai', 'agustus_pegawai', 'september_pegawai', 'oktober_pegawai', 'november_pegawai', 'desember_pegawai'];
-				$rpd_pegawai = array_filter(
-					$data['rpd'],
-					fn ($key) => in_array($key, $pegawai_key),
-					ARRAY_FILTER_USE_KEY
-				);
-				$data['rpd_pegawai'] = [$rpd_pegawai['januari_pegawai'], $rpd_pegawai['februari_pegawai'], $rpd_pegawai['maret_pegawai'], $rpd_pegawai['april_pegawai'], $rpd_pegawai['mei_pegawai'], $rpd_pegawai['juni_pegawai'], $rpd_pegawai['juli_pegawai'], $rpd_pegawai['agustus_pegawai'], $rpd_pegawai['september_pegawai'], $rpd_pegawai['oktober_pegawai'], $rpd_pegawai['november_pegawai'], $rpd_pegawai['desember_pegawai']];
-
-
-				// RPD Belanja Barang
-				$barang_key  = ['januari_barang', 'februari_barang', 'maret_barang', 'april_barang', 'mei_barang', 'juni_barang', 'juli_barang', 'agustus_barang', 'september_barang', 'oktober_barang', 'november_barang', 'desember_barang'];
-				$rpd_barang = array_filter(
-					$data['rpd'],
-					fn ($key) => in_array($key, $barang_key),
-					ARRAY_FILTER_USE_KEY
-				);
-				$data['rpd_barang'] = [$rpd_barang['januari_barang'], $rpd_barang['februari_barang'], $rpd_barang['maret_barang'], $rpd_barang['april_barang'], $rpd_barang['mei_barang'], $rpd_barang['juni_barang'], $rpd_barang['juli_barang'], $rpd_barang['agustus_barang'], $rpd_barang['september_barang'], $rpd_barang['oktober_barang'], $rpd_barang['november_barang'], $rpd_barang['desember_barang']];
-
-				// RPD Belanja Modal
-				$modal_key  = ['januari_modal', 'februari_modal', 'maret_modal', 'april_modal', 'mei_modal', 'juni_modal', 'juli_modal', 'agustus_modal', 'september_modal', 'oktober_modal', 'november_modal', 'desember_modal'];
-				$rpd_modal = array_filter(
-					$data['rpd'],
-					fn ($key) => in_array($key, $modal_key),
-					ARRAY_FILTER_USE_KEY
-				);
-				$data['rpd_modal'] = [$rpd_modal['januari_modal'], $rpd_modal['februari_modal'], $rpd_modal['maret_modal'], $rpd_modal['april_modal'], $rpd_modal['mei_modal'], $rpd_modal['juni_modal'], $rpd_modal['juli_modal'], $rpd_modal['agustus_modal'], $rpd_modal['september_modal'], $rpd_modal['oktober_modal'], $rpd_modal['november_modal'], $rpd_modal['desember_modal']];
-
+				// Data for Chart Deviasi RPD
 				$data['realisasi_rpd'] = $this->Guzzle_model->getDataGrafikDeviasiRpdRealisasi($id_dipa);
-				// $data['realisasi_pegawai'] = $realisasi_rpd['pegawai'];
-
-				// echo '<pre>'; print_r($rpd); exit;
+				$data['grafik_rpd'] = $this->Guzzle_model->getDataGrafikDeviasi($id_dipa);
 			}
 
 			$this->load->view('users/header', $data);

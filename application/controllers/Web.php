@@ -83,7 +83,7 @@ class Web extends CI_Controller {
 						$this->session->set_userdata('id_dipa', "$user_dipa");
 						$this->session->set_userdata('lokasi', "$user_lokasi");
 
-						// $this->session->set_userdata('jml_notif_bell', "0");
+						$this->session->set_userdata('jml_notif_bell', "0");
 
 						redirect('dashboard');
 					}
@@ -108,24 +108,26 @@ class Web extends CI_Controller {
 
 	public function notif_bell($aksi='')
 	{
-		date_default_timezone_set('Asia/Jakarta');
+		date_default_timezone_set('Asia/Singapore');
 		$id_user = $this->session->userdata('id_user');
 		$level	 = $this->session->userdata('level');
 
-		$this->db->order_by('id_notif','DESC');
-		$data['query'] = $this->db->get_where('tbl_notif', array('penerima'=>$id_user));
+		$data['notif'] = $this->Guzzle_model->getNotifikasiByIdPenerima($id_user);
+
 		$jml_notif_baru = 0;
- 		foreach ($data['query']->result() as $key => $value) {
-			if(!preg_match("/$id_user/i", $value->hapus_notif)) {
+ 		foreach ($data['notif'] as $key => $value) {
+			if($value['status'] == 'belum dibaca') {
 				$jml_notif_baru++;
-			}
-		}
-		
-		foreach ($data['query']->result() as $key => $value) {
-			if((preg_match("/$id_user/i", $value->baca_notif)) && (!preg_match("/$id_user/i", $value->hapus_notif))) {
+			} elseif($value['status'] == 'sudah dibaca') {
 				$jml_notif_baru--;
 			}
 		}
+		
+		// foreach ($data['query']->result() as $key => $value) {
+		// 	if((preg_match("/$id_user/i", $value->baca_notif)) && (!preg_match("/$id_user/i", $value->hapus_notif))) {
+		// 		$jml_notif_baru--;
+		// 	}
+		// }
 		
 		$data['jml_notif'] = $jml_notif_baru;
 		if ($aksi=='pesan_baru') {
@@ -160,50 +162,75 @@ class Web extends CI_Controller {
 			// $data['users']  	 = $this->Mcrud->get_users();
 			$data['judul_web'] = "Notifikasi";
 
-			$this->db->order_by('id_notif','DESC');
-			$data['query'] = $this->db->get_where('tbl_notif', array('penerima'=>$id_user));
+			// $this->db->order_by('id_notif','DESC');
+			// $data['query'] = $this->db->get_where('tbl_notif', array('penerima'=>$id_user));
 
-			if ($aksi=='h' or $aksi=='h_all') {
-				if ($aksi=='h') {
-					$cek_data = $this->db->get_where("tbl_notif", array('id_notif'=>"$id"));
-				} else {
-					$cek_data = $this->db->get_where("tbl_notif", array('penerima'=>"$id_user"));
-				}
-				if ($cek_data->num_rows() != 0) {
-					if ($aksi=='h') {
-						$h_notif = $cek_data->row()->hapus_notif;
-						if(!preg_match("/$id_user/i", $h_notif)) {
-							$data = array('hapus_notif'=>"$id_user, $h_notif");
-							$this->db->update('tbl_notif', $data, array('id_notif'=>$id));
-						}
-					} else {
-						foreach ($cek_data->result() as $key => $value) {
-							$h_notif = $value->hapus_notif;
-							if(!preg_match("/$id_user/i", $h_notif)) {
-								$data = array('hapus_notif'=>"$id_user, $h_notif");
-								$this->db->update('tbl_notif', $data, array('penerima'=>$id_user));
-							}
-						}
-					}
+			$data['notif'] = $this->Guzzle_model->getNotifikasiByIdPenerima($id_user);
+
+			usort($data['notif'], function($a, $b) {
+				return $a['id'] <=> $b['id'];
+			});
+
+			if ($aksi == 'h') {
+				$cek_data = $this->Guzzle_model->getNotifikasiById($id);
+				if (count($cek_data) != 0) {
+					$this->Guzzle_model->deleteNotifikasi($id);
 					$this->session->set_flashdata('msg',
 						'
 						<div class="alert alert-success alert-dismissible" role="alert">
-							 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-								 <span aria-hidden="true">&times;</span>
-							 </button>
-							 <strong>Sukses!</strong> Berhasil dihapus.
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<strong>Sukses!</strong> Berhasil dihapus.
 						</div>
 						<br>'
 					);
 					redirect("web/notif");
-				} else {
-					if ($aksi=='h') {
-						redirect('404_content');
-					} else {
-						redirect("web/notif");
-					}
+				}else {
+					redirect('404_content');
 				}
 			}
+			// if ($aksi=='h' or $aksi=='h_all') {
+			// 	if ($aksi=='h') {
+			// 		$cek_data = $this->db->get_where("tbl_notif", array('id_notif'=>"$id"));
+			// 	} else {
+			// 		$cek_data = $this->db->get_where("tbl_notif", array('penerima'=>"$id_user"));
+			// 	}
+			// 	if ($cek_data->num_rows() != 0) {
+			// 		if ($aksi=='h') {
+			// 			$h_notif = $cek_data->row()->hapus_notif;
+			// 			if(!preg_match("/$id_user/i", $h_notif)) {
+			// 				$data = array('hapus_notif'=>"$id_user, $h_notif");
+			// 				$this->db->update('tbl_notif', $data, array('id_notif'=>$id));
+			// 			}
+			// 		} else {
+			// 			foreach ($cek_data->result() as $key => $value) {
+			// 				$h_notif = $value->hapus_notif;
+			// 				if(!preg_match("/$id_user/i", $h_notif)) {
+			// 					$data = array('hapus_notif'=>"$id_user, $h_notif");
+			// 					$this->db->update('tbl_notif', $data, array('penerima'=>$id_user));
+			// 				}
+			// 			}
+			// 		}
+			// 		$this->session->set_flashdata('msg',
+			// 			'
+			// 			<div class="alert alert-success alert-dismissible" role="alert">
+			// 				 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			// 					 <span aria-hidden="true">&times;</span>
+			// 				 </button>
+			// 				 <strong>Sukses!</strong> Berhasil dihapus.
+			// 			</div>
+			// 			<br>'
+			// 		);
+			// 		redirect("web/notif");
+			// 	} else {
+			// 		if ($aksi=='h') {
+			// 			redirect('404_content');
+			// 		} else {
+			// 			redirect("web/notif");
+			// 		}
+			// 	}
+			// }
 
 			$this->load->view('users/header', $data);
 			$this->load->view('users/notif/index', $data);

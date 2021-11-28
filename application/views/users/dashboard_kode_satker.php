@@ -181,7 +181,7 @@ const chart_penyerapan = new Chart(ctx, {
 
 <script>
 let data_realisasi_pegawai = <?php echo json_encode($realisasi_rpd['pegawai']);  ?>;
-let data_rpd_pegawai = <?php echo json_encode($rpd_pegawai);  ?>;
+let data_rpd_pegawai = <?php echo json_encode($grafik_rpd['pegawai']);  ?>;
 let data_deviasi_pegawai = [];
 data_realisasi_pegawai.forEach((val, key)=>{
 	data_deviasi_pegawai[key] = data_realisasi_pegawai[key] - data_rpd_pegawai[key];
@@ -275,7 +275,7 @@ var line_chart_penyerapan_pegawai = new Chart(ctxrpd, {
   });
 
 let data_realisasi_barang = <?php echo json_encode($realisasi_rpd['barang']);  ?>;
-let data_rpd_barang = <?php echo json_encode($rpd_barang);  ?>;
+let data_rpd_barang = <?php echo json_encode($grafik_rpd['barang']);  ?>;
 let data_deviasi_barang = [];
 data_realisasi_barang.forEach((val, key)=>{
 	data_deviasi_barang[key] = data_realisasi_barang[key] - data_rpd_barang[key];
@@ -369,7 +369,7 @@ var line_chart_penyerapan_barang = new Chart(ctxrpd, {
   });
 
 let data_realisasi_modal = <?php echo json_encode($realisasi_rpd['modal']);  ?>;
-let data_rpd_modal = <?php echo json_encode($rpd_modal);  ?>;
+let data_rpd_modal = <?php echo json_encode($grafik_rpd['modal']);  ?>;
 let data_deviasi_modal = [];
 data_realisasi_modal.forEach((val, key)=>{
 	data_deviasi_modal[key] = data_realisasi_modal[key] - data_rpd_modal[key];

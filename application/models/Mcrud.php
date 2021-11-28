@@ -5,7 +5,7 @@ class Mcrud extends CI_Model {
 
  public static function tgl_id($date, $bln='')
  {
-	 date_default_timezone_set('Asia/Jakarta');
+	 date_default_timezone_set('Asia/Singapore');
 		 $str = explode('-', $date);
 		 $bulan = array(
 			 '01' => 'Januari',
@@ -108,7 +108,7 @@ class Mcrud extends CI_Model {
 			$data_notif = array(
 				'pesan'				=> "mengirim laporan pelaksaanaan anggaran",
 				'link'				=> "pelaksanaan_anggaran/v/$id_dipa/d/".hashids_encrypt($id_for_link),
-				'status'				=> "belum dibaca",
+				'status'			=> "belum dibaca",
 				'id_user_pengirim'	=> $pengirim,
 				'id_user_penerima'	=> $penerima
 			);

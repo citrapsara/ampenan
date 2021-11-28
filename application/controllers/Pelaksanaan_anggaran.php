@@ -21,6 +21,9 @@ class Pelaksanaan_anggaran extends CI_Controller {
 		$id_user = $this->session->userdata('id_user');
 		$level 	 = $this->session->userdata('level');
 		$id_dipa_user = $this->session->userdata('id_dipa');
+		$lokasi_user = $this->session->userdata('lokasi');
+
+		
 		if(!isset($ceks)) {
 			redirect('web/login');
 		}
@@ -178,20 +181,27 @@ class Pelaksanaan_anggaran extends CI_Controller {
 						'id_pelaksanaan_anggaran'	=> $id_pelaksanaan_anggaran
 					);
 
-					$this->Guzzle_model->createPelaksanaanAnggaranAkunDetil($data_detil_akun);
+					$data_pelaksanaan_detil_result = $this->Guzzle_model->createPelaksanaanAnggaranAkunDetil($data_detil_akun);
 				}
 
-				$user_dipa = $this->Guzzle_model->getUserByDipaId($id_dipa_user);
-
-				$keuangan = array_filter($user_dipa, function($key) {
-   					return ($key['role'] == 'keuangan');
-				});
-
-				foreach ($keuangan as $key => $value) {
-					$id_keuangan = $value['id'];
+				if ($data_pelaksanaan_result['status'] == 201 && $data_pelaksanaan_detil_result['status'] == 201) {
+					if ($lokasi_user == 'kanwil') {
+						$user_dipa = $this->Guzzle_model->getUserByDipaId('00');
+					} else {
+						$user_dipa = $this->Guzzle_model->getUserByDipaId($id_dipa_user);
+					}
+					
+					$keuangan = array_filter($user_dipa, function($key) {
+						return ($key['role'] == 'keuangan');
+					});
+					
+					foreach ($keuangan as $key => $value) {
+						$id_keuangan = $value['id'];
+					}
+	
+					$this->Mcrud->kirim_notif('pelaksanaan_anggaran', $id_dipa, $id_pelaksanaan_anggaran, $id_user, $id_keuangan);
 				}
 
-				$this->Mcrud->kirim_notif('pelaksanaan_anggaran', $id_dipa, $id_pelaksanaan_anggaran, $id_user, $id_keuangan);
 
 				$this->session->set_flashdata('msg',
 					'

@@ -397,6 +397,20 @@ class Guzzle_model extends CI_model {
         return $result;
     }
 
+    public function getDataGrafikDeviasi($id)
+    {
+        $response = $this->_client->request('GET', 'RPD/dataGrafikDeviasi/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function getdataGrafikDeviasiSemuaSatker()
+    {
+        $response = $this->_client->request('GET', 'RPD/dataGrafikDeviasiSemuaSatker');
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
     public function getRPDByDipaIdRevisi($id, $revisi)
     {
         $response = $this->_client->request('GET', 'RPD/getDetailByDipaByRevisi/' . $id . '/' . $revisi);

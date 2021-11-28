@@ -28,15 +28,17 @@ class Dipa extends CI_Controller {
 		}
 
 		if ($aksi == 't') {
-			if ($level!='perencana') {redirect('404');}
+			if ($level!='pelaksana') {redirect('404');}
 			$p = "tambah";
 			$data['judul_web'] 	  = "Tambah Dokumen DIPA";
 		} elseif ($aksi == 'e') {
+			if ($level!='pelaksana') {redirect('404');}
 			$p = "edit";
 			$data['judul_web'] 	  = "Edit Dokumen DIPA";
 			$data['dipa'] = $this->Guzzle_model->getDokumenDipaById($id);
 			if ($data['dipa']['id']=='') {redirect('404');}
 		} elseif ($aksi == 'h') {
+			if ($level!='pelaksana') {redirect('404');}
 			$this->Guzzle_model->deleteDokumenDipa($id);
 			$this->session->set_flashdata('msg',
 				'
