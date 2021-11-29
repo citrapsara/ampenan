@@ -77,11 +77,22 @@ class Pelaksanaan_anggaran extends CI_Controller {
 			$data['total_realisasi'] = $this->Mcrud->rupiah(array_sum($jumlah));
 
 			if ($data['pelaksanaan_anggaran']['id']=='') {redirect('404');} 
+
+			$cek_notif = $this->Guzzle_model->getNotifikasiByIdPenerima($id_user);
+
+			$notif_filter = array_filter($cek_notif, function($key) use ($id) {
+				return ($key['id_for_link'] == $id);
+			});
+
+			foreach ($notif_filter as $key => $value) {
+				$this->Mcrud->update_notif($value);
+			}
 		} elseif ($aksi == 'e') {
 			$p = "edit";
 			$data['judul_web'] 	  = "Edit Pelaksanaan Anggaran";
 			$data['pelaksanaan_anggaran'] = $this->Guzzle_model->getPelaksanaanAnggaranById($id);
 			$data['pelaksanaan_anggaran_akun_detil'] = $this->Guzzle_model->getPelaksanaanAnggaranAkunDetilByPelaksanaanAnggaran($id);
+
 			if ($data['pelaksanaan_anggaran']['id']=='' OR $data['pelaksanaan_anggaran']['status_verifikasi']=='sudah') {redirect('404');}
 		} elseif ($aksi == 'c') {
 			$p = "verifikasi";
@@ -258,7 +269,7 @@ class Pelaksanaan_anggaran extends CI_Controller {
 					'tanggal_pelaksanaan' => $tanggal_pelaksanaan,
 					'id_dipa' => $id_dipa
 				);
-				$this->Guzzle_model->updatePelaksanaanAnggaran($id, $data_pelaksanaan);
+				$pelaksanaan_anggaran = $this->Guzzle_model->updatePelaksanaanAnggaran($id, $data_pelaksanaan);
 
 				$kode_akun = $_POST['kode_akun'];
 				$uraian_detil = $_POST['uraian_detil'];
@@ -288,9 +299,25 @@ class Pelaksanaan_anggaran extends CI_Controller {
 						'id_pelaksanaan_anggaran'	=> $id
 					);
 
-					// echo '<pre>'; print_r($data_detil_akun_new); echo '</pre>'; exit;
-
 					$this->Guzzle_model->createPelaksanaanAnggaranAkunDetil($data_detil_akun_new);
+				}
+
+				if ($pelaksanaan_anggaran['status'] == 200) {
+					if ($lokasi_user == 'kanwil') {
+						$user_dipa = $this->Guzzle_model->getUserByDipaId('00');
+					} else {
+						$user_dipa = $this->Guzzle_model->getUserByDipaId($id_dipa_user);
+					}
+					
+					$keuangan = array_filter($user_dipa, function($key) {
+						return ($key['role'] == 'keuangan');
+					});
+					
+					foreach ($keuangan as $key => $value) {
+						$id_keuangan = $value['id'];
+					}
+
+					$this->Mcrud->kirim_notif('revisi_pelaksanaan_anggaran', $id_dipa, $id, $id_user, $id_keuangan);
 				}
 
 				$this->session->set_flashdata('msg',
@@ -339,7 +366,23 @@ class Pelaksanaan_anggaran extends CI_Controller {
 			);
 
 			if ($simpan=='y') {
-				$this->Guzzle_model->updatePelaksanaanAnggaran($id, $data);
+				$pelaksanaan_anggaran = $this->Guzzle_model->updatePelaksanaanAnggaran($id, $data);
+
+				if ($pelaksanaan_anggaran['status'] == 200) {
+						$user_dipa = $this->Guzzle_model->getUserByDipaId($id_dipa_user);
+					
+					
+					$pelaksana = array_filter($user_dipa, function($key) {
+						return ($key['role'] == 'pelaksana');
+					});
+					
+					foreach ($pelaksana as $key => $value) {
+						$id_pelaksana = $value['id'];
+					}
+
+					$this->Mcrud->kirim_notif('verifikasi_pelaksanaan_anggaran', $id_dipa, $id, $id_user, $id_pelaksana, $status_verifikasi);
+				}
+
 				$this->session->set_flashdata('msg',
 					'
 					<div class="alert alert-success alert-dismissible" role="alert">

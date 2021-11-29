@@ -29,10 +29,9 @@
 						<a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
 					</div>
 					
-					<!-- <h4 class="panel-title"> -->
-					<a href="web/notif/h_all" class="btn btn-danger btn-xs" onclick="return confirm('Anda Yakin??');"> <i class="fa fa-trash"></i> Hapus Semua Notifikasi Saya</a>
-					<!-- </h4> -->
-				</div>
+					<h4 class="panel-title"><?php echo $judul_web; ?> </h4>
+						<!-- <a href="web/notif/h_all" class="btn btn-danger btn-xs" onclick="return confirm('Anda Yakin??');"> <i class="fa fa-trash"></i> Hapus Semua Notifikasi Saya</a> -->
+					</div>
 				
 				<div class="panel-body">
 					<div class="table-responsive">
@@ -52,51 +51,41 @@
                                 	$no=1;
 									$foto  = "img/user/user-default.jpg";
 									$id_user = $this->session->userdata('id_user');
-									foreach ($query->result() as $value):
-										$cek_penerima = $this->db->get_where('tbl_user', array('id_user'=>$value->penerima));
+									foreach ($notif as $value):
+										$cek_penerima = $this->Guzzle_model->getUserById($value['id_user_penerima']);
 
-									  	if ($cek_penerima->num_rows()!=0) {
-											$cek_pengirim = $this->db->get_where('tbl_user', array('id_user'=>$value->pengirim));
-											if ($cek_pengirim->num_rows()==0) {
-												if ($value->nama_client=='') {
-													$nama  = ""; $pesan = ""; $waktu = "";
-												} else {
-													$nama  = $value->nama_client;
-													$pesan = $value->pesan;
-													$waktu = $this->Mcrud->waktu($value->tgl_notif,'full');
-												}
-											} else {
-												$baris = $cek_pengirim->row();
-												$nama  = $baris->nama_lengkap;
-												$pesan = $value->pesan;
-												$waktu = $this->Mcrud->waktu($value->tgl_notif,'full');
-											}
-
+									  	if (count($cek_penerima)!=0) {
+											$cek_pengirim = $this->Guzzle_model->getUserById($value['id_user_pengirim']);
+											$dipa = $this->Guzzle_model->getDetailDipa($cek_pengirim['id_dipa']);
+											$nama  = $cek_pengirim['nama'];
+											$nama_dipa = $dipa['nama'];
+											$pesan = $value['pesan'];
+											$waktu = $this->Mcrud->waktu($value['created_at'],'full');
+											
 											$link = "javascript:;";
 
-									  		if ($value->link!='') {
-												$link = $value->link;
+									  		if ($value['link']!='') {
+												$link = $value['link'];
 									  		}
 
-											if(!preg_match("/$id_user/i", $value->hapus_notif)) {
 								?>
 								<tr>
                                     <td><b><?php echo $no++; ?>.</b></td>
 									<td>
-										<a href="<?php echo $foto; ?>" data-fancybox="all" data-caption="<?php echo $nama; ?>">
+										<a href="<?php echo $foto; ?>" data-fancybox="all" data-caption="<?php echo $nama . ' ' . $nama_dipa; ?>">
 											<img src="<?php echo $foto; ?>" alt="<?php echo $nama; ?>" width="100">
 										</a>
 									</td>
-									<td><?php echo $nama; ?></td>
-									<td><?php echo $pesan; ?></td>
+									<td><?php echo $nama . ' ' . $nama_dipa; ?></td>
+									<td><?php echo ucfirst($pesan); ?></td>
 									<td><?php echo $waktu; ?></td>
 									<td align="center">
 										<a href="<?php echo $link; ?>" class="btn btn-info btn-xs" title="Detail"><i class="fa fa-search"></i></a>
-										<a href="web/notif/h/<?php echo hashids_encrypt($value->id_notif); ?>" class="btn btn-danger btn-xs" title="Hapus" onclick="return confirm('Anda yakin?');"><i class="fa fa-trash-o"></i></a>
+										<a href="web/notif/h/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-danger btn-xs" title="Hapus" onclick="return confirm('Anda yakin?');"><i class="fa fa-trash-o"></i></a>
 									</td>
                                 </tr>
                                 <?php
-											}
+											
 										}
 									endforeach; ?>
                             </tbody>

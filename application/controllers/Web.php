@@ -114,20 +114,19 @@ class Web extends CI_Controller {
 
 		$data['notif'] = $this->Guzzle_model->getNotifikasiByIdPenerima($id_user);
 
-		$jml_notif_baru = 0;
- 		foreach ($data['notif'] as $key => $value) {
-			if($value['status'] == 'belum dibaca') {
-				$jml_notif_baru++;
-			} elseif($value['status'] == 'sudah dibaca') {
-				$jml_notif_baru--;
-			}
-		}
-		
-		// foreach ($data['query']->result() as $key => $value) {
-		// 	if((preg_match("/$id_user/i", $value->baca_notif)) && (!preg_match("/$id_user/i", $value->hapus_notif))) {
+		// $jml_notif_baru = 0;
+ 		// foreach ($data['notif'] as $key => $value) {
+		// 	if($value['status'] == 'belum dibaca') {
+		// 		$jml_notif_baru++;
+		// 	} elseif($value['status'] == 'sudah dibaca') {
 		// 		$jml_notif_baru--;
 		// 	}
 		// }
+
+		$filtered_notif = array_filter($data['notif'], function($key) {
+			return ($key['status'] == 'belum dibaca');
+		});
+		$jml_notif_baru = count($filtered_notif);
 		
 		$data['jml_notif'] = $jml_notif_baru;
 		if ($aksi=='pesan_baru') {

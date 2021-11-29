@@ -100,9 +100,18 @@
 
               <hr style="margin-top:0px;">
               <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo strtolower($this->uri->segment(3)); ?>.html" class="btn btn-default"><< Kembali</a>
-              <?php if ($level=='superadmin'){ ?>
-                <a class="btn btn-success" title="Edit" data-toggle="modal" onclick="modal_show(<?php echo $query->id_laporan; ?>);" style="float:right;"><i class="fa fa-pencil"></i> Edit</a>
+
+              <?php if ($level=='pelaksana'){ ?>
+                <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo strtolower($this->uri->segment(3)); ?>/e/<?php echo $this->uri->segment(5); ?>" class="btn btn-success <?php if ($pelaksanaan_anggaran['status_verifikasi'] == 'sudah') { echo 'disabled'; }; ?>" title="Edit" style="float:right;"><i class="fa fa-edit"></i> Edit</a>
               <?php } ?>
+
+              <?php if($level == 'keuangan'){
+                if ($id_dipa == '00') {
+                  if ($link3 != '00' AND $this->Mcrud->cek_lokasi($link3)) { ?>
+                    <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo strtolower($this->uri->segment(3)); ?>/c/<?php echo $this->uri->segment(5); ?>" class="btn btn-success" title="Edit" style="float:right;"><i class="fa fa-edit"></i> Verifikasi</a>
+              <?php } } else { ?>
+                    <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo strtolower($this->uri->segment(3)); ?>/c/<?php echo $this->uri->segment(5); ?>" class="btn btn-success" title="Edit" style="float:right;"><i class="fa fa-edit"></i> Verifikasi</a>
+              <?php } } ?>
             </div>
 
         </div>

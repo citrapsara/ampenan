@@ -37,7 +37,7 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-3">
-                                  <select class="form-control default-select2" id="stt">
+                                  <select class="form-control default-select2" id="stt" onchange="window.location.href='rpd/v/<?php echo $link3;?>/'+this.value;">
                                     <option value="">- Pilih Revisi-</option>
                                     <?php for($i=0; $i < count($rpd_dipa); $i++): ?>
                                       <option value="<?php echo $i ?>" <?php if ($i == $link4) { echo "selected"; } ?>>
@@ -48,7 +48,6 @@
                                   </select>
                                 </div>
                                 <div class="col-md-1">
-                                  <button class="btn btn-default" onclick="window.location.href='rpd/v/<?php echo $link3;?>/'+$('#stt').val();"><i class="fa fa-search"></i> Select</button>
                                 </div>
                                 <div class="col-md-2"></div>
                                 <div class="col-md-6 text-right">

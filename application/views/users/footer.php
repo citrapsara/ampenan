@@ -107,7 +107,7 @@ function notif()
   console.log(data2)
   $("#notif_bell").load(data2);
 }
-setInterval(notif, 20000); //2 detik
+setInterval(notif, 2000); //2 detik
 </script>
 
 </body>

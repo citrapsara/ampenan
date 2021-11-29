@@ -147,7 +147,11 @@ class Revisi_dipa extends CI_Controller {
 					'id_user_verifikator'	=> $id_verifikator
 				);
 				// echo '<pre>'; print_r($data2); echo '</pre>'; exit;
-				$this->Guzzle_model->createVerifikasiRevisiDipa($data2);
+				$verifikasi_revisi = $this->Guzzle_model->createVerifikasiRevisiDipa($data2);
+
+				if ($revisi_dipa_result['status'] == 201 AND $verifikasi_revisi['status'] == 201) {
+					$this->Mcrud->kirim_notif('usulan_revisi_dipa', $id_dipa, $id_usulan_revisi_dipa, $id_user, $id_verifikator);
+				}
 				
 				$this->session->set_flashdata('msg',
 					'
@@ -210,7 +214,20 @@ class Revisi_dipa extends CI_Controller {
 					'jenis_revisi'					=> $jenis_revisi,
 					'id_user_verifikator_terakhir'	=> $id_verifikator
 				);
-				$this->Guzzle_model->updateRevisiDipa($id, $data);
+				$revisi_dipa_result = $this->Guzzle_model->updateRevisiDipa($id, $data);
+
+				if ($revisi_dipa_result['status'] == 200) {
+					$verifikator = $this->Guzzle_model->getVerifikasiByUsulanRevisiId($id);
+
+					$verifikator_filter = array_filter($verifikator, function($key) {
+						return ($key['status_verifikasi'] != 'sudah');
+					});
+					
+					foreach ($verifikator_filter as $key => $value) {
+						$id_verifikator = $value['id_user_verifikator'];
+						$this->Mcrud->kirim_notif('revisi_usulan_revisi_dipa', $id_dipa, $id, $id_user, $id_verifikator);
+					}
+				}
 				
 				$this->session->set_flashdata('msg',
 					'

@@ -102,18 +102,52 @@ class Mcrud extends CI_Model {
 		return $data;
 	}
 
-	function kirim_notif($notif_type, $id_dipa, $id_for_link, $pengirim, $penerima)
+	function kirim_notif($notif_type, $id_dipa, $id_for_link, $pengirim, $penerima, $status_verifikasi='')
 	{
 		if ($notif_type == 'pelaksanaan_anggaran') {
-			$data_notif = array(
-				'pesan'				=> "mengirim laporan pelaksaanaan anggaran",
-				'link'				=> "pelaksanaan_anggaran/v/$id_dipa/d/".hashids_encrypt($id_for_link),
-				'status'			=> "belum dibaca",
-				'id_user_pengirim'	=> $pengirim,
-				'id_user_penerima'	=> $penerima
-			);
+			$pesan = "mengirim laporan pelaksanaan anggaran";
+			$link = "pelaksanaan_anggaran/v/$id_dipa/d/".hashids_encrypt($id_for_link);
+		} elseif ($notif_type == 'revisi_pelaksanaan_anggaran') {
+			$pesan = "mengirim perbaikan laporan pelaksanaan anggaran";
+			$link = "pelaksanaan_anggaran/v/$id_dipa/d/".hashids_encrypt($id_for_link);
+		} elseif ($notif_type == 'verifikasi_pelaksanaan_anggaran') {
+			$link = "pelaksanaan_anggaran/v/$id_dipa/d/".hashids_encrypt($id_for_link);
+			if ($status_verifikasi == 'tolak') {
+				$pesan = "laporan pelaksanaan anggaran perlu perbaikan";
+			} elseif ($status_verifikasi == 'sudah') {
+				$pesan = "laporan pelaksaanaan anggaran sudah diverifikasi";
+			}
+		} elseif ($notif_type == 'usulan_revisi_dipa') {
+			$link = "revisi_dipa/v/$id_dipa/d/".hashids_encrypt($id_for_link);
+			$pesan = "mengirim usulan revisi dipa";
+		} elseif ($notif_type == 'revisi_usulan_revisi_dipa') {
+			$link = "revisi_dipa/v/$id_dipa/d/".hashids_encrypt($id_for_link);
+			$pesan = "mengirim perbaikan usulan revisi dipa";
 		}
+
+		$data_notif = array(
+			'pesan'				=> $pesan,
+			'link'				=> $link,
+			'status'			=> "belum dibaca",
+			'id_user_pengirim'	=> $pengirim,
+			'id_user_penerima'	=> $penerima,
+			'id_for_link'		=> $id_for_link
+
+		);
 		$this->Guzzle_model->createNotifikasi($data_notif);
+	}
+
+	function update_notif($notif) {
+		$data_notif = array(
+			'pesan'				=> $notif['pesan'],
+			'link'				=> $notif['link'],
+			'status'			=> "sudah dibaca",
+			'id_user_pengirim'	=> $notif['id_user_pengirim'],
+			'id_user_penerima'	=> $notif['id_user_penerima'],
+			'id_for_link'		=> $notif['id_for_link']
+
+		);
+		$this->Guzzle_model->updateNotifikasi($notif['id'], $data_notif);
 	}
 
 	public function rupiah($angka) {
