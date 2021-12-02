@@ -191,3 +191,21 @@ input[type="radio"] {
 #disabled-button-wrapper .btn[disabled] {
   pointer-events: none;
 }
+
+.progress-jenis-belanja .progress {
+  height: 7px;
+}
+
+.progress-bar-striped {
+  background-image: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.15) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.15) 75%,
+    transparent 75%,
+    transparent
+  );
+  background-size: 1rem 1rem;
+}

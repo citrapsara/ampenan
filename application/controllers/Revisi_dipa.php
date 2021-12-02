@@ -61,6 +61,16 @@ class Revisi_dipa extends CI_Controller {
 			usort($data['verifikasi_usulan'], function($a, $b) {
 				return $a['id'] <=> $b['id'];
 			});
+
+			$cek_notif = $this->Guzzle_model->getNotifikasiByIdPenerima($id_user);
+
+			$notif_filter = array_filter($cek_notif, function($key) use ($id) {
+				return ($key['id_for_link'] == $id);
+			});
+
+			foreach ($notif_filter as $key => $value) {
+				$this->Mcrud->update_notif($value);
+			}
 		} elseif ($aksi == 'e') {
 			$p = "edit";
 			$data['judul_web'] 	  = "Edit Usulan Revisi DIPA";
@@ -275,7 +285,7 @@ class Revisi_dipa extends CI_Controller {
 						'id_usulan_revisi_dipa'		=> $id_usulan_revisi_dipa,
 						'komentar'					=> $komentar
 					);
-					$this->Guzzle_model->updateVerifikasiRevisiDipa($id_verifikasi_usulan, $data);
+					$verifikasi_result = $this->Guzzle_model->updateVerifikasiRevisiDipa($id_verifikasi_usulan, $data);
 				} elseif ($status_verifikasi == 'sudah') {
 					$data1 = array(
 						'status_verifikasi'			=> $status_verifikasi,
@@ -283,7 +293,7 @@ class Revisi_dipa extends CI_Controller {
 						'id_usulan_revisi_dipa'		=> $id_usulan_revisi_dipa,
 						'komentar'					=> $komentar
 					);
-					$this->Guzzle_model->updateVerifikasiRevisiDipa($id_verifikasi_usulan, $data1);
+					$verifikasi_result = $this->Guzzle_model->updateVerifikasiRevisiDipa($id_verifikasi_usulan, $data1);
 
 					if ($id_user != $id_user_verifikator_terakhir) {
 						$data2 = array(
@@ -292,10 +302,28 @@ class Revisi_dipa extends CI_Controller {
 							'id_usulan_revisi_dipa'		=> $id_usulan_revisi_dipa,
 							'komentar'					=> ""
 						);
-						$this->Guzzle_model->createVerifikasiRevisiDipa($data2);
+						$new_verifikator = $this->Guzzle_model->createVerifikasiRevisiDipa($data2);
 					}
 				}
 				
+				if ($verifikasi_result['status'] == 200) {
+					$user_dipa = $this->Guzzle_model->getUserByDipaId($id_dipa);
+					
+					$pelaksana = array_filter($user_dipa, function($key) {
+						return ($key['role'] == 'pelaksana');
+					});
+					
+					foreach ($pelaksana as $key => $value) {
+						$id_pelaksana = $value['id'];
+					}
+					
+					$this->Mcrud->kirim_notif('verifikasi_usulan_revisi_dipa', $id_dipa, $id_usulan_revisi_dipa, $id_user, $id_pelaksana, $status_verifikasi);
+				}
+
+				if ($new_verifikator['status'] == 201) {
+					$this->Mcrud->kirim_notif('usulan_revisi_dipa', $id_dipa, $id_usulan_revisi_dipa, $id_user, $id_user_verifikator);
+				}
+
 				$this->session->set_flashdata('msg',
 					'
 					<div class="alert alert-success alert-dismissible" role="alert">

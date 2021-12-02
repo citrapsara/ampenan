@@ -8,18 +8,18 @@ class Mcrud extends CI_Model {
 	 date_default_timezone_set('Asia/Singapore');
 		 $str = explode('-', $date);
 		 $bulan = array(
-			 '01' => 'Januari',
-			 '02' => 'Februari',
-			 '03' => 'Maret',
-			 '04' => 'April',
+			 '01' => 'Jan',
+			 '02' => 'Feb',
+			 '03' => 'Mar',
+			 '04' => 'Apr',
 			 '05' => 'Mei',
-			 '06' => 'Juni',
-			 '07' => 'Juli',
-			 '08' => 'Agustus',
-			 '09' => 'September',
-			 '10' => 'Oktober',
-			 '11' => 'November',
-			 '12' => 'Desember',
+			 '06' => 'Jun',
+			 '07' => 'Jul',
+			 '08' => 'Ags',
+			 '09' => 'Sep',
+			 '10' => 'Okt',
+			 '11' => 'Nov',
+			 '12' => 'Des',
 		 );
 		 if ($bln == '') {
 			 $hasil = $str['0'] . "-" . substr($bulan[$str[1]],0,3) . "-" .$str[2];
@@ -105,24 +105,37 @@ class Mcrud extends CI_Model {
 	function kirim_notif($notif_type, $id_dipa, $id_for_link, $pengirim, $penerima, $status_verifikasi='')
 	{
 		if ($notif_type == 'pelaksanaan_anggaran') {
-			$pesan = "mengirim laporan pelaksanaan anggaran";
+			$pesan = "Mengirim laporan pelaksanaan anggaran";
 			$link = "pelaksanaan_anggaran/v/$id_dipa/d/".hashids_encrypt($id_for_link);
 		} elseif ($notif_type == 'revisi_pelaksanaan_anggaran') {
-			$pesan = "mengirim perbaikan laporan pelaksanaan anggaran";
+			$pesan = "Mengirim perbaikan laporan pelaksanaan anggaran";
 			$link = "pelaksanaan_anggaran/v/$id_dipa/d/".hashids_encrypt($id_for_link);
 		} elseif ($notif_type == 'verifikasi_pelaksanaan_anggaran') {
-			$link = "pelaksanaan_anggaran/v/$id_dipa/d/".hashids_encrypt($id_for_link);
+			$link = "elaksanaan_anggaran/v/$id_dipa/d/".hashids_encrypt($id_for_link);
 			if ($status_verifikasi == 'tolak') {
-				$pesan = "laporan pelaksanaan anggaran perlu perbaikan";
+				$pesan = "Laporan pelaksanaan anggaran perlu perbaikan";
 			} elseif ($status_verifikasi == 'sudah') {
-				$pesan = "laporan pelaksaanaan anggaran sudah diverifikasi";
+				$pesan = "Laporan pelaksaanaan anggaran sudah diverifikasi";
 			}
 		} elseif ($notif_type == 'usulan_revisi_dipa') {
 			$link = "revisi_dipa/v/$id_dipa/d/".hashids_encrypt($id_for_link);
-			$pesan = "mengirim usulan revisi dipa";
+			$pesan = "Mengirim usulan revisi dipa";
 		} elseif ($notif_type == 'revisi_usulan_revisi_dipa') {
 			$link = "revisi_dipa/v/$id_dipa/d/".hashids_encrypt($id_for_link);
-			$pesan = "mengirim perbaikan usulan revisi dipa";
+			$pesan = "Mengirim perbaikan usulan revisi dipa";
+		} elseif ($notif_type == 'verifikasi_usulan_revisi_dipa') {
+			$link = "revisi_dipa/v/$id_dipa/d/".hashids_encrypt($id_for_link);
+			if ($status_verifikasi == 'tolak') {
+				$pesan = "Usulan revisi DIPA perlu perbaikan";
+			} elseif ($status_verifikasi == 'sudah') {
+				$pesan = "Usulan revisi DIPA sudah diverifikasi";
+			}
+		} elseif ($notif_type == 'monev') {
+			$pesan = "Mengirim monitoring dan evaluasi";
+			$link = "monev/v/$status_verifikasi/$id_dipa/".hashids_encrypt($id_for_link);
+		} elseif ($notif_type == 'tindak_lanjut_monev') {
+			$pesan = "Mengirim tindak lanjut monitoring dan evaluasi";
+			$link = "monev/v/$status_verifikasi/$id_dipa/".hashids_encrypt($id_for_link);
 		}
 
 		$data_notif = array(
@@ -134,6 +147,7 @@ class Mcrud extends CI_Model {
 			'id_for_link'		=> $id_for_link
 
 		);
+
 		$this->Guzzle_model->createNotifikasi($data_notif);
 	}
 
@@ -150,6 +164,26 @@ class Mcrud extends CI_Model {
 		$this->Guzzle_model->updateNotifikasi($notif['id'], $data_notif);
 	}
 
+	function cek_verifikasi_usulan_revisi_dipa($id_dipa, $id_user, $id_usulan_verifikasi_dipa) {
+		$verifikasi_array = $this->Guzzle_model->getRevisiDipaByDipaIdUserId($id_dipa, $id_user);
+
+		$verifikasi_filter = array_filter($verifikasi_array, function($key) use ($id_usulan_verifikasi_dipa) {
+			return ($key['id'] == $id_usulan_verifikasi_dipa);
+		});
+
+		foreach ($verifikasi_filter as $key => $value) {
+			$status = $value['status_verifikasi'];
+		}
+
+		if (count($verifikasi_filter) != 0 AND $status != 'sudah') {
+			$result = true;
+		} else {
+			$result = false;
+		}
+
+		return $result;
+	}
+
 	public function rupiah($angka) {
 		$hasil_rupiah = "Rp " . number_format($angka,0,"",".");
 		return $hasil_rupiah;
@@ -157,6 +191,9 @@ class Mcrud extends CI_Model {
 
 	public function persen($realisasi, $total) {
 		 $persen = ($realisasi / $total) * 100;
+		 if ($total == 0) {
+			 $persen = 0;
+		 }
 		 return $persen;
 	}
 

@@ -85,7 +85,7 @@
 
                             <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo strtolower($this->uri->segment(3)); ?>/h/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-danger btn-xs <?php if ($level != 'pelaksana') { echo "hidden"; } ?>" title="Hapus" onclick="return confirm('Anda yakin? Seluruh dokumen akan ikut terhapus.');"><i class="fa fa-trash-o"></i></a>
                             
-                            <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo strtolower($this->uri->segment(3)); ?>/v/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-success btn-xs <?php if ($value['id_user_verifikator'] == null OR $value['status_verifikasi'] == 'sudah') { echo "disabled"; } ?> <?php if ($level == 'pelaksana') { echo "hidden"; } ?>" title="Edit"><i class="fa fa-edit"></i> Verifikasi</a>
+                            <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo strtolower($this->uri->segment(3)); ?>/v/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-success btn-xs <?php if ($value['id_user_verifikator'] == null OR $value['status_verifikasi'] == 'sudah' OR $value['status_verifikasi_terakhir'] == 'sudah') { echo "disabled"; } ?> <?php if ($level == 'pelaksana') { echo "hidden"; } ?>" title="Edit"><i class="fa fa-edit"></i> Verifikasi</a>
                           </td>
                         </tr>
                         <?php endforeach; ?>

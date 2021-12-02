@@ -154,7 +154,8 @@ class Pelaksanaan_anggaran extends CI_Controller {
 
 		if (isset($_POST['btnsimpan'])) {
 			$nama_pelaksanaan_anggaran = htmlentities(strip_tags($this->input->post('nama_pelaksanaan_anggaran')));
-			$tanggal_pelaksanaan 	 = htmlentities(strip_tags($this->input->post('tanggal_pelaksanaan')));
+			$tanggal_mulai 	 = htmlentities(strip_tags($this->input->post('tanggal_mulai')));
+			$tanggal_selesai 	 = htmlentities(strip_tags($this->input->post('tanggal_selesai')));
 
 			if ( ! $this->upload->do_upload('file_pertanggungjawaban'))
 			{
@@ -174,8 +175,11 @@ class Pelaksanaan_anggaran extends CI_Controller {
 					'uraian'				=> $nama_pelaksanaan_anggaran,
 					'id_dipa'				=> $id_dipa,
 					'url_file'				=> $file_pertanggungjawaban,
-					'tanggal_pelaksanaan'	=> $tanggal_pelaksanaan
+					'tanggal_mulai'			=> $tanggal_mulai,
+					'tanggal_selesai'		=> $tanggal_selesai
+
 				);
+
 				$data_pelaksanaan_result = $this->Guzzle_model->createPelaksanaanAnggaran($data_pelaksanaan);
 
 				$id_pelaksanaan_anggaran = $data_pelaksanaan_result['id'];				
@@ -241,7 +245,8 @@ class Pelaksanaan_anggaran extends CI_Controller {
 
 		if (isset($_POST['btnupdate'])) {
 			$nama_pelaksanaan_anggaran = htmlentities(strip_tags($this->input->post('nama_pelaksanaan_anggaran')));
-			$tanggal_pelaksanaan = htmlentities(strip_tags($this->input->post('tanggal_pelaksanaan')));
+			$tanggal_mulai = htmlentities(strip_tags($this->input->post('tanggal_mulai')));
+			$tanggal_selesai = htmlentities(strip_tags($this->input->post('tanggal_selesai')));
 			$cek_file = $data['pelaksanaan_anggaran']['url_file'];
 			if ($_FILES['file_pertanggungjawaban']['error'] <> 4) {
 				if ( ! $this->upload->do_upload('file_pertanggungjawaban'))
@@ -266,7 +271,8 @@ class Pelaksanaan_anggaran extends CI_Controller {
 				$data_pelaksanaan = array(
 					'uraian' => $nama_pelaksanaan_anggaran,
 					'url_file' => $file_pertanggungjawaban,
-					'tanggal_pelaksanaan' => $tanggal_pelaksanaan,
+					'tanggal_mulai' => $tanggal_mulai,
+					'tanggal_selesai' => $tanggal_selesai,
 					'id_dipa' => $id_dipa
 				);
 				$pelaksanaan_anggaran = $this->Guzzle_model->updatePelaksanaanAnggaran($id, $data_pelaksanaan);
@@ -359,7 +365,8 @@ class Pelaksanaan_anggaran extends CI_Controller {
 			$data = array(
 				'uraian' => $data_lama['uraian'],
 				'url_file' => $data_lama['url_file'],
-				'tanggal_pelaksanaan' => $data_lama['tanggal_pelaksanaan'],
+				'tanggal_mulai' => $data_lama['tanggal_mulai'],
+				'tanggal_selesai' => $data_lama['tanggal_selesai'],
 				'id_dipa' => $data_lama['id_dipa'],
 				'catatan_verifikator' => $catatan_verifikator,
 				'status_verifikasi'				=> $status_verifikasi

@@ -43,10 +43,18 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-lg-3">Tanggal Pelaksanaan<b id='wajib_isi'>*</b></label>
+                    <label class="col-lg-3">Tanggal Mulai Pelaksanaan<b id='wajib_isi'>*</b></label>
                     <div class="col-lg-9">
                       <div class="input-group">
-                        <input type="date" name="tanggal_pelaksanaan" class="form-control daterange-single" value="" maxlength="10" required>
+                        <input type="date" name="tanggal_mulai" class="form-control daterange-single" value="" maxlength="10" required>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-lg-3">Tanggal Selesai Pelaksanaan<b id='wajib_isi'>*</b></label>
+                    <div class="col-lg-9">
+                      <div class="input-group">
+                        <input type="date" name="tanggal_selesai" class="form-control daterange-single" value="" maxlength="10" required>
                       </div>
                     </div>
                   </div>

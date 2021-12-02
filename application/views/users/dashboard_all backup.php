@@ -61,18 +61,18 @@ $id_dipa = $this->session->userdata('id_dipa');
 										<div class="progress-title">REALISASI ANGGARAN</div>
 										<div class="text-white progress-angka"><?php 
 											echo $this->Mcrud->rupiah($realisasi_satker_total[$key['id']]);
-										?> (<?php echo number_format($this->Mcrud->persen($realisasi_satker_total[$key['id']], $pagu_satker[$key['id']]),2,",",""); ?>%)</div>
+										?></div>
 										<div class="progress">
-											<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="<?php echo $realisasi_satker_persen[$key['id']] ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $realisasi_satker_persen[$key['id']] ?>%">
+											<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<?php echo $realisasi_satker_persen[$key['id']] ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $realisasi_satker_persen[$key['id']] ?>%">
 												<span class="sr-only"></span>
 											</div>
 										</div>
 									</div>
 									<div class="dashboard-progress">
 										<div class="progress-title">SISA ANGGARAN</div>
-										<div class="text-white progress-angka"><?php echo $this->Mcrud->rupiah($sisa_satker[$key['id']]); ?> (<?php echo number_format($this->Mcrud->persen($sisa_satker[$key['id']], $pagu_satker[$key['id']]),2,",",""); ?>%)</div>
+										<div class="text-white progress-angka"><?php echo $this->Mcrud->rupiah($sisa_satker[$key['id']]); ?></div>
 										<div class="progress">
-											<div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" style="width: <?php echo $sisa_satker_persen[$key['id']]; ?>%;" aria-valuenow="<?php echo $sisa_satker_persen[$key['id']]; ?>" aria-valuemin="0" aria-valuemax="100"></div>
+											<div class="progress-bar progress-bar-danger" role="progressbar" style="width: <?php echo $sisa_satker_persen[$key['id']]; ?>%;" aria-valuenow="<?php echo $sisa_satker_persen[$key['id']]; ?>" aria-valuemin="0" aria-valuemax="100"></div>
 										</div>
 									</div>
 								</div>
@@ -82,13 +82,13 @@ $id_dipa = $this->session->userdata('id_dipa');
 											<div class="progress-title">TOTAL BELANJA PEGAWAI</div>
 											<div class="text-white progress-angka"><?php 
 											if ($realisasi_satker_bp[$key['id']] != null) {
-												echo $this->Mcrud->rupiah($realisasi_satker_bp[$key['id']]) . " (" . number_format($this->Mcrud->persen($realisasi_satker_bp[$key['id']], $pagu_jenis_belanja[$key['id']]['pegawai']),2,",","") . "%)";
+												echo $this->Mcrud->rupiah($realisasi_satker_bp[$key['id']]);
 											} else {
 												echo 'Rp 0';
 											}
 										 ?></div>
 											<div class="progress">
-												<div class="progress-bar progress-bar-bp progress-bar-striped" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+												<div class="progress-bar progress-bar-bp" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
 											</div>
 										</div>
 									<!-- </div>
@@ -97,13 +97,13 @@ $id_dipa = $this->session->userdata('id_dipa');
 											<div class="progress-title">TOTAL BELANJA BARANG</div>
 											<div class="text-white progress-angka"><?php 
 											if ($realisasi_satker_bb[$key['id']] != null) {
-												echo $this->Mcrud->rupiah($realisasi_satker_bb[$key['id']]) . " (" . number_format($this->Mcrud->persen($realisasi_satker_bb[$key['id']], $pagu_jenis_belanja[$key['id']]['barang']),2,",","") . "%)";
+												echo $this->Mcrud->rupiah($realisasi_satker_bb[$key['id']]);
 											} else {
 												echo 'Rp 0';
 											}
 										 ?></div>
 										<div class="progress">
-											<div class="progress-bar progress-bar-bb progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+											<div class="progress-bar progress-bar-bb" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
 												<span class="sr-only"></span>
 											</div>
 											</div>
@@ -114,13 +114,13 @@ $id_dipa = $this->session->userdata('id_dipa');
 											<div class="progress-title">TOTAL BELANJA MODAL</div>
 											<div class="text-white progress-angka"><?php 
 												if ($realisasi_satker_bm[$key['id']] != null) {
-													echo $this->Mcrud->rupiah($realisasi_satker_bm[$key['id']]) . " (" . number_format($this->Mcrud->persen($realisasi_satker_bm[$key['id']], $pagu_jenis_belanja[$key['id']]['modal']),2,",","") . "%)"; 
+													echo $this->Mcrud->rupiah($realisasi_satker_bm[$key['id']]); 
 												} else {
 													echo 'Rp 0';
 												}
 											?></div>
 											<div class="progress">
-												<div class="progress-bar progress-bar-bm progress-bar-striped" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+												<div class="progress-bar progress-bar-bm" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
 											</div>
 										</div>
 									<!-- </div> -->
@@ -179,12 +179,10 @@ $id_dipa = $this->session->userdata('id_dipa');
 var dipa_id = <?php echo json_encode($dipa_id);  ?>;
 const realisasi_satker_total = <?php echo json_encode($realisasi_satker_total); ?>;
 const sisa_satker = <?php echo json_encode($sisa_satker_pie_chart); ?>;
-const sisa_satker_aktual = <?php echo json_encode($sisa_satker); ?>;
 
 dipa_id.forEach(myFunction);
 
 function myFunction(value, key) {
-var kode_satker = value;
 var options = {
            tooltips: {
          enabled: true
@@ -198,13 +196,11 @@ var options = {
                   dataArr.map(data => {
                       sum += data;
                   });
-				  sum = realisasi_satker_total[kode_satker] + sisa_satker_aktual[kode_satker];
 				  
                   let percentage = (value*100 / sum).toFixed(2)+"%";
-				  if( (value*100 / sum) <= 0){ percentage = "";}
+				  if(percentage == "0.00%"){ percentage = "";}
                   return percentage;
-				// return "haha"+key;
-				//   return value;
+
               
                 },
                 color: '#fff',
@@ -245,7 +241,7 @@ function fungsi(val, key){
 	if(key > 0){
 		nama_dipa[key-1] = val.nama;
 		let realisasi = realisasi_satker_total[val.id];
-		let sisa = sisa_satker_aktual[val.id];
+		let sisa = sisa_satker[val.id];
 
 		persen_realisasi[key-1] = (Math.round(((realisasi / (realisasi + sisa)) * 100) * 100) / 100).toFixed(2)
 	}
@@ -275,7 +271,7 @@ const myChart = new Chart(ctx, {
 			yAxes: [{
 				display: true,
 				ticks: {
-					// max: 100,
+					max: 100,
 					fontColor: 'white'
 				}
 			}],
@@ -318,7 +314,6 @@ let data_deviasi_modal = <?php echo json_encode($data_deviasi['modal']);  ?>;
 dipa_id.forEach(myFunction);
 
 function myFunction(value, key) {
-var kode_satker = value;
 const data_chart_pegawai = {
   labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
   datasets: [
@@ -350,7 +345,6 @@ const data_chart_pegawai = {
 };
 
 var ctxrpd = document.getElementById('line_chart_rpd_pegawai'+ value).getContext('2d');
-
 var line_chart_penyerapan_pegawai = new Chart(ctxrpd, {
 	type: 'line',
 	data: data_chart_pegawai,
@@ -398,8 +392,7 @@ var line_chart_penyerapan_pegawai = new Chart(ctxrpd, {
 				anchor: 'end',
 				align: 'bottom',
 				formatter: (val, ctx) => {
-					// return 'Rp ' +  (val).toLocaleString().replace(/,/g,".");//toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-					return ((data_realisasi_pegawai[kode_satker][ctx.dataIndex] - data_rpd_pegawai[kode_satker][ctx.dataIndex]) / data_rpd_pegawai[kode_satker][ctx.dataIndex] * 100).toFixed(2) + " %";
+					return 'Rp ' +  (val).toLocaleString().replace(/,/g,".");//toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 				},
 				color: 'white',
 				display: false
@@ -486,9 +479,7 @@ var line_chart_penyerapan_barang = new Chart(ctxrpd, {
 				anchor: 'end',
 				align: 'bottom',
 				formatter: (val, ctx) => {
-					// return 'Rp ' +  (val).toLocaleString().replace(/,/g,".");//toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-					return ((data_realisasi_barang[kode_satker][ctx.dataIndex] - data_rpd_barang[kode_satker][ctx.dataIndex]) / data_rpd_barang[kode_satker][ctx.dataIndex] * 100).toFixed(2) + " %";
-					// return kode_satker ;
+					return 'Rp ' +  (val).toLocaleString().replace(/,/g,".");//toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 				},
 				color: 'white',
 				display: false
@@ -575,9 +566,7 @@ var line_chart_penyerapan_modal = new Chart(ctxrpd, {
 				anchor: 'end',
 				align: 'bottom',
 				formatter: (val, ctx) => {
-					// return 'Rp ' +  (val).toLocaleString().replace(/,/g,".");//toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-					return ((data_realisasi_modal[kode_satker][ctx.dataIndex] - data_rpd_modal[kode_satker][ctx.dataIndex]) / data_rpd_modal[kode_satker][ctx.dataIndex] * 100).toFixed(2) + " %";
-
+					return 'Rp ' +  (val).toLocaleString().replace(/,/g,".");//toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 				},
 				color: 'white',
 				display: false

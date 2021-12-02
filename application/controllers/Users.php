@@ -33,6 +33,8 @@ class Users extends CI_Controller {
 				}
 				$data['pagu_satker'] = $pagu_satker;
 
+				$data['pagu_jenis_belanja'] = $this->Guzzle_model->getTotalPaguJenisBelanja();
+
 				foreach ($data['realisasi_jenis_belanja'] as $subkey => $subval) {
 					if ($subval['jenis_belanja'] == '51') {
 						$realisasi_bp[$subval['kode_satker']] = $subval['total_realisasi'];
@@ -87,6 +89,7 @@ class Users extends CI_Controller {
 				// Data Pagu dan Realisasi Anggaran 
 				$data['total_pagu'] = $this->Guzzle_model->getTotalPagubyKodeSatker($id_dipa);
 
+				$data['pagu_jenis_belanja'] = $this->Guzzle_model->getTotalPaguJenisBelanjabyKodeSatker($id_dipa);
 				$total_realisasi_jenis_belanja = $this->Guzzle_model->getTotalRealisasiJenisBelanjabyKodeSatker($id_dipa);
 
 				foreach ($total_realisasi_jenis_belanja as $key => $value) {

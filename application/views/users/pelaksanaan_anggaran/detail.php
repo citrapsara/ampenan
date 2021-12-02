@@ -48,7 +48,12 @@
                     <tr>
                       <th valign="top" width="160">Tanggal Pelaksanaan</th>
                       <th valign="top" width="1">:</th>
-                      <td><?php echo $this->Mcrud->tgl_id(date('d-m-Y', strtotime($pelaksanaan_anggaran['tanggal_pelaksanaan'])),'full'); ?></td>
+                      <td><?php echo $this->Mcrud->tgl_id(date('d-m-Y', strtotime($pelaksanaan_anggaran['tanggal_mulai'])),'full'); ?><?php if ($pelaksanaan_anggaran['tanggal_mulai'] != $pelaksanaan_anggaran['tanggal_selesai']): ?> s.d. <?php echo $this->Mcrud->tgl_id(date('d-m-Y', strtotime($pelaksanaan_anggaran['tanggal_selesai'])),'full'); endif;?></td>
+                    </tr>
+                    <tr>
+                      <th valign="top" width="160">Tanggal Pengajuan</th>
+                      <th valign="top" width="1">:</th>
+                      <td><?php echo $this->Mcrud->tgl_id(date('d-m-Y', strtotime($pelaksanaan_anggaran['created_at'])),'full'); ?></td>
                     </tr>
                   </tbody>
                 </table>

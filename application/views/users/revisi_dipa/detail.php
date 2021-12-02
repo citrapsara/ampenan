@@ -92,14 +92,20 @@
 
               <hr style="margin-top:0px;">
               <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo strtolower($this->uri->segment(3)); ?>.html" class="btn btn-default"><< Kembali</a>
-              <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo strtolower($this->uri->segment(3)); ?>/e/<?php echo $this->uri->segment(5); ?>" class="btn btn-success" title="Edit" style="float:right;">
-                <i class="fa fa-edit"></i> 
-                <?php if ($level == 'pelaksana') {
-                  echo "Edit";
-                } else {
-                  echo "Revisi";
-                }?>
-              </a>
+              <?php 
+               if ($level != 'pelaksana' AND $this->Mcrud->cek_verifikasi_usulan_revisi_dipa($link3, $id_user, $revisi_dipa['id'])):
+                ?>
+                <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo strtolower($this->uri->segment(3)); ?>/v/<?php echo $this->uri->segment(5); ?>" class="btn btn-success" title="Verifikasi" style="float:right;"><i class="fa fa-edit"></i> Verifikasi</a>
+              <?php else: ?>
+                <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo strtolower($this->uri->segment(3)); ?>/e/<?php echo $this->uri->segment(5); ?>" class="btn btn-success" title="Edit" style="float:right;">
+                  <i class="fa fa-edit"></i> 
+                    <?php if ($level == 'pelaksana') {
+                      echo "Edit";
+                    } else {
+                      echo "Revisi";
+                    }?>
+                </a>
+              <?php endif; ?>
             </div>
 
         </div>

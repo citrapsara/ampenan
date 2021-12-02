@@ -58,12 +58,12 @@
                                 <thead>
                                     <tr>
                                         <th width="1%">NO.</th>
-                                        <th>KETERANGAN</th>
-                                        <th>DOKUMEN PERTANGGUNG-JAWABAN</th>
-                                        <th>REALISASI</th>
-                                        <th>TANGGAL KEGIATAN</th>
-                                        <th>TANGGAL INPUT</th>
-                                        <th>STATUS</th>
+                                        <th width="20%">KETERANGAN</th>
+                                        <th width="10%">DOKUMEN PERTANGGUNG-JAWABAN</th>
+                                        <th width="15%">REALISASI</th>
+                                        <th>TANGGAL PELAKSANAAN</th>
+                                        <th>TANGGAL PENGAJUAN</th>
+                                        <th width="1%">STATUS</th>
                                         <th width="15%">Opsi</th>
                                     </tr>
                                 </thead>
@@ -74,7 +74,7 @@
                                     <tr>
                                         <td><?php echo $no++; ?>.</td>
 																				<td><?php echo ucwords($value['uraian']); ?></td>
-																				<td class="text-center"><a class="btn btn-info" href="<?php echo $value['url_file']; ?>" target="_blank"><i class="fa fa-download"></i> Download</a></td>
+																				<td class="text-center"><a class="btn btn-info btn-xs" href="<?php echo $value['url_file']; ?>" target="_blank"><i class="fa fa-download"></i> Download</a></td>
 																				<td><?php 
                                           if ($value['total_realisasi'] != null) {
                                             echo $value['total_realisasi'];
@@ -82,23 +82,23 @@
                                             echo 'Rp 0';
                                           }
                                         ?></td>
-																				<td><?php echo $this->Mcrud->tgl_id(date('d-m-Y', strtotime($value['tanggal_pelaksanaan'])),'full'); ?></td>
+																				<td><?php echo $this->Mcrud->tgl_id(date('d-m-Y', strtotime($value['tanggal_mulai'])),'full'); ?><?php if ($value['tanggal_mulai'] != $value['tanggal_selesai']): ?> s.d. <?php echo $this->Mcrud->tgl_id(date('d-m-Y', strtotime($value['tanggal_selesai'])),'full'); endif;?></td>
 																				<td><?php echo $this->Mcrud->tgl_id(date('d-m-Y', strtotime($value['created_at'])),'full'); ?></td>
                                         <td class="text-center verifikasi-icon">
                                           <?php $this->Mcrud->status_verifikasi($value['status_verifikasi']); ?>
                                         </td>
 																				<td align="center">
-                                          <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo strtolower($this->uri->segment(3)); ?>/d/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-info btn-xs" title="Detail"><i class="fa fa-search"></i></a>
+                                          <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo strtolower($this->uri->segment(3)); ?>/d/<?php echo hashids_encrypt($value['id']); ?>" class="m-b-5 btn btn-info btn-xs" title="Detail"><i class="fa fa-search"></i></a>
                                           <?php if($level == 'keuangan'){
                                               if ($id_dipa == '00') {
                                                 if ($link3 != '00' AND $this->Mcrud->cek_lokasi($link3)) { ?>
-                                                  <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo $this->uri->segment(3); ?>/c/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-success btn-xs" title="Verifikasi"><i class="fa fa-edit"></i> Verifikasi</a>
+                                                  <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo $this->uri->segment(3); ?>/c/<?php echo hashids_encrypt($value['id']); ?>" class="m-b-5 btn btn-success btn-xs" title="Verifikasi"><i class="fa fa-edit"></i> Verifikasi</a>
                                           <?php } } else { ?>
-                                                  <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo $this->uri->segment(3); ?>/c/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-success btn-xs" title="Verifikasi"><i class="fa fa-edit"></i> Verifikasi</a>
+                                                  <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo $this->uri->segment(3); ?>/c/<?php echo hashids_encrypt($value['id']); ?>" class="m-b-5 btn btn-success btn-xs" title="Verifikasi"><i class="fa fa-edit"></i> Verifikasi</a>
                                           <?php }  } else { ?>
-																					  <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo $this->uri->segment(3); ?>/e/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-success btn-xs <?php if ($value['status_verifikasi'] == 'sudah') { echo 'disabled'; }; ?>" title="Edit"><i class="fa fa-edit"></i></a>
+																					  <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo $this->uri->segment(3); ?>/e/<?php echo hashids_encrypt($value['id']); ?>" class="m-b-5 btn btn-success btn-xs <?php if ($value['status_verifikasi'] == 'sudah') { echo 'disabled'; }; ?>" title="Edit"><i class="fa fa-edit"></i></a>
                                           <?php } if($level == 'pelaksana'){ ?>
-                                            <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo $this->uri->segment(3); ?>/h/<?php echo hashids_encrypt($value['id']); ?>" class="btn btn-danger btn-xs <?php if ($value['status_verifikasi'] == 'sudah') { echo 'disabled'; }; ?>" title="Hapus" onclick="return confirm('Anda yakin? Seluruh dokumen akan ikut terhapus.');"><i class="fa fa-trash-o"></i></a>
+                                            <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo $this->uri->segment(3); ?>/h/<?php echo hashids_encrypt($value['id']); ?>" class="m-b-5 btn btn-danger btn-xs <?php if ($value['status_verifikasi'] == 'sudah') { echo 'disabled'; }; ?>" title="Hapus" onclick="return confirm('Anda yakin? Seluruh dokumen akan ikut terhapus.');"><i class="fa fa-trash-o"></i></a>
                                           <?php } ?>
                                         </td>
                                     </tr>

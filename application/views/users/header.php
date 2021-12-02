@@ -213,122 +213,79 @@ $sub_menu3 = strtolower($this->uri->segment(3));
 						    <span>Pelaksanaan Anggaran</span>
 					   </a>
 					</li>
-					<!-- <li class="has-sub<?php //if($menu=='pengadaan' AND $sub_menu=='' or $menu=='pengadaan'){echo " active";} ?>">
+					
+					<!-- <li class="has-sub<?php //if($menu=='data_kontrak' AND $sub_menu=='' or $menu=='data_kontrak'){echo " active";} ?>">
 						<a href="">
 						    <i class="fa fa-cart-plus"></i>
-						    <span>Pengadaan</span>
+						    <span>Data Kontrak</span>
 					   </a>
 					</li> -->
+					<li class="has-sub <?php if($menu=='monev'){echo " active";} ?>">
+						<a href="javascript:;">
+							<b class="caret pull-right"></b>
+							<i class="fa fa-newspaper-o bg-gray"></i>
+							<span>Monitoring dan Evaluasi</span>
+						</a>
+						<ul class="sub-menu">
+							<li class="has-sub <?php if($sub_menu3=='t1' OR $sub_menu3=='t2' OR $sub_menu3=='t3'OR $sub_menu3=='t4'){echo " active";} ?>">
+								<a href="javascript:;">
+									<b class="caret pull-right"></b>
+									<i class="fa fa-calendar bg-gray"></i>
+									<span>Rutin</span>
+								</a>
+								<ul class="sub-menu">
+									<li <?php if($sub_menu3=='t1'){echo " class='active'";} ?>>
+										<a href="monev/v/t1">
+											<i class="fa fa-folder-open"></i> <span>Triwulan I</span>
+										</a>
+									</li>
+									<li <?php if($sub_menu3=='t2'){echo " class='active'";} ?>>
+										<a href="monev/v/t2">
+											<i class="fa fa-folder-open"></i> <span>Triwulan II</span>
+										</a>
+									</li>
+									<li <?php if($sub_menu3=='t3'){echo " class='active'";} ?>>
+										<a href="monev/v/t3">
+											<i class="fa fa-folder-open"></i> <span>Triwulan III</span>
+										</a>
+									</li>
+									<li <?php if($sub_menu3=='t4'){echo " class='active'";} ?>>
+										<a href="monev/v/t4">
+											<i class="fa fa-folder-open"></i> <span>Triwulan IV</span>
+										</a>
+									</li>
+								</ul>
+							</li>
+							<li <?php if($sub_menu3=='i'){echo " class='active'";} ?>>
+								<a href="monev/v/i">
+									<i class="fa fa-calendar-check-o"></i> <span>Insidental</span>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li class="has-sub">
+						<a href="javascript:;">
+							<b class="caret pull-right"></b>
+							<i class="fa fa-folder-open bg-gray"></i>
+							<span>Pelaporan</span>
+						</a>
+						<ul class="sub-menu">
+							<li class="has-sub">
+								<a href="https://sites.google.com/view/pelungguh/home/laporan-keuangan-kinerja" target="_blank">
+									<i class="fa fa-folder"></i>
+									<span>Laporan Keuangan dan BMN</span>
+							   </a>
+							</li>
+							<li class="has-sub">
+								<a href="https://sites.google.com/view/pelungguh/home/laporan-keuangan-kinerja" target="_blank">
+									<i class="fa fa-folder"></i>
+									<span>Laporan Kinerja</span>
+							   </a>
+							</li>
+						</ul>
+					</li>
 				<!-- </ul> -->
 
-				<!-- begin sidebar nav -->
-				<!-- <ul class="nav"> -->
-				<!-- MENU UMUM DARI SINI -->
-					<!-- <li class="nav-header"><big ">Menu Navigasi</big></li>
-					<li class="has-sub<?php if($menu=='users' AND $sub_menu=='' or $menu=='dashboard'){echo " active";} ?>">
-						<a href="dashboard.html">
-						    <i class="ion-ios-pulse-strong"></i>
-						    <span>Dashboard</span>
-					   </a>
-					</li> -->
-				<!-- MENU UMUM SAMPAI SINI -->
-				
-					<!-- MENU SUPER ADMIN -->
-					<!-- <?php if ($level=='superadmin'): ?>
-						<li class="has-sub <?php if($menu=='pengaduan'){echo " active";} ?>">
-							<a href="javascript:;">
-								<b class="caret pull-right"></b>
-								<i class="fa fa-users bg-gray"></i>
-								<span>Masyarakat</span>
-							</a>
-							<ul class="sub-menu">
-								<li <?php if($menu=='pengaduan' AND $sub_menu=='v'){echo " class='active'";} ?>>
-									<a href="pengaduan/v.html">
-										<i class="fa fa-comments"></i> <span>Pengaduan Masyarakat</span>
-									</a>
-								</li>
-							</ul>
-						</li>
-						<li class="has-sub <?php if($menu=='obh' OR ($menu=='laporan' AND $sub_menu=='v') OR $menu=='tambahobh' OR ($menu=='laporan_semester' AND $sub_menu=='v')){echo " active";} ?>">
-							<a href="javascript:;">
-								<b class="caret pull-right"></b>
-								<i class="fa fa-user bg-gray"></i>
-								<span>OBH</span>
-							</a>
-							<ul class="sub-menu">
-								<li <?php if($menu=='obh'){echo " class='active'";} ?>>
-									<a href="obh/v.html">
-										<i class="fa fa-user-circle"></i> <span>Data OBH</span>
-									</a>
-								</li>
-								<li <?php if($menu=='tambahobh'){echo " class='active'";} ?>>
-									<a href="tambahobh/v.html">
-										<i class="fa fa-user-plus"></i> <span>Registrasi OBH</span>
-									</a>
-								</li>
-								<li <?php if($menu=='laporan' AND $sub_menu=='v'){echo " class='active'";} ?>>
-									<a href="laporan/v.html">
-										<i class="fa fa-file-text"></i> <span>Laporan Kegiatan OBH</span>
-									</a>
-								</li>
-								<li <?php if($menu=='laporan_semester' AND $sub_menu=='v'){echo " class='active'";} ?>>
-									<a href="laporan_semester/v.html">
-										<i class="fa fa-calendar-check-o"></i> <span>Laporan Semester OBH</span>
-									</a>
-								</li>
-							</ul>
-						</li>
-						<li class="has-sub <?php if($menu=='file_manager'){echo " active";} ?>">
-							<a href="javascript:;">
-								<b class="caret pull-right"></b>
-								<i class="fa fa-newspaper-o bg-gray"></i>
-								<span>Info Publik</span>
-							</a>
-							<ul class="sub-menu">
-								<li <?php if($menu=='file_manager'){echo " class='active'";} ?>>
-									<a href="file_manager/v.html">
-										<i class="fa fa-folder-open"></i> <span>File Manager</span>
-									</a>
-								</li>
-							</ul>
-						</li>
-						<li class="has-sub <?php if($menu=='kategori_lap'){echo " active";} ?>">
-							<a href="javascript:;">
-								<b class="caret pull-right"></b>
-								<i class="fa fa-cogs bg-gray"></i>
-								<span>Kategori Laporan</span>
-							</a>
-							<ul class="sub-menu">
-								<li<?php if($menu=='kategori_lap' AND $sub_menu='v'){echo " class='active'";} ?>><a href="kategori_lap/v.html">Kategori Laporan</a></li>
-								<li<?php if($menu=='kategori_lap' AND $sub_menu='sub'){echo " class='active'";} ?>><a href="kategori_lap/sub.html">Sub Kategori</a></li>
-							</ul>
-						</li>
-					<?php endif; ?> -->
-					<!-- akhir sesi super admin -->
-					
-					<!-- MENU OBH -->
-					<!-- <?php if ($level=='obh'): ?>
-						<li <?php if($menu=='laporan' AND $sub_menu=='v'){echo " class='active'";} ?>>
-							<a href="laporan/v.html">
-								<div class="icon-img"><i class="fa fa-file-text"></i></div>
-							  <span>Laporan Kegiatan</span>
-							</a>
-						</li>
-						<li <?php if($menu=='laporan_semester' AND $sub_menu=='v'){echo " class='active'";} ?>>
-							<a href="laporan_semester/v.html">
-								<div class="icon-img"><i class="fa fa-calendar-check-o"></i></div>
-							  <span>Laporan Semester</span>
-							</a>
-						</li>
-						<li <?php if($menu=='permohonan_bankum' AND $sub_menu=='v'){echo " class='active'";} ?>>
-							<a href="permohonan_bankum/v.html">
-								<div class="icon-img"><i class="fa fa-envelope"></i></div>
-							  <span>Permohonan Bantuan</span>
-							</a>
-						</li>
-					<?php endif; ?> -->
-					
-					<!-- AKHIR MENU NOTARIS-->
 					<li class="nav-header"></li>
 					<li>
 						<a href="web/logout.html">

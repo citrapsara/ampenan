@@ -27,23 +27,23 @@ $id_dipa = $this->session->userdata('id_dipa');
 									<div class="progress-title">TOTAL PAGU</div>
 									<div class="text-white progress-angka"><?php echo $this->Mcrud->rupiah($total_pagu); ?></div>
 									<div class="progress">
-										<div class="progress-bar progress-bar-striped" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+										<div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
 									</div>
 								</div>
 								<div class="dashboard-progress">
 									<div class="progress-title">REALISASI ANGGARAN</div>
-									<div class="text-white progress-angka"><?php echo $this->Mcrud->rupiah($total_realisasi); ?> (<?php echo number_format($this->Mcrud->persen($total_realisasi, $total_pagu),2,",",""); ?>%)</div>
+									<div class="text-white progress-angka"><?php echo $this->Mcrud->rupiah($total_realisasi); ?></div>
 									<div class="progress">
-										<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="<?php echo $persen_realisasi ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $persen_realisasi ?>%">
+										<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<?php echo $persen_realisasi ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $persen_realisasi ?>%">
 											<span class="sr-only"></span>
 										</div>
 										</div>
 								</div>
 								<div class="dashboard-progress">
 									<div class="progress-title">SISA ANGGARAN</div>
-									<div class="text-white progress-angka"><?php echo $this->Mcrud->rupiah($sisa_anggaran); ?> (<?php echo number_format($this->Mcrud->persen($sisa_anggaran, $total_pagu),2,",",""); ?>%)</div>
+									<div class="text-white progress-angka"><?php echo $this->Mcrud->rupiah($sisa_anggaran); ?></div>
 									<div class="progress">
-										<div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" style="width: <?php echo $persen_sisa ?>%;" aria-valuenow="<?php echo $persen_sisa ?>" aria-valuemin="0" aria-valuemax="100"></div>
+										<div class="progress-bar progress-bar-danger" role="progressbar" style="width: <?php echo $persen_sisa ?>%;" aria-valuenow="<?php echo $persen_sisa ?>" aria-valuemin="0" aria-valuemax="100"></div>
 									</div>
 
 								</div>
@@ -56,18 +56,18 @@ $id_dipa = $this->session->userdata('id_dipa');
 							<div class="col-md-4">
 								<div class="dashboard-progress">
 									<div class="progress-title">TOTAL BELANJA PEGAWAI</div>
-									<div class="text-white progress-angka"><?php echo $this->Mcrud->rupiah($realisasi_bp); ?> (<?php echo number_format($this->Mcrud->persen($realisasi_bp, $pagu_jenis_belanja['pegawai']),2,",",""); ?>%)</div>
+									<div class="text-white progress-angka"><?php echo $this->Mcrud->rupiah($realisasi_bp); ?></div>
 									<div class="progress">
-										<div class="progress-bar progress-bar-bp progress-bar-striped" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+										<div class="progress-bar progress-bar-bp" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
 									</div>
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="dashboard-progress">
 									<div class="progress-title">TOTAL BELANJA BARANG</div>
-									<div class="text-white progress-angka"><?php echo $this->Mcrud->rupiah($realisasi_bb); ?> (<?php echo number_format($this->Mcrud->persen($realisasi_bb, $pagu_jenis_belanja['barang']),2,",",""); ?>%)</div>
+									<div class="text-white progress-angka"><?php echo $this->Mcrud->rupiah($realisasi_bb); ?></div>
 									<div class="progress">
-										<div class="progress-bar progress-bar-bb progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+										<div class="progress-bar progress-bar-bb" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
 											<span class="sr-only"></span>
 										</div>
 										</div>
@@ -76,9 +76,9 @@ $id_dipa = $this->session->userdata('id_dipa');
 							<div class="col-md-4">
 								<div class="dashboard-progress">
 									<div class="progress-title">TOTAL BELANJA MODAL</div>
-									<div class="text-white progress-angka"><?php echo $this->Mcrud->rupiah($realisasi_bm); ?> (<?php echo number_format($this->Mcrud->persen($realisasi_bm, $pagu_jenis_belanja['modal']),2,",",""); ?>%)</div>
+									<div class="text-white progress-angka"><?php echo $this->Mcrud->rupiah($realisasi_bm); ?></div>
 									<div class="progress">
-										<div class="progress-bar progress-bar-bm progress-bar-striped" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+										<div class="progress-bar progress-bar-bm" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
 									</div>
 
 								</div>
@@ -118,6 +118,35 @@ $id_dipa = $this->session->userdata('id_dipa');
 					</div>
 				</div>
 			</div>
+			<!-- <div class="col-md-3">
+				<div class="realisasi-card card">
+					<div class="card-body">
+						<div class="dashboard-progress">
+							<div class="progress-title">TOTAL BELANJA PEGAWAI</div>
+							<div class="text-white progress-angka"><?php echo $this->Mcrud->rupiah($realisasi_bp); ?></div>
+							<div class="progress">
+								<div class="progress-bar progress-bar-bp" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
+						</div>
+						<div class="dashboard-progress">
+							<div class="progress-title">TOTAL BELANJA BARANG</div>
+							<div class="text-white progress-angka"><?php echo $this->Mcrud->rupiah($realisasi_bb); ?></div>
+							<div class="progress">
+								<div class="progress-bar progress-bar-bb" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+									<span class="sr-only"></span>
+								</div>
+								</div>
+						</div>
+						<div class="dashboard-progress">
+							<div class="progress-title">TOTAL BELANJA MODAL</div>
+							<div class="text-white progress-angka"><?php echo $this->Mcrud->rupiah($realisasi_bm); ?></div>
+							<div class="progress">
+								<div class="progress-bar progress-bar-bm" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div> -->
 		</div>
 <!-- end #content -->
 
@@ -138,14 +167,13 @@ var options = {
             datalabels: {
                 formatter: (value, ctx) => {
                 
-                //   let sum = 0;
-                //   let dataArr = ctx.chart.data.datasets[0].data;
-                // //   dataArr.map(data => {
-                // //       sum += data;
-                // //   });
-				  let sum = total_realisasi + sisa_anggaran;
+                  let sum = 0;
+                  let dataArr = ctx.chart.data.datasets[0].data;
+                  dataArr.map(data => {
+                      sum += data;
+                  });
                   let percentage = (value*100 / sum).toFixed(2)+"%";
-				  if(value/sum * 100 <= 0){ percentage = "";}
+				  if(percentage == "0.00%"){ percentage = "";}
                   return percentage;
 
               
@@ -161,7 +189,7 @@ const chart_penyerapan = new Chart(ctx, {
         labels: ['Penyerapan Anggaran', 'Sisa Anggaran'],
         datasets: [{
             // label: '# of Votes',
-            data: [total_realisasi, sisa_anggaran < 0 ? 0 : sisa_anggaran],
+            data: [total_realisasi, sisa_anggaran],
             backgroundColor: [
                 'rgba(0, 172, 172, 1)',
                 'rgba(234, 66, 114, 1)'
@@ -184,11 +212,8 @@ const chart_penyerapan = new Chart(ctx, {
 let data_realisasi_pegawai = <?php echo json_encode($realisasi_rpd['pegawai']);  ?>;
 let data_rpd_pegawai = <?php echo json_encode($grafik_rpd['pegawai']);  ?>;
 let data_deviasi_pegawai = [];
-let persen_deviasi_pegawai = [];
 data_realisasi_pegawai.forEach((val, key)=>{
 	data_deviasi_pegawai[key] = data_realisasi_pegawai[key] - data_rpd_pegawai[key];
-	// data_deviasi_pegawai[key]["persen"] = data_deviasi_pegawai[key] / data_rpd_pegawai[key] * 100;
-	persen_deviasi_pegawai[key] = (data_realisasi_pegawai[key] - data_rpd_pegawai[key]) / data_rpd_pegawai[key] * 100;
 });
 
 const data_chart_pegawai = {
@@ -269,9 +294,7 @@ var line_chart_penyerapan_pegawai = new Chart(ctxrpd, {
 				anchor: 'end',
 				align: 'bottom',
 				formatter: (value, ctx) => {
-					// return 'Rp ' +  (value).toLocaleString().replace(/,/g,".");//toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-					// return '' +  value;
-					return persen_deviasi_pegawai[ctx.dataIndex].toFixed(2) + " %";
+					return 'Rp ' +  (value).toLocaleString().replace(/,/g,".");//toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 				},
 				color: 'white',
 				display: false
@@ -283,13 +306,8 @@ var line_chart_penyerapan_pegawai = new Chart(ctxrpd, {
 let data_realisasi_barang = <?php echo json_encode($realisasi_rpd['barang']);  ?>;
 let data_rpd_barang = <?php echo json_encode($grafik_rpd['barang']);  ?>;
 let data_deviasi_barang = [];
-let persen_deviasi_barang = [];
 data_realisasi_barang.forEach((val, key)=>{
 	data_deviasi_barang[key] = data_realisasi_barang[key] - data_rpd_barang[key];
-	// data_deviasi_barang[key]["persen"] = (data_realisasi_barang[key] - data_rpd_barang[key]) / data_rpd_barang[key] * 100;
-	// data_deviasi_barang[key]['haha'] = 88;
-	// data_deviasi_barang[key].hehe = 77;
-	persen_deviasi_barang[key] = (data_realisasi_barang[key] - data_rpd_barang[key]) / data_rpd_barang[key] * 100;
 });
 
 const data_chart_barang = {
@@ -370,7 +388,7 @@ var line_chart_penyerapan_barang = new Chart(ctxrpd, {
 				anchor: 'end',
 				align: 'bottom',
 				formatter: (value, ctx) => {
-					return persen_deviasi_barang[ctx.dataIndex].toFixed(2) + " %";
+					return 'Rp ' +  (value).toLocaleString().replace(/,/g,".");//toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 				},
 				color: 'white',
 				display: false
@@ -382,10 +400,8 @@ var line_chart_penyerapan_barang = new Chart(ctxrpd, {
 let data_realisasi_modal = <?php echo json_encode($realisasi_rpd['modal']);  ?>;
 let data_rpd_modal = <?php echo json_encode($grafik_rpd['modal']);  ?>;
 let data_deviasi_modal = [];
-let persen_deviasi_modal = [];
 data_realisasi_modal.forEach((val, key)=>{
 	data_deviasi_modal[key] = data_realisasi_modal[key] - data_rpd_modal[key];
-	persen_deviasi_modal[key] = (data_realisasi_modal[key] - data_rpd_modal[key]) / data_rpd_modal[key] * 100;
 });
 
 const data_chart_modal = {
@@ -466,8 +482,7 @@ var line_chart_penyerapan_modal = new Chart(ctxrpd, {
 				anchor: 'end',
 				align: 'bottom',
 				formatter: (value, ctx) => {
-					// return 'Rp ' +  (value).toLocaleString().replace(/,/g,".");//toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-					return persen_deviasi_modal[ctx.dataIndex].toFixed(2) + " %";
+					return 'Rp ' +  (value).toLocaleString().replace(/,/g,".");//toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 				},
 				color: 'white',
 				display: false

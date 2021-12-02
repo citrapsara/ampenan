@@ -20,6 +20,7 @@
                 echo $this->session->flashdata('msg');
                 $id_dipa = $this->session->userdata('id_dipa');
                 $level = $this->session->userdata('level');
+                $username = $this->session->userdata('username');
                 $link3 = $this->uri->segment(3);
                 $link4 = $this->uri->segment(4);
 
@@ -53,9 +54,9 @@
                                 <div class="col-md-6 text-right">
                                   <?php if ($level == 'pelaksana'): ?>
                                     <div id="disabled-button-wrapper" data-title="Disbursement Plan hanya dapat diinput pada waktu yang telah ditentukan">
-                                      <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo $this->uri->segment(3); ?>/t.html" class="btn btn-primary <?php if (count($rpd_dipa)!=0) { echo 'disabled'; } ?>"><i class="fa fa-plus-circle"></i> Input Disbursement Plan</a>
+                                      <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo $this->uri->segment(3); ?>/t.html" class="btn btn-primary <?php if (count($rpd)!=0) { echo 'disabled'; } ?>"><i class="fa fa-plus-circle"></i> Input Disbursement Plan</a>
                                     </div>
-                                    <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo $this->uri->segment(3); ?>/r.html" class="btn btn-primary <?php if (count($rpd_dipa)==0) { echo 'disabled'; } ?>"><i class="fa fa-pencil"></i> Revisi</a>
+                                    <a href="<?php echo strtolower($this->uri->segment(1)); ?>/<?php echo strtolower($this->uri->segment(2)); ?>/<?php echo $this->uri->segment(3); ?>/r.html" class="btn btn-primary <?php if (count($rpd)==0) { echo 'disabled'; } ?>"><i class="fa fa-pencil"></i> Revisi</a>
                                   <?php endif; ?>
                                 </div>
                             </div>

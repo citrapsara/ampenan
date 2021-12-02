@@ -20,10 +20,14 @@ foreach ($notif as $key => $value):
       }
   ?>
   <li class="media">
-      <a href="<?php echo $link; ?>" id="notif_click">
+      <a href="<?php echo $link; ?>" id="notif_click" class="<?php if($value['status'] == 'belum dibaca') echo "unread" ?>">
           <div class="media-left"><img src="<?php echo $foto; ?>" class="media-object" alt=""></div>
           <div class="media-body">
-              <h6 class="media-heading"><?php echo $nama . " " . $nama_dipa; ?></h6>
+              <?php if ($pengirim['id_dipa'] == '00'): ?>
+                <h6 class="media-heading"><?php echo $nama; ?></h6>
+              <?php else: ?>
+                <h6 class="media-heading"><?php echo $nama . " " . $nama_dipa; ?></h6>
+              <?php endif; ?>
               <p><?php echo $pesan; ?></p>
               <div class="text-muted f-s-11"><?php echo $waktu; ?></div>
           </div>

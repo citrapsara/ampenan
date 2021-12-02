@@ -216,6 +216,18 @@ class Guzzle_model extends CI_model {
         $result = json_decode($response->getBody()->getContents(), true);
         return $result;
     }
+    public function getTotalPaguJenisBelanja()
+    {
+        $response = $this->_client->request('GET', 'ApiDipaPusdatin/TotalPaguJenisBelanja');
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+    public function getTotalPaguJenisBelanjabyKodeSatker($id)
+    {
+        $response = $this->_client->request('GET', 'ApiDipaPusdatin/TotalPaguJenisBelanjaByKodeSatker/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
     public function getTotalRealisasi()
     {
         $response = $this->_client->request('GET', 'ApiRealisasiMonsakti/TotalRealisasi');
@@ -597,6 +609,59 @@ class Guzzle_model extends CI_model {
         $result = json_decode($response->getBody()->getContents(), true);
         return $result;
     }
+    
+    // Model Monev
+    public function getAllMonev()
+    {
+        $response = $this->_client->request('GET', 'Monev');
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
 
+    public function getMonevById($id)
+    {
+        $response = $this->_client->request('GET', 'Monev/detail/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
 
+    public function getMonevByDipaId($id)
+    {
+        $response = $this->_client->request('GET', 'Monev/getDetailByKodeSatker/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function getMonevByDipaIdJenisMonev($id, $jenis)
+    {
+        $response = $this->_client->request('GET', 'Monev/getDetailByKodeSatkerByJenisRekomendasi/' . $id . '/' . $jenis);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function createMonev($data)
+    {
+        $response = $this->_client->request('POST', 'Monev/create', [
+            'json' => $data
+        ]);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function updateMonev($id, $data)
+    {
+        // var_dump($data); exit;
+        $response = $this->_client->request('PUT', 'Monev/update/' . $id, [
+            'json' => $data
+        ]);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function deleteMonev($id)
+    {
+        $response = $this->_client->request('DELETE', 'Monev/delete/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
 }

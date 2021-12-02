@@ -48,14 +48,14 @@ class Rpd extends CI_Controller {
 		}
 
 		if ($aksi == 't') {
-			if ($level!='perencana' AND $level!='pelaksana') {redirect('404');}
+			if ($level!='pelaksana') {redirect('404');}
 			$p = "revisi";
 			$data['judul_web'] 	  = "Input Disbursement Plan";
 			if (count($data['rpd_dipa']) != 0) {
 				redirect('404_content');
 			}
 		} elseif ($aksi == 'r') {
-			if ($level!='perencana' AND $level!='pelaksana') {redirect('404');}
+			if ($level!='pelaksana') {redirect('404');}
 			$p = "revisi";
 			$data['judul_web'] 	  = "Revisi Rencana Penarikan Dana";
 			
