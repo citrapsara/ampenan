@@ -18,13 +18,6 @@ class Data_dukung extends CI_Controller {
 			redirect('web/login');
 		}
 
-		// $data['user']  			  = $this->Mcrud->get_users_by_un($ceks);
-
-		// if ($level!='superadmin') {
-		// 	redirect('404');
-		// }
-
-
 		$data['folder_data_dukung'] = $this->Guzzle_model->getFolderDataDukungById($id_folder_data_dukung);
 		$data['judul_web'] 	  = $data['folder_data_dukung']['uraian'];
 

@@ -203,6 +203,54 @@ class Guzzle_model extends CI_model {
         return $result;
     }
 
+    // Model Ankabut
+    public function getAllAnkabut()
+    {
+        $response = $this->_client->request('GET', 'Ankabut');
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function getAnkabutByDipaId($id)
+    {
+        $response = $this->_client->request('GET', 'Ankabut/GetDetailByDipa/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function getAnkabutById($id)
+    {
+        $response = $this->_client->request('GET', 'Ankabut/detail/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function createAnkabut($data)
+    {
+        $response = $this->_client->request('POST', 'Ankabut/create', [
+            'json' => $data
+        ]);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function deleteAnkabut($id)
+    {
+        $response = $this->_client->request('DELETE', 'Ankabut/delete/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function updateAnkabut($id, $data)
+    {
+        // var_dump($data); exit;
+        $response = $this->_client->request('PUT', 'Ankabut/update/' . $id, [
+            'json' => $data
+        ]);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
     // Model Pagu dan Realisasi 
     public function getTotalPagu()
     {

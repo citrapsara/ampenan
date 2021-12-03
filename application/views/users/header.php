@@ -164,7 +164,7 @@ $sub_menu3 = strtolower($this->uri->segment(3));
 						    <span>Dashboard</span>
 					   </a>
 					</li>
-					<li class="has-sub <?php if($menu=='perencanaan' OR ($menu=='dipa' AND $sub_menu=='v') OR ($menu=='folder_data_dukung' AND $sub_menu=='v') OR ($menu=='data_dukung' AND $sub_menu=='v') OR ($menu=='rpd' AND $sub_menu=='v')){echo " active";} ?>">
+					<li class="has-sub <?php if($menu=='perencanaan' OR ($menu=='dipa' AND $sub_menu=='v') OR ($menu=='folder_data_dukung' AND $sub_menu=='v') OR ($menu=='data_dukung' AND $sub_menu=='v') OR ($menu=='rpd' AND $sub_menu=='v') OR ($menu=='ankabut' AND $sub_menu=='v')){echo " active";} ?>">
 						<a href="javascript:;">
 							<b class="caret pull-right"></b>
 							<i class="fa fa-calculator bg-gray"></i>
@@ -181,18 +181,23 @@ $sub_menu3 = strtolower($this->uri->segment(3));
 									<i class="fa fa-pencil-square"></i> <span>Usulan Revisi DIPA</span>
 								</a>
 							</li> -->
-							<li class="has-sub <?php if($menu=='data_dukung' or $menu=='folder_data_dukung'){echo " active";} ?>">
+							<li class="has-sub <?php if($menu=='data_dukung' or $menu=='folder_data_dukung' or $menu=='ankabut'){echo " active";} ?>">
 								<a href="javascript:;">
 									<b class="caret pull-right"></b>
 									<i class="fa fa-calculator bg-gray"></i>
 									<span>Penyusunan Anggaran</span>
 								</a>
 								<ul class="sub-menu">
+									<li <?php if($menu=='ankabut'){echo " class='active'";} ?>>
+										<a href="ankabut">
+											<i class="fa fa-file"></i> <span>Analisa Kebutuhan Anggaran</span>
+										</a>
+									</li>
 									<li <?php if($menu=='data_dukung' or $menu=='folder_data_dukung'){echo " class='active'";} ?>>
 										<a href="folder_data_dukung">
 											<i class="fa fa-folder-open"></i> <span>Data Dukung</span>
 										</a>
-									</li>>
+									</li>
 								</ul>
 							</li>
 							<li <?php if($menu=='rpd' AND $sub_menu=='v'){echo " class='active'";} ?>>
@@ -230,35 +235,35 @@ $sub_menu3 = strtolower($this->uri->segment(3));
 							<li class="has-sub <?php if($sub_menu3=='t1' OR $sub_menu3=='t2' OR $sub_menu3=='t3'OR $sub_menu3=='t4'){echo " active";} ?>">
 								<a href="javascript:;">
 									<b class="caret pull-right"></b>
-									<i class="fa fa-calendar bg-gray"></i>
+									<i class="fa fa-calendar-check-o bg-gray"></i>
 									<span>Rutin</span>
 								</a>
 								<ul class="sub-menu">
 									<li <?php if($sub_menu3=='t1'){echo " class='active'";} ?>>
 										<a href="monev/v/t1">
-											<i class="fa fa-folder-open"></i> <span>Triwulan I</span>
+											<i class="fa fa-commenting"></i> <span>Triwulan I</span>
 										</a>
 									</li>
 									<li <?php if($sub_menu3=='t2'){echo " class='active'";} ?>>
 										<a href="monev/v/t2">
-											<i class="fa fa-folder-open"></i> <span>Triwulan II</span>
+											<i class="fa fa-commenting"></i> <span>Triwulan II</span>
 										</a>
 									</li>
 									<li <?php if($sub_menu3=='t3'){echo " class='active'";} ?>>
 										<a href="monev/v/t3">
-											<i class="fa fa-folder-open"></i> <span>Triwulan III</span>
+											<i class="fa fa-commenting"></i> <span>Triwulan III</span>
 										</a>
 									</li>
 									<li <?php if($sub_menu3=='t4'){echo " class='active'";} ?>>
 										<a href="monev/v/t4">
-											<i class="fa fa-folder-open"></i> <span>Triwulan IV</span>
+											<i class="fa fa-commenting"></i> <span>Triwulan IV</span>
 										</a>
 									</li>
 								</ul>
 							</li>
 							<li <?php if($sub_menu3=='i'){echo " class='active'";} ?>>
 								<a href="monev/v/i">
-									<i class="fa fa-calendar-check-o"></i> <span>Insidental</span>
+									<i class="fa fa-calendar"></i> <span>Insidental</span>
 								</a>
 							</li>
 						</ul>

@@ -17,9 +17,16 @@
 				<center>
 
 					<form class="login100-form validate-form" action="" method="post">
-						<span class="login100-form-title" style="padding:40px;">
-							Silahkan Login
+						<span class="login100-form-title" style="padding-bottom:0px;font-size: 53px;
+   						color: #00acac;">
+							AMPENAN
 						</span>
+						<span class="login100-form-title" style="padding-bottom:40px;font-size:16px;">
+							APLIKASI MANAJEMEN PROGRAM KEGIATAN DAN ANGGARAN
+						</span>
+						<!-- <span class="login100-form-title" style="padding-bottom:40px;font-size: 19px;">
+							PROGRAM DAN ANGGARAN
+						</span> -->
 						<?php
 							echo $this->session->flashdata('msg');
 						?>
