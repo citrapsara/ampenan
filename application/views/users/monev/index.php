@@ -58,14 +58,14 @@
                                 </div>
                                 <?php endif; ?>
                               <div class="col-md-3">
-                              <?php if ($link3 == 'i'): ?>
+                              <?php //if ($link3 == 'i'): ?>
                                 <select class="form-control default-select2" id="" onchange="window.location.href='<?php echo $link1; ?>/<?php echo $link2; ?>/<?php echo $link3; ?>/<?php echo $id_dipa_select; ?>/'+this.value;">
                                     <option value="">- Pilih Monev -</option>
                                     <?php foreach($monev_list as $baris):?>
                                     <option value="<?php echo hashids_encrypt($baris['id']); ?>" <?php if(hashids_encrypt($baris['id'])==$link5){echo "selected";} ?>><?php echo ucwords($baris['judul']); ?></option>
                                     <?php endforeach; ?>
                                 </select>
-                                <?php endif; ?>
+                                <?php //endif; ?>
                               </div>
                               <?php if ($id_dipa != '00'): ?>
                                 <div class="col-md-3"></div>

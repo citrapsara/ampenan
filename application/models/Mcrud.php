@@ -82,7 +82,7 @@ class Mcrud extends CI_Model {
 		// }else {
 		// 	$data = "$nama_web $ket_web";
 		// }
-		$data = '';
+		$data = 'AMPENAN';
 		return $data;
 	}
 

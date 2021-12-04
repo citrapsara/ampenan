@@ -71,13 +71,13 @@ class Monev extends CI_Controller {
 		if ($id_dipa != '') {
 			$data['judul_tabel_dipa'] = $arraydipa_id_nama[$id_dipa];
 			$data['monev_list'] = $this->Guzzle_model->getMonevByDipaIdJenisMonev($id_dipa, $jenis_monev);
-			if ($jenis != 'i') {
-				$data['monev'] = $data['monev_list'][0];
-			} else {
+			// if ($jenis != 'i') {
+			// 	$data['monev'] = $data['monev_list'][0];
+			// } else {
 				if ($id != '') {
 					$data['monev'] = $this->Guzzle_model->getMonevById($id);
 				}
-			}
+			// }
 		}
 		
 		if ($aksi == 't') {
@@ -140,7 +140,7 @@ class Monev extends CI_Controller {
 						return ($key['role'] == 'kpa');
 					});
 
-					if ($kpa == '') {
+					if ($kpa == null) {
 						$id_kpa = 6;
 					} else {
 						foreach ($kpa as $key => $value) {
@@ -245,7 +245,7 @@ class Monev extends CI_Controller {
 						return ($key['role'] == 'kpa');
 					});
 
-					if ($kpa == '') {
+					if ($kpa == null) {
 						$id_kpa = 6;
 					} else {
 						foreach ($kpa as $key => $value) {
