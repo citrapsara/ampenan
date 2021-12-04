@@ -48,6 +48,29 @@ html {
   background-position: left;
 }
 
+.bg-img2 {
+  background-image: url(../images/img-login2.png);
+  position: absolute;
+  bottom: 10px;
+  left: 61px;
+  right: 0;
+  top: 0;
+  background-size: 54%;
+  background-repeat: no-repeat;
+  background-position: left;
+}
+.bg-img1 {
+  background-image: url(../images/img-login1.png);
+  position: absolute;
+  bottom: 10px;
+  left: 100px;
+  right: 0;
+  top: 0;
+  background-size: 48%;
+  background-repeat: no-repeat;
+  background-position: left;
+}
+
 /*---------------------------------------------*/
 a {
   font-family: Poppins-Regular;
@@ -203,7 +226,7 @@ iframe {
 
 .container-login100 {
   width: 100%;
-  min-height: 94vh;
+  min-height: 90vh;
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
@@ -233,7 +256,7 @@ iframe {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding: 80px 60px 20px 30px;
+  padding: 45px 45px 20px 30px;
 }
 
 /*------------------------------------------------------------------
@@ -381,7 +404,8 @@ a.img-attribute {
   width: 100%;
   height: 50px;
   border-radius: 25px;
-  background: #00acac;
+  /* background: #00acac; */
+  background: #144578;
   /* #7cb37a; */
   display: -webkit-box;
   display: -webkit-flex;
@@ -399,7 +423,9 @@ a.img-attribute {
 }
 
 .login100-form-btn:hover {
-  background: #008181;
+  /* background: #008181; */
+  background: #282964;
+
   /* #669966; */
 }
 

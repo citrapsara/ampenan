@@ -314,16 +314,11 @@ let data_deviasi_barang = <?php echo json_encode($data_deviasi['barang']);  ?>;
 let data_realisasi_modal = <?php echo json_encode($realisasi_rpd['modal']);  ?>;
 let data_rpd_modal = <?php echo json_encode($grafik_rpd['modal']);  ?>;
 let data_deviasi_modal = <?php echo json_encode($data_deviasi['modal']);  ?>;
-var total_pagu = <?php echo json_encode($pagu_jenis_belanja);  ?>;
 
 dipa_id.forEach(myFunction);
 
 function myFunction(value, key) {
 var kode_satker = value;
-var pagu_pegawai = total_pagu[kode_satker]['pegawai'];
-var pagu_barang = total_pagu[kode_satker]['barang'];
-var pagu_modal = total_pagu[kode_satker]['modal'];
-
 const data_chart_pegawai = {
   labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
   datasets: [
@@ -404,8 +399,7 @@ var line_chart_penyerapan_pegawai = new Chart(ctxrpd, {
 				align: 'bottom',
 				formatter: (val, ctx) => {
 					// return 'Rp ' +  (val).toLocaleString().replace(/,/g,".");//toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-					// return ((data_realisasi_pegawai[kode_satker][ctx.dataIndex] - data_rpd_pegawai[kode_satker][ctx.dataIndex]) / data_rpd_pegawai[kode_satker][ctx.dataIndex] * 100).toFixed(2) + " %";
-					return ((data_realisasi_pegawai[kode_satker][ctx.dataIndex] - data_rpd_pegawai[kode_satker][ctx.dataIndex]) / pagu_pegawai * 100).toFixed(2) + " %";
+					return ((data_realisasi_pegawai[kode_satker][ctx.dataIndex] - data_rpd_pegawai[kode_satker][ctx.dataIndex]) / data_rpd_pegawai[kode_satker][ctx.dataIndex] * 100).toFixed(2) + " %";
 				},
 				color: 'white',
 				display: false
@@ -493,8 +487,7 @@ var line_chart_penyerapan_barang = new Chart(ctxrpd, {
 				align: 'bottom',
 				formatter: (val, ctx) => {
 					// return 'Rp ' +  (val).toLocaleString().replace(/,/g,".");//toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-					// return ((data_realisasi_barang[kode_satker][ctx.dataIndex] - data_rpd_barang[kode_satker][ctx.dataIndex]) / data_rpd_barang[kode_satker][ctx.dataIndex] * 100).toFixed(2) + " %";
-					return ((data_realisasi_barang[kode_satker][ctx.dataIndex] - data_rpd_barang[kode_satker][ctx.dataIndex]) / pagu_barang * 100).toFixed(2) + " %";
+					return ((data_realisasi_barang[kode_satker][ctx.dataIndex] - data_rpd_barang[kode_satker][ctx.dataIndex]) / data_rpd_barang[kode_satker][ctx.dataIndex] * 100).toFixed(2) + " %";
 					// return kode_satker ;
 				},
 				color: 'white',
@@ -583,8 +576,7 @@ var line_chart_penyerapan_modal = new Chart(ctxrpd, {
 				align: 'bottom',
 				formatter: (val, ctx) => {
 					// return 'Rp ' +  (val).toLocaleString().replace(/,/g,".");//toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-					// return ((data_realisasi_modal[kode_satker][ctx.dataIndex] - data_rpd_modal[kode_satker][ctx.dataIndex]) / data_rpd_modal[kode_satker][ctx.dataIndex] * 100).toFixed(2) + " %";
-					return ((data_realisasi_modal[kode_satker][ctx.dataIndex] - data_rpd_modal[kode_satker][ctx.dataIndex]) / pagu_modal * 100).toFixed(2) + " %";
+					return ((data_realisasi_modal[kode_satker][ctx.dataIndex] - data_rpd_modal[kode_satker][ctx.dataIndex]) / data_rpd_modal[kode_satker][ctx.dataIndex] * 100).toFixed(2) + " %";
 
 				},
 				color: 'white',

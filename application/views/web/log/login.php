@@ -1,6 +1,9 @@
 <section dir="ltr" id="home">
 <div class="limiter" >
-	<div class="bg-img"></div>
+	<!-- <div class="bg-img"></div> -->
+	<!-- <div class="bg-img2"></div> -->
+	<div class="bg-img1"></div>
+
 	<div class="container-login100">
 		<div class="wrap-login100">
 			<div class="col-lg-8">
@@ -15,13 +18,15 @@
 			</div>
 			<div class="col-lg-4">
 				<center>
+					<img src="assets/login/images/logo_ampenan.png" alt="IMG" style="width: 40%;">
 
 					<form class="login100-form validate-form" action="" method="post">
-						<span class="login100-form-title" style="padding-bottom:0px;font-size: 53px;
+						<!-- <span class="login100-form-title" style="padding-bottom:0px;font-size: 53px;
    						color: #00acac;">
 							AMPENAN
-						</span>
-						<span class="login100-form-title" style="padding-bottom:40px;font-size:16px;">
+						</span> -->
+
+						<span class="login100-form-title" style="padding:7px 13px 40px;font-size:15px;">
 							APLIKASI MANAJEMEN PROGRAM KEGIATAN DAN ANGGARAN
 						</span>
 						<!-- <span class="login100-form-title" style="padding-bottom:40px;font-size: 19px;">

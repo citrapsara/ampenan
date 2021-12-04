@@ -183,14 +183,12 @@ const chart_penyerapan = new Chart(ctx, {
 <script>
 let data_realisasi_pegawai = <?php echo json_encode($realisasi_rpd['pegawai']);  ?>;
 let data_rpd_pegawai = <?php echo json_encode($grafik_rpd['pegawai']);  ?>;
-let pagu_pegawai = <?php echo json_encode($pagu_jenis_belanja['pegawai']);  ?>;
 let data_deviasi_pegawai = [];
 let persen_deviasi_pegawai = [];
 data_realisasi_pegawai.forEach((val, key)=>{
 	data_deviasi_pegawai[key] = data_realisasi_pegawai[key] - data_rpd_pegawai[key];
 	// data_deviasi_pegawai[key]["persen"] = data_deviasi_pegawai[key] / data_rpd_pegawai[key] * 100;
-	// persen_deviasi_pegawai[key] = (data_realisasi_pegawai[key] - data_rpd_pegawai[key]) / data_rpd_pegawai[key] * 100;
-	persen_deviasi_pegawai[key] = (data_realisasi_pegawai[key] - data_rpd_pegawai[key]) / pagu_pegawai * 100;
+	persen_deviasi_pegawai[key] = (data_realisasi_pegawai[key] - data_rpd_pegawai[key]) / data_rpd_pegawai[key] * 100;
 });
 
 const data_chart_pegawai = {
@@ -284,7 +282,6 @@ var line_chart_penyerapan_pegawai = new Chart(ctxrpd, {
 
 let data_realisasi_barang = <?php echo json_encode($realisasi_rpd['barang']);  ?>;
 let data_rpd_barang = <?php echo json_encode($grafik_rpd['barang']);  ?>;
-let pagu_barang = <?php echo json_encode($pagu_jenis_belanja['barang']);  ?>;
 let data_deviasi_barang = [];
 let persen_deviasi_barang = [];
 data_realisasi_barang.forEach((val, key)=>{
@@ -292,8 +289,7 @@ data_realisasi_barang.forEach((val, key)=>{
 	// data_deviasi_barang[key]["persen"] = (data_realisasi_barang[key] - data_rpd_barang[key]) / data_rpd_barang[key] * 100;
 	// data_deviasi_barang[key]['haha'] = 88;
 	// data_deviasi_barang[key].hehe = 77;
-	// persen_deviasi_barang[key] = (data_realisasi_barang[key] - data_rpd_barang[key]) / data_rpd_barang[key] * 100;
-	persen_deviasi_barang[key] = (data_realisasi_barang[key] - data_rpd_barang[key]) / pagu_barang * 100;
+	persen_deviasi_barang[key] = (data_realisasi_barang[key] - data_rpd_barang[key]) / data_rpd_barang[key] * 100;
 });
 
 const data_chart_barang = {
@@ -385,13 +381,11 @@ var line_chart_penyerapan_barang = new Chart(ctxrpd, {
 
 let data_realisasi_modal = <?php echo json_encode($realisasi_rpd['modal']);  ?>;
 let data_rpd_modal = <?php echo json_encode($grafik_rpd['modal']);  ?>;
-let pagu_modal = <?php echo json_encode($pagu_jenis_belanja['modal']);  ?>;
 let data_deviasi_modal = [];
 let persen_deviasi_modal = [];
 data_realisasi_modal.forEach((val, key)=>{
 	data_deviasi_modal[key] = data_realisasi_modal[key] - data_rpd_modal[key];
-	// persen_deviasi_modal[key] = (data_realisasi_modal[key] - data_rpd_modal[key]) / data_rpd_modal[key] * 100;
-	persen_deviasi_modal[key] = (data_realisasi_modal[key] - data_rpd_modal[key]) / pagu_modal * 100;
+	persen_deviasi_modal[key] = (data_realisasi_modal[key] - data_rpd_modal[key]) / data_rpd_modal[key] * 100;
 });
 
 const data_chart_modal = {
