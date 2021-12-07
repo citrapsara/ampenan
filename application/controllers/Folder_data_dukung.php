@@ -64,6 +64,12 @@ class Folder_data_dukung extends CI_Controller {
 		} elseif ($aksi == 'h') {
 			$cek_data = $this->Guzzle_model->getFolderDataDukungById($id);
 			if (count($cek_data) != 0) {
+				$cek_data_dukung = $this->Guzzle_model->getDataDukungByFolderId($id);
+				foreach ($cek_data_dukung as $key => $value) {
+					if ($value['url_file'] != '') {
+						unlink($value['url_file']);
+					}
+				}
 				$this->Guzzle_model->deleteFolderDataDukung($id);
 				$this->session->set_flashdata('msg',
 					'

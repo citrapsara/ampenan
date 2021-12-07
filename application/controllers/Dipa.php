@@ -39,6 +39,14 @@ class Dipa extends CI_Controller {
 			if ($data['dipa']['id']=='') {redirect('404');}
 		} elseif ($aksi == 'h') {
 			if ($level!='pelaksana') {redirect('404');}
+			$cek_data = $this->Guzzle_model->getDokumenDipaById($id);
+			if ($cek_data['url_file_dipa'] != '') {
+				unlink($cek_data['url_file_dipa']);
+			}
+
+			if ($cek_data['url_file_lkk'] != '') {
+				unlink($cek_data['url_file_lkk']);
+			}
 			$this->Guzzle_model->deleteDokumenDipa($id);
 			$this->session->set_flashdata('msg',
 				'
@@ -51,6 +59,7 @@ class Dipa extends CI_Controller {
 				<br>'
 			);
 			redirect("dipa/v");
+
 		}else{
 			$p = "index";
 			$data['judul_web'] 	  = "DIPA";

@@ -32,6 +32,10 @@ class Data_dukung extends CI_Controller {
 			$data['data_dukung'] = $this->Guzzle_model->getDataDukungById($id);
 			if ($data['data_dukung']['id']=='') {redirect('404');}
 		} elseif ($aksi == 'h') {
+			$cek_data = $this->Guzzle_model-> getDataDukungById($id);
+			if ($cek_data['url_file'] != '') {
+				unlink($cek_data['url_file']);
+			}
 			$this->Guzzle_model->deleteDataDukung($id);
 			$this->session->set_flashdata('msg',
 				'

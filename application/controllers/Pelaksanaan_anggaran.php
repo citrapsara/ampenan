@@ -117,6 +117,9 @@ class Pelaksanaan_anggaran extends CI_Controller {
 		} elseif ($aksi == 'h') {
 			$cek_data = $this->Guzzle_model->getPelaksanaanAnggaranById($id);
 			if (count($cek_data) != 0 AND $cek_data['status_verifikasi'] != 'sudah') {
+				if ($cek_data['url_file'] != '') {
+					unlink($cek_data['url_file']);
+				}
 				$this->Guzzle_model->deletePelaksanaanAnggaran($id);
 				$this->session->set_flashdata('msg',
 					'

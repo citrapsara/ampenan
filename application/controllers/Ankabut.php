@@ -63,6 +63,9 @@ class Ankabut extends CI_Controller {
 		} elseif ($aksi == 'h') {
 			$cek_data = $this->Guzzle_model->getAnkabutById($id);
 			if (count($cek_data) != 0) {
+				if ($cek_data['url_file'] != '') {
+					unlink($cek_data['url_file']);
+				}
 				$this->Guzzle_model->deleteAnkabut($id);
 				$this->session->set_flashdata('msg',
 					'
@@ -75,6 +78,7 @@ class Ankabut extends CI_Controller {
 					<br>'
 				);
 				redirect("ankabut/v/$id_dipa");
+				
 			}else {
 				redirect('404_content');
 			}

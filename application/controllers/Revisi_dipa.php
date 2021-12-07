@@ -85,7 +85,20 @@ class Revisi_dipa extends CI_Controller {
 				return $a['id'] <=> $b['id'];
 			});
 		} elseif ($aksi == 'h') {
-			if ($level!='perencana' AND $level!='pelaksana') {redirect('404');}
+			if ($level!='pelaksana') {redirect('404');}
+			$filter = array_filter($data['revisi_dipa'], function($key) {
+				return ($key['status_verifikasi_terakhir'] == 'sudah');
+			});
+			// echo '<pre>'; print_r($filter); exit;
+			foreach ($filter as $key => $value) {
+				if ($value['id'] == $id) {
+					redirect('404');
+				}
+			}
+			$cek_data = $this->Guzzle_model->getRevisiDipaById($id);
+			if ($cek_data['url_file'] != '') {
+				unlink($cek_data['url_file']);
+			}
 			$this->Guzzle_model->deleteRevisiDipa($id);
 			$this->session->set_flashdata('msg',
 				'
