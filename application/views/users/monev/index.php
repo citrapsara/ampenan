@@ -72,10 +72,11 @@
                               <?php endif; ?>
                               <div class="col-md-6 text-right">
                                 <?php if ($username == 'kakanwil' AND $id_dipa_select != ''): ?>
-                                  <?php if ($monev == ''): ?>
-                                    <a href="<?php echo strtolower($this->uri->segment(1)) . "/" . strtolower($this->uri->segment(2)) . "/" . $this->uri->segment(3) . "/" .  $id_dipa_select . "/" . hashids_encrypt(''); ?>/t.html" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Input Rekomendasi</a>
-                                  <?php else: ?>
-                                    <a href="<?php echo strtolower($this->uri->segment(1)) . "/" . strtolower($this->uri->segment(2)) . "/" . $this->uri->segment(3) . "/" .  $id_dipa_select . "/" . hashids_encrypt($monev['id']); ?>/er.html" class="btn btn-success"><i class="fa fa-plus-circle"></i> Edit Rekomendasi</a>
+                                  <?php //if ($monev == ''): ?>
+                                    <a href="<?php echo strtolower($this->uri->segment(1)) . "/" . strtolower($this->uri->segment(2)) . "/" . $this->uri->segment(3) . "/" .  $id_dipa_select . "/" . hashids_encrypt(''); ?>/t.html" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Input</a>
+                                  <?php if ($monev != ''): ?>
+                                    <a href="<?php echo strtolower($this->uri->segment(1)) . "/" . strtolower($this->uri->segment(2)) . "/" . $this->uri->segment(3) . "/" .  $id_dipa_select . "/" . hashids_encrypt($monev['id']); ?>/er.html" class="btn btn-success"><i class="fa fa-pencil"></i> Edit</a>
+                                    <a href="<?php echo strtolower($this->uri->segment(1)) . "/" . strtolower($this->uri->segment(2)) . "/" . $this->uri->segment(3) . "/" .  $id_dipa_select . "/" . hashids_encrypt($monev['id']); ?>/h.html" class="btn btn-danger"><i class="fa fa-trash"></i> Hapus</a>
                                   <?php endif;
                                 elseif ($monev != null AND $level == 'kpa'):
                                   if ($monev['tindak_lanjut_rekomendasi'] == ''): ?>

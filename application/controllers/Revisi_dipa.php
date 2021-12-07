@@ -57,6 +57,10 @@ class Revisi_dipa extends CI_Controller {
 			$data['judul_web'] 	  = "Detail Usulan Revisi DIPA";
 			$data['revisi_dipa'] = $this->Guzzle_model->getRevisiDipaById($id);
 
+			if ($data['revisi_dipa'] == null) {
+				redirect(404);
+			}
+
 			$data['verifikasi_usulan'] = $this->Guzzle_model->getVerifikasiByUsulanRevisiId($id);
 			usort($data['verifikasi_usulan'], function($a, $b) {
 				return $a['id'] <=> $b['id'];
@@ -100,6 +104,15 @@ class Revisi_dipa extends CI_Controller {
 				unlink($cek_data['url_file']);
 			}
 			$this->Guzzle_model->deleteRevisiDipa($id);
+			$notif = $this->Guzzle_model->getAllNotifikasi();
+
+				$notif_filter = array_filter($notif, function($key) use ($id) {
+					return ($key['id_for_link'] == $id);
+				});
+
+				foreach ($notif_filter as $key => $value) {
+					$this->Guzzle_model->deleteNotifikasi($value['id']);
+				}
 			$this->session->set_flashdata('msg',
 				'
 				<div class="alert alert-success alert-dismissible" role="alert">

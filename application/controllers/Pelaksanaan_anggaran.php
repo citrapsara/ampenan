@@ -68,6 +68,10 @@ class Pelaksanaan_anggaran extends CI_Controller {
 
 			$data['pelaksanaan_anggaran'] = $this->Guzzle_model->getPelaksanaanAnggaranById($id);
 
+			if ($data['revisi_dipa'] == null) {
+				redirect(404);
+			}
+
 			$data['pelaksanaan_anggaran_akun_detil'] = $this->Guzzle_model->getPelaksanaanAnggaranAkunDetilByPelaksanaanAnggaran($id);
 
 			foreach ($data['pelaksanaan_anggaran_akun_detil'] as $key => $value) {
@@ -121,6 +125,16 @@ class Pelaksanaan_anggaran extends CI_Controller {
 					unlink($cek_data['url_file']);
 				}
 				$this->Guzzle_model->deletePelaksanaanAnggaran($id);
+
+				$notif = $this->Guzzle_model->getAllNotifikasi();
+
+				$notif_filter = array_filter($notif, function($key) use ($id) {
+					return ($key['id_for_link'] == $id);
+				});
+
+				foreach ($notif_filter as $key => $value) {
+					$this->Guzzle_model->deleteNotifikasi($value['id']);
+				}
 				$this->session->set_flashdata('msg',
 					'
 					<div class="alert alert-success alert-dismissible" role="alert">

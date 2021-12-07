@@ -96,6 +96,35 @@ class Monev extends CI_Controller {
 			if ($level!='kpa') {redirect('404');}
 			$p = "edit_tindaklanjut";
 			$data['judul_web'] 	  = "Edit Tindak Lanjut Rekomendasi";
+		} elseif ($aksi == 'h') {
+			$cek_data = $this->Guzzle_model->getMonevById($id);
+			if (count($cek_data) != 0) {
+				$this->Guzzle_model->deleteMonev($id);
+				$notif = $this->Guzzle_model->getAllNotifikasi();
+
+				$notif_filter = array_filter($notif, function($key) use ($id) {
+					return ($key['id_for_link'] == $id);
+				});
+
+				foreach ($notif_filter as $key => $value) {
+					$this->Guzzle_model->deleteNotifikasi($value['id']);
+				}
+
+				$this->session->set_flashdata('msg',
+					'
+					<div class="alert alert-success alert-dismissible" role="alert">
+						 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							 <span aria-hidden="true">&times;</span>
+						 </button>
+						 <strong>Sukses!</strong> Berhasil dihapus.
+					</div>
+					<br>'
+				);
+				redirect("monev/v/$jenis/$id_dipa");
+				
+			}else {
+				redirect('404_content');
+			}
 		} else {
 			$data['judul_web'] 	  = "Monitoring dan Evaluasi";
 			$p = "index";
