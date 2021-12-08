@@ -68,7 +68,7 @@ class Pelaksanaan_anggaran extends CI_Controller {
 
 			$data['pelaksanaan_anggaran'] = $this->Guzzle_model->getPelaksanaanAnggaranById($id);
 
-			if ($data['revisi_dipa'] == null) {
+			if ($data['pelaksanaan_anggaran'] == null) {
 				redirect(404);
 			}
 
@@ -162,7 +162,7 @@ class Pelaksanaan_anggaran extends CI_Controller {
 		$tgl = date('Y-m-d H:i:s');
 
 		$lokasi = 'file/pelaksanaan_anggaran';
-		$file_size = 1024 * 10; // 10 MB
+		$file_size = 1024 * 100; // 10 MB
 		$this->upload->initialize(array(
 			"upload_path"   => "./$lokasi",
 			"allowed_types" => "*",
@@ -389,12 +389,12 @@ class Pelaksanaan_anggaran extends CI_Controller {
 				'status_verifikasi'				=> $status_verifikasi
 			);
 
+			
 			if ($simpan=='y') {
 				$pelaksanaan_anggaran = $this->Guzzle_model->updatePelaksanaanAnggaran($id, $data);
-
+				
 				if ($pelaksanaan_anggaran['status'] == 200) {
-						$user_dipa = $this->Guzzle_model->getUserByDipaId($id_dipa_user);
-					
+					$user_dipa = $this->Guzzle_model->getUserByDipaId($id_dipa);
 					
 					$pelaksana = array_filter($user_dipa, function($key) {
 						return ($key['role'] == 'pelaksana');

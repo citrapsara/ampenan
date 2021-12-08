@@ -111,7 +111,7 @@ class Mcrud extends CI_Model {
 			$pesan = "Mengirim perbaikan laporan pelaksanaan anggaran";
 			$link = "pelaksanaan_anggaran/v/$id_dipa/d/".hashids_encrypt($id_for_link);
 		} elseif ($notif_type == 'verifikasi_pelaksanaan_anggaran') {
-			$link = "elaksanaan_anggaran/v/$id_dipa/d/".hashids_encrypt($id_for_link);
+			$link = "pelaksanaan_anggaran/v/$id_dipa/d/".hashids_encrypt($id_for_link);
 			if ($status_verifikasi == 'tolak') {
 				$pesan = "Laporan pelaksanaan anggaran perlu perbaikan";
 			} elseif ($status_verifikasi == 'sudah') {

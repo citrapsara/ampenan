@@ -95,7 +95,7 @@ class Ankabut extends CI_Controller {
 		$tgl = date('Y-m-d H:i:s');
 
 		$lokasi = 'file/ankabut';
-		$file_size = 1024 * 10; // 10 MB
+		$file_size = 1024 * 100; // 10 MB
 		$this->upload->initialize(array(
 			"upload_path"   => "./$lokasi",
 			"allowed_types" => "*",

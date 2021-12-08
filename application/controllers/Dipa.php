@@ -73,7 +73,7 @@ class Dipa extends CI_Controller {
 		$tgl = date('Y-m-d H:i:s');
 
 		$lokasi = 'file/dipa';
-		$file_size = 1024 * 3; // 3 MB
+		$file_size = 1024 * 100; // 3 MB
 		$this->upload->initialize(array(
 			"upload_path"   => "./$lokasi",
 			"allowed_types" => "*",
