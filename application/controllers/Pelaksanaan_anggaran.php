@@ -41,6 +41,7 @@ class Pelaksanaan_anggaran extends CI_Controller {
 		}
 		
 		$data['pelaksanaan_anggaran'] = $this->Guzzle_model->getAllPelaksanaanAnggaran();
+   
 		$data['total_realisasi'] = $this->Guzzle_model->getTotalPelaksanaanAnggaran();
 		
 		if ($id_dipa!='00') {
