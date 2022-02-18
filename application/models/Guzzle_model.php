@@ -44,6 +44,32 @@ class Guzzle_model extends CI_model {
         return $result;
     }
 
+    public function createUser($data)
+    {
+        $response = $this->_client->request('POST', 'User/create', [
+            'json' => $data
+        ]);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function updateUser($id, $data)
+    {
+        // var_dump($data); exit;
+        $response = $this->_client->request('PUT', 'User/update/' . $id, [
+            'json' => $data
+        ]);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
+    public function deleteUser($id)
+    {
+        $response = $this->_client->request('DELETE', 'User/delete/' . $id);
+        $result = json_decode($response->getBody()->getContents(), true);
+        return $result;
+    }
+
     // Model Folder Data Dukung
     public function getAllFolderDataDukung()
     {

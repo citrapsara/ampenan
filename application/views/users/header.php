@@ -164,6 +164,13 @@ $sub_menu3 = strtolower($this->uri->segment(3));
 						    <span>Dashboard</span>
 					   </a>
 					</li>
+					<?php if ($level == 'superadmin'):?>
+						<li class="has-sub<?php if($menu=='datapengguna' AND $sub_menu=='' or $menu=='datapengguna'){echo " active";} ?>">
+							<a href="datapengguna/v.html">
+								<i class="fa fa-users"></i> <span>Data Pengguna</span>
+							</a>
+						</li>
+					<?php endif; ?>
 					<li class="has-sub <?php if($menu=='perencanaan' OR ($menu=='dipa' AND $sub_menu=='v') OR ($menu=='folder_data_dukung' AND $sub_menu=='v') OR ($menu=='data_dukung' AND $sub_menu=='v') OR ($menu=='rpd' AND $sub_menu=='v') OR ($menu=='ankabut' AND $sub_menu=='v')){echo " active";} ?>">
 						<a href="javascript:;">
 							<b class="caret pull-right"></b>

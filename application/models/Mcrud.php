@@ -59,6 +59,15 @@ class Mcrud extends CI_Model {
 		}
 	}
 
+	public function cek_satker($id_dipa) {
+		$dipa = $this->Guzzle_model->getDetailDipa($id_dipa);
+		$nama = $dipa['nama'];
+		if ($nama == 'semuadipa') {
+			$nama = "-";
+		}
+		return $nama;
+	}
+
 	public function waktu($data, $aksi='')
 	{
 		if ($aksi=='full') {
